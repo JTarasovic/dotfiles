@@ -1,0 +1,5 @@
+#!/bin/sh
+
+trap 'pkill --signal "SIGRTMIN+1" "i3status-rs"' EXIT
+
+kubens "$@"

@@ -1,0 +1,55 @@
+
+# set history options
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.histfile
+bindkey -v
+
+# man 1 zshoptions
+setopt incappendhistory histignorealldups sharehistory extendedhistory
+setopt autocd extendedglob correct autopushd
+setopt notify
+setopt interactivecomments
+
+unsetopt nomatch
+
+autoload -Uz promptinit
+promptinit
+
+zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' completer _expand _complete _extensions _ignored _approximate
+zstyle ':completion:*' max-errors 2
+zstyle ':completion:*' menu select
+zstyle ':completion:*' verbose true
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+# zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==34=1;36}:${(s.:.)LS_COLORS}")'
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-colors ''
+
+
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([[:digit:]]#)*=34=31'
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,cmd'
+autoload -Uz compinit
+compinit
+
+{{ template "aliases.tmpl" . }}
+{{ template "functions.tmpl" . }}
+
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
+
+{{ if lookPath "starship" -}}
+{{ output "starship" "init" "zsh" }}
+{{ else }}
+# starship init omitted
+{{ end -}}
+
+export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+{{ if (eq .chezmoi.os "linux") }}
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+{{- end -}}
+
+{{ if (eq .chezmoi.os "darwin") }}
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+{{- end }}
+

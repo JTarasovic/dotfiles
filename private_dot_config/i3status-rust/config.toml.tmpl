@@ -1,0 +1,68 @@
+# vi:syntax=toml
+
+# base16-i3status-rust (https://github.com/mystfox/base16-i3status-rust)
+# Nord by arcticicestudio
+
+[theme]
+name = "slick"
+[theme.overrides]
+idle_bg = "#2E3440"
+idle_fg = "#E5E9F0"
+info_bg = "#5E81AC"
+info_fg = "#2E3440"
+good_bg = "#A3BE8C"
+good_fg = "#2E3440"
+warning_bg = "#EBCB8B"
+warning_fg = "#2E3440"
+critical_bg = "#BF616A"
+critical_fg = "#2E3440"
+# The rest of the theme settings are left at default.
+
+[icons]
+name = "awesome"
+
+[[block]]
+block = "custom"
+interval = "once"
+signal = 1
+command = ''' current-context '''
+
+[[block]]
+block = "music"
+max_width = 100
+dynamic_width = true
+buttons = [ "play" ]
+
+[[block]]
+block = "bluetooth"
+mac = "4C:87:5D:27:4F:21"
+label = " Bose NC700"
+
+[[block]]
+block = "sound"
+on_click = 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
+
+[[block]]
+block = "sound"
+device_kind = 'source'
+on_click = 'pactl set-source-mute @DEFAULT_SOURCE@ toggle'
+
+[[block]]
+block = "weather"
+service = { name = "openweathermap", api_key = "{{ .openweathermap.api_key }}", city_id = "4377664", units = "imperial" }
+interval = 900
+
+[[block]]
+block = "time"
+interval = 60
+format = "%a %b %d %R"
+
+[[block]]
+block = "custom"
+command = "browsers GET"
+on_click = "browsers CYCLE"
+interval = "once"
+signal = 2
+
+[[block]]
+block = "notify"

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+MYTAG=browserchanger
+
+while read -r line;
+do
+    while read -r current old;
+    do
+        if [[ "$old" =~ 9 ]]; then
+            "$HOME"/.local/bin/browsers SET firefox-developer-edition.desktop > /dev/null
+            echo "set browser to Firefox Developer Edition" | systemd-cat -t "$MYTAG"
+        fi
+        if [[ "$current" =~ 9 ]]; then
+            "$HOME"/.local/bin/browsers SET firefox.desktop > /dev/null
+            echo "set browser to Firefox" | systemd-cat -t "$MYTAG"
+        fi
+    done < <(echo "$line" | jq -cr '[.current,.old | .name] | @sh')
+done < <(i3-msg -t subscribe -m '[ "workspace" ]')
+
+echo "exiting" | systemd-cat -t "$MYTAG"
+
+exit 0

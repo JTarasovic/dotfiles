@@ -1,0 +1,11 @@
+helpers/
+README.md
+
+{{ if (eq .chezmoi.os "darwin") }}
+private_dot_config/dunst/
+private_dot_config/i3/
+private_dot_config/i3status-rust/
+private_dot_config/rofi/
+private_dot_config/systemd/
+{{- end }}
+

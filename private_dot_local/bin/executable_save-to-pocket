@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+cleaned=$(urlcleaner -glob='utm*' -url="$1" \
+    | xargs curl -w "%{url_effective}" -ILsSo /dev/null \
+    | urlcleaner -glob='utm*')
+
+[ -z "$cleaned" ] && exit 1
+
+pocket add "$cleaned"

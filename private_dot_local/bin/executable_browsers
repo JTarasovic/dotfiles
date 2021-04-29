@@ -1,0 +1,44 @@
+#!/bin/bash
+
+
+declare -A browsers
+
+browsers[firefox-developer-edition.desktop]='爵'
+browsers[firefox.desktop]=''
+browsers[chromium.desktop]=''
+
+get_current() {
+    xdg-settings get default-web-browser
+}
+
+set_current() {
+    xdg-settings set default-web-browser "$1"
+    do_echo "$1";
+    pkill --signal "SIGRTMIN+2" "i3status-rs"
+}
+
+cycle() {
+    local blist=("${(k)browsers[@]}")
+    local ix=0
+    local current
+    current=$(get_current)
+    # local ix=${browsers[(i)$current]}
+
+    for (( i = 1; i <= ${#blist[@]}; i++ ));
+    do
+        [[ "$current" = "${blist[i]}" ]] && ix="$i"
+    done
+
+    set_current "${blist[$((ix % 3 + 1))]}"
+}
+
+do_echo() {
+    printf "%s" "${browsers[$1]}"
+}
+
+
+[[ "$1" = "GET" ]] && do_echo "$(get_current)"
+
+[[ "$1" = "SET" ]] && set_current "$2"
+
+[[ "$1" = "CYCLE" ]] && cycle

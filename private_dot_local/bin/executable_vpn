@@ -1,0 +1,13 @@
+#!/bin/bash
+
+IFACE=${1:-tun0}
+systemctl start openvpn-client@attentive.service
+
+while ! resolvectl dns "$IFACE" &> /dev/null;
+do
+    echo "...waiting on $IFACE to be ready"
+    sleep 1;
+done
+
+resolvectl dns "$IFACE" 10.1.0.2
+resolvectl domain "$IFACE" attentivemobile.com

@@ -1,0 +1,129 @@
+# vi:syntax=toml
+
+# base16-i3status-rust (https://github.com/mystfox/base16-i3status-rust)
+# Nord by arcticicestudio
+
+[theme]
+name = "slick"
+[theme.overrides]
+idle_bg = "#2E3440"
+idle_fg = "#E5E9F0"
+info_bg = "#5E81AC"
+info_fg = "#2E3440"
+good_bg = "#A3BE8C"
+good_fg = "#2E3440"
+warning_bg = "#EBCB8B"
+warning_fg = "#2E3440"
+critical_bg = "#BF616A"
+critical_fg = "#2E3440"
+# The rest of the theme settings are left at default.
+
+[icons]
+name = "awesome"
+
+
+[[block]]
+block = "temperature"
+collapsed = false
+chip = "nvme-pci-0400"
+good = 20
+idle = 30
+info = 60
+warning = 70
+format = "/ {max}°"
+interval = 5
+
+[[block]]
+block = "disk_space"
+path = "/"
+alias = "/"
+info_type = "available"
+unit = "GB"
+warning = 20.0
+alert = 10.0
+interval = 120
+
+[[block]]
+block = "temperature"
+collapsed = false
+chip = "nvme-pci-0100"
+good = 20
+idle = 30
+info = 60
+warning = 70
+format = "~ {max}°"
+interval = 5
+
+[[block]]
+block = "disk_space"
+path = "/home"
+alias = "~"
+info_type = "available"
+unit = "GB"
+warning = 20.0
+alert = 10.0
+interval = 120
+
+[[block]]
+block = "docker"
+format = "T:{total} R:{running} S:{stopped} P:{paused} I:{images}"
+interval = 60
+
+[[block]]
+block = "memory"
+display_type = "memory"
+format_mem = "{MFg}GiB"
+format_swap = "{SFg}GiB"
+interval = 5
+
+[[block]]
+block = "temperature"
+collapsed = false
+chip = "iwlwifi_1-virtual-0"
+good = 10
+idle = 20
+info = 65
+warning = 70
+format = " {max}°"
+interval = 5
+
+[[block]]
+block = "net"
+use_bits = true
+format="{speed_down} {speed_up}"
+speed_min_unit = "M"
+interval = 5
+
+[[block]]
+block = "temperature"
+collapsed = false
+chip = "amdgpu-pci-0a00"
+inputs = [ 'edge' ]
+good = 20
+idle = 30
+info = 70
+warning = 75
+format = "GPU: {max}°"
+interval = 5
+
+[[block]]
+block = "load"
+format = "{1m} : {5m}"
+interval = 5
+
+[[block]]
+block = "cpu"
+format="{frequency} {barchart}"
+interval = 5
+
+[[block]]
+block = "temperature"
+collapsed = false
+chip = "k10temp-pci-00c3"
+inputs = [ 'Tctl' ]
+good = 20
+idle = 30
+info = 75
+warning = 80
+format = " {max}°"
+interval = 5

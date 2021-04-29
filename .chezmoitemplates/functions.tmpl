@@ -1,0 +1,68 @@
+watch_url() {
+    while :;
+    do
+        curl -s -o /dev/null -w "%{http_code} - %{size_download}\n" --connect-timeout 2 -k "$1";
+        sleep "${2:-5}";
+    done
+}
+
+clear_terminal_title() {
+    echo -en "\e]2;Alacritty\a";
+}
+
+{{ if lookPath "git" -}}
+get_default_branch() {
+    git remote show origin | awk '/HEAD branch/ {print $NF}'
+}
+
+clean () {
+    old=$(git rev-parse --abbrev-ref HEAD);
+    git checkout "${1:-$(get_default_branch)}" && git pull && git br -D "$old"
+}
+
+# https://stackoverflow.com/questions/1029969/why-is-my-git-repository-so-big
+git-fatfiles() {
+    git rev-list --all --objects | \
+        sed -n $(git rev-list --objects --all | \
+        cut -f1 -d' ' | \
+        git cat-file --batch-check | \
+        grep blob | \
+        sort -n -k 3 | \
+        tail -n40 | \
+        while read hash type size; do
+             echo -n "-e s/$hash/$size/p ";
+        done) | \
+        sort -nr -k1
+}
+
+{{ else }}
+# git functions omitted
+{{ end -}}
+
+{{ if lookPath "aws" -}}
+cf_validate() {
+    aws cloudformation validate-template --template-body "file://$1" | jq '.'
+}
+{{ else }}
+# aws functions omitted
+{{ end -}}
+
+{{ if lookPath "kubectl" -}}
+node2instance() {
+    kubectl get node "$1" -o jsonpath="{.spec.providerID}" | cut -d "/" -f 5
+}
+
+pods_ready() {
+    namespace="$1"
+    label_selector="$2"
+
+    while IFS="|" read -r pod node statuses;
+    do
+        [[ "$statuses" =~ false ]] && echo "$pod in $namespace has unready containers on instance $node"
+    done < <(kubectl -n "$namespace" get pod -l "$label_selector" -o jsonpath='{range .items[*]}{.metadata.name}|{.spec.nodeName}|{.status.containerStatuses[*].ready}{"\n"}{end}')
+}
+{{ else }}
+# kubectl functions omitted
+{{ end -}}
+
+

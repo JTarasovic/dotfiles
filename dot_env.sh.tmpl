@@ -1,0 +1,21 @@
+{{ if lookPath "bat" -}}
+export BAT_THEME="Nord"
+{{ else }}
+# bat export omitted
+{{- end -}}
+
+export EDITOR=vim
+{{ if lookPath "nvim" -}}
+export EDITOR={{ lookPath "nvim" }}
+{{ else }}
+# nvim export omitted
+{{- end -}}
+
+{{ output "dircolors" ( joinPath .chezmoi.sourceDir "helpers" "nord_dir_colors") }}
+export USER_LS_COLORS="$LS_COLORS"
+
+# fzf nord theme
+export FZF_DEFAULT_OPTS='--color=bg+:#3B4252,bg:#2E3440,spinner:#81A1C1,hl:#616E88,fg:#D8DEE9,header:#616E88,info:#81A1C1,pointer:#81A1C1,marker:#81A1C1,fg+:#D8DEE9,prompt:#81A1C1,hl+:#81A1C1'
+
+{{/* TODO: add mysql for osx */}}
+{{ output (joinPath .chezmoi.sourceDir "helpers" "path.sh" ) }}

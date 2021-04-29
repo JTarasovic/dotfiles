@@ -1,0 +1,39 @@
+{{- $email := .email -}}
+{{- if not $email -}}
+{{-   $email = promptString "email" -}}
+{{- end -}}
+
+{{- $fullname := .fullname -}}
+{{- if not $fullname -}}
+{{-   $fullname = promptString "full name" -}}
+{{- end -}}
+
+{{- $reddit_private_feed := .feed.reddit_private_feed -}}
+{{- if not $reddit_private_feed -}}
+{{-   $reddit_private_feed = promptString "reddit private feed" -}}
+{{- end -}}
+
+{{- $openweathermap_api_key := .openweathermap.api_key -}}
+{{- if not $openweathermap_api_key -}}
+{{-   $openweathermap_api_key = promptString "openweathermap API key" -}}
+{{- end -}}
+
+{{- $yubico_favorites := .yubico.favorites -}}
+{{- if not $yubico_favorites -}}
+{{-   $yubico_favorites = "" -}}
+{{- end -}}
+
+data:
+    email: {{ $email }}
+    fullname: {{ $fullname }}
+
+    feed:
+        reddit_private_feed: |-
+            {{ $reddit_private_feed }}
+
+    openweathermap:
+        api_key: {{ $openweathermap_api_key }}
+
+    yubico:
+        favorites: |-
+            {{ $yubico_favorites }}

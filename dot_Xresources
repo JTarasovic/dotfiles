@@ -1,0 +1,43 @@
+/* Xft.dpi: 120 */
+
+! Base16 Nord
+! Scheme: arcticicestudio
+
+#define base00 #2e3440
+#define base01 #3b4252
+#define base02 #434c5e
+#define base03 #4c566a
+#define base04 #d8dee9
+#define base05 #e5e9f0
+#define base06 #eceff4
+#define base07 #8fbcbb
+#define base08 #88c0d0
+#define base09 #81a1c1
+#define base0A #5e81ac
+#define base0B #bf616a
+#define base0C #d08770
+#define base0D #ebcb8b
+#define base0E #a3be8c
+#define base0F #b48ead
+
+*foreground:   base05
+*background:   base00
+*cursorColor:  base05
+
+*color0:       base00
+*color1:       base01
+*color2:       base02
+*color3:       base03
+*color4:       base04
+*color5:       base05
+*color6:       base06
+*color7:       base07
+
+*color8:       base08
+*color9:       base09
+*color10:      base0A
+*color11:      base0B
+*color12:      base0C
+*color13:      base0D
+*color14:      base0E
+*color15:      base0F

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+rofi \
+    -show powermenu \
+    -modi \
+    "powermenu:$HOME/.local/bin/rofi-power-menu --choices=lockscreen/logout/suspend/reboot/shutdown"
