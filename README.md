@@ -24,6 +24,7 @@
 - newsboat
 - neovim
 - starship
+- bat
 
 ### weak depends
 - Firefox Developer Edition
