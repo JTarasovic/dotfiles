@@ -36,6 +36,7 @@ bindsym $mod+Return exec alacritty
 # kill focused window
 bindsym $mod+q kill
 
+# TODO: figure this out
 bindsym $mod+space exec "rofi -show combi -modi combi,calc -show-icons"
 
 # TODO: reconcile
@@ -241,6 +242,7 @@ bar {
         }
 }
 
+# TODO: figure this out
 # auto-start daemons
 exec /usr/bin/light-locker
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
