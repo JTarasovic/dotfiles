@@ -20,6 +20,36 @@ alias cat='bat'
 # bat aliases omitted
 {{- end }}
 
+{{ if lookPath "chezmoi" -}}
+alias cm='chezmoi '
+alias cma='chezmoi apply '
+alias cmd='chezmoi diff '
+alias cmu='chezmoi update '
+alias cmg='chezmoi git '
+alias cmsp='chezmoi source-path '
+{{- else -}}
+# chezmoi aliases omitted
+{{- end }}
+
+{{ if lookPath "kubectl" -}}
+# kubectl
+alias k='kubectl'
+{{- /* TODO: move this to helper script */ -}}
+{{- /*
+!sh
+```
+for context in $(kubectl config get-contexts -o name);
+do
+    clean_ctx="$(echo "$context" | tr -d "-")"
+    alias_to_create="$(printf "%s%s" "k" "$clean_ctx")"
+    echo alias "$alias_to_create='kubectl --context=$context '"
+done
+```
+*/ -}}
+{{- else -}}
+# kubectl aliases omitted
+{{- end }}
+
 # misc
 alias yml2yaml='for f in *.yml; do mv -- "$f" "${f%.yml}.yaml"; done'
 alias flatten='find ./ -type f -exec mv '{}' . \;'
