@@ -1,15 +1,15 @@
 {{ if lookPath "bat" -}}
 export BAT_THEME="Nord"
-{{ else }}
+{{- else -}}
 # bat export omitted
-{{- end -}}
+{{- end }}
 
 export EDITOR=vim
 {{ if lookPath "nvim" -}}
 export EDITOR={{ lookPath "nvim" }}
-{{ else }}
+{{- else -}}
 # nvim export omitted
-{{- end -}}
+{{- end }}
 
 {{ output "dircolors" ( joinPath .chezmoi.sourceDir "helpers" "nord_dir_colors") }}
 export USER_LS_COLORS="$LS_COLORS"
