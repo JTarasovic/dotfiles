@@ -34,18 +34,7 @@ alias cmsp='chezmoi source-path '
 {{ if lookPath "kubectl" -}}
 # kubectl
 alias k='kubectl'
-{{- /* TODO: move this to helper script */ -}}
-{{- /*
-!sh
-```
-for context in $(kubectl config get-contexts -o name);
-do
-    clean_ctx="$(echo "$context" | tr -d "-")"
-    alias_to_create="$(printf "%s%s" "k" "$clean_ctx")"
-    echo alias "$alias_to_create='kubectl --context=$context '"
-done
-```
-*/ -}}
+{{ output ( joinPath .chezmoi.sourceDir "helpers" "kubectl-aliases.sh" ) "k8s-" }}
 {{- else -}}
 # kubectl aliases omitted
 {{- end }}
