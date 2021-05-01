@@ -36,7 +36,7 @@ compinit
 {{ template "aliases.tmpl" . }}
 {{ template "functions.tmpl" . }}
 
-[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
+source "$HOME/.zshrc.local"
 
 {{ if lookPath "starship" -}}
 {{ output "starship" "init" "zsh" }}
