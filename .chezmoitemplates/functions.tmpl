@@ -64,3 +64,12 @@ pods_ready() {
 {{- else -}}
 # kubectl functions omitted
 {{- end }}
+
+{{ if lookPath "chezmoi" -}}
+cmet() {
+    local template="$1"
+    chezmoi execute-template < "$(chezmoi source-path)/$1"
+}
+{{- else -}}
+# chezmoi functions omitted
+{{- end }}
