@@ -22,10 +22,11 @@ alias cat='bat'
 
 {{ if lookPath "chezmoi" -}}
 alias cm='chezmoi '
+alias cme='chezmoi edit '
 alias cma='chezmoi apply '
 alias cmd='chezmoi diff '
 alias cmu='chezmoi update '
-alias cmg='chezmoi git '
+alias cmg='chezmoi git -- '
 alias cmsp='chezmoi source-path '
 {{- else -}}
 # chezmoi aliases omitted
