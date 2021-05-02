@@ -90,7 +90,6 @@ alias pbpaste='xclip -selection clipboard -o'
 {{- end }}
 
 {{ if (eq .chezmoi.os "darwin") -}}
-export CLICOLOR=1
 alias l='ls'
 alias l.='ls -d .*'
 alias la='ls -lah'

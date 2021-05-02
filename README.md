@@ -21,7 +21,6 @@
 ```
 brew install \
     chezmoi \
-    coreutils \
     git \
     lastpass-cli \
     python@3.9 \
