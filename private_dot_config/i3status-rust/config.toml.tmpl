@@ -1,3 +1,7 @@
+{{ $headphone_mac := output
+    ( joinPath .chezmoi.sourceDir "helpers" "bluetooth-device-paired.sh")
+    "Bose NC 700 Head" -}}
+
 # vi:syntax=toml
 
 # base16-i3status-rust (https://github.com/mystfox/base16-i3status-rust)
@@ -33,11 +37,12 @@ max_width = 100
 dynamic_width = true
 buttons = [ "play" ]
 
-{{/* TODO: figure this out */}}
+{{ if $headphone_mac -}}
 [[block]]
 block = "bluetooth"
-mac = "4C:87:5D:27:4F:21"
+mac = {{ $headphone_mac | quote }}
 label = " Bose NC700"
+{{- end }}
 
 [[block]]
 block = "sound"
