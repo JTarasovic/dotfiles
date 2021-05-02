@@ -1,5 +1,8 @@
 {{/* TODO: pull critical temps from sensors output */}}
-{{- $sensors := fromJson ( output "sensors" "-j" ) -}}
+{{- $sensors := fromJson "{}" -}}
+{{- if lookPath "sensors" -}}
+{{- $sensors = fromJson ( output "sensors" "-j" ) -}}
+{{- end -}}
 
 # vi:syntax=toml
 
