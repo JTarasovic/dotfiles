@@ -2,7 +2,7 @@
 ## Dependencies
 
 ### Linux
-- Dunst
+- dunst
 - i3
 - i3status-rust
 - rofi <!-- rofi calc? -->
@@ -18,7 +18,22 @@
 - xrdb
 
 ### OSX
-?
+```
+brew install \
+    chezmoi \
+    coreutils \
+    git \
+    lastpass-cli \
+    python@3.9 \
+    neovim \
+    starship \
+    zsh-syntax-highlighting
+
+brew tap homebrew/cask-fonts && brew install --cask font-dejavu-sans-mono-nerd-font
+
+lpass login $USERNAME
+PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH" chezmoi init $USERNAME --apply
+```
 
 ### all
 - Alacritty
