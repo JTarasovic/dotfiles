@@ -253,25 +253,25 @@ bar {
 
 # auto-start daemons
 {{ if lookPath "light-locker" -}}
-exec /usr/bin/light-locker
+exec {{ lookPath "light-locker" }}
 {{- else -}}
 # light-locker startup skipped
 {{- end }}
 
-{{ if lookPath "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1" -}}
+{{ if stat "/usr/lib/polkit-gnome" -}}
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 {{- else -}}
 # polkit-gnome startup skipped
 {{- end }}
 
 {{ if lookPath "udiskie" -}}
-exec --no-startup-id /usr/bin/udiskie --smart-tray
+exec --no-startup-id {{ lookPath "udiskie" }} --smart-tray
 {{- else -}}
 # udiskie startup skipped
 {{- end }}
 
 {{ if lookPath "playerctld" -}}
-exec --no-startup-id /usr/bin/playerctld daemon
+exec --no-startup-id {{ lookPath "playerctld" }} daemon
 {{- else -}}
 # playerctld startup skipped
 {{- end }}
@@ -283,37 +283,37 @@ exec_always --no-startup-id $HOME/.local/bin/browserchanger
 
 # auto-start applications
 {{ if lookPath "yubioath-desktop" -}}
-exec --no-startup-id /usr/bin/yubioath-desktop
+exec --no-startup-id {{ lookPath "yubioath-desktop" }}
 {{- else -}}
 # yubioath-desktop startup skipped
 {{- end }}
 
 {{ if lookPath "slack" -}}
-exec --no-startup-id /usr/bin/slack -s
+exec --no-startup-id {{ lookPath "slack" }} -s
 {{- else -}}
 # slack startup skipped
 {{- end }}
 
 {{ if lookPath "spotify" -}}
-exec --no-startup-id /usr/bin/spotify
+exec --no-startup-id {{ lookPath "spotify" }}
 {{- else -}}
 # spotify startup skipped
 {{- end }}
 
 {{ if lookPath "thunderbird" -}}
-exec /usr/lib/thunderbird/thunderbird
+exec {{ lookPath "thunderbird" }}
 {{- else -}}
 # thunderbird startup skipped
 {{- end }}
 
-{{ if lookPath "/usr/lib/firefox/firefox" -}}
-exec /usr/lib/firefox/firefox
+{{ if lookPath "firefox" -}}
+exec {{ lookPath "firefox" }}
 {{- else -}}
 # firefox startup skipped
 {{- end }}
 
-{{ if lookPath "/usr/lib/firefox-developer-edition/firefox" -}}
-exec /usr/lib/firefox-developer-edition/firefox
+{{ if lookPath "firefox-developer-edition" -}}
+exec {{ lookPath "firefox-developer-edition" }}
 {{- else -}}
 # firefox-developer-edition startup skipped
 {{- end }}
