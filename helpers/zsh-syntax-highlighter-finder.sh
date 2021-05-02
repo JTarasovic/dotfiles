@@ -7,3 +7,5 @@ do
     search="$dir/$HIGHLIGHT"
     [[ -f "$search" ]] && { echo "source \"$search\""; exit 0; }
 done
+
+exit 0
