@@ -5,7 +5,7 @@
 - Dunst
 - i3
 - i3status-rust
-- rofi
+- rofi <!-- rofi calc? -->
 - <!-- figure this out for osx -->
 - yubioath-desktop
 - DejaVuSansMono Nerd Font
@@ -14,7 +14,8 @@
 - playerctl
 - light-locker
 - udiskie
-- pocket-cli
+- pocket-cli <!-- which one? -->
+- xrdb
 
 ### OSX
 ?

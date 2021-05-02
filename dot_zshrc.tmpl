@@ -36,14 +36,14 @@ compinit
 {{ template "aliases.tmpl" . }}
 {{ template "functions.tmpl" . }}
 
-[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
+source "$HOME/.zshrc.local"
 
 {{ if lookPath "starship" -}}
 {{ output "starship" "init" "zsh" }}
-{{ else }}
+{{- else -}}
 # starship init omitted
-{{ end -}}
+{{- end }}
 
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
-{{ output (joinPath .chezmoi.sourceDir "helpers" "zsh-syntax-highlighter-finder.sh")}}
+{{ output (joinPath .chezmoi.sourceDir "helpers" "zsh-syntax-highlighter-finder.sh") }}
 

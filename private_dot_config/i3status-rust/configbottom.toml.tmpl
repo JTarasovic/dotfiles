@@ -1,3 +1,6 @@
+{{/* TODO: pull critical temps from sensors output */}}
+{{- $sensors := fromJson ( output "sensors" "-j" ) -}}
+
 # vi:syntax=toml
 
 # base16-i3status-rust (https://github.com/mystfox/base16-i3status-rust)
@@ -22,6 +25,7 @@ critical_fg = "#2E3440"
 name = "awesome"
 
 
+{{ if ( get $sensors "nvme-pci-0400" ) -}}
 [[block]]
 block = "temperature"
 collapsed = false
@@ -32,6 +36,7 @@ info = 60
 warning = 70
 format = "/ {max}°"
 interval = 5
+{{- end }}
 
 [[block]]
 block = "disk_space"
@@ -43,6 +48,7 @@ warning = 20.0
 alert = 10.0
 interval = 120
 
+{{ if ( get $sensors "nvme-pci-0100" ) -}}
 [[block]]
 block = "temperature"
 collapsed = false
@@ -53,6 +59,7 @@ info = 60
 warning = 70
 format = "~ {max}°"
 interval = 5
+{{- end }}
 
 [[block]]
 block = "disk_space"
@@ -76,6 +83,7 @@ format_mem = "{MFg}GiB"
 format_swap = "{SFg}GiB"
 interval = 5
 
+{{ if ( get $sensors "iwlwifi_1-virtual-0" ) -}}
 [[block]]
 block = "temperature"
 collapsed = false
@@ -86,6 +94,7 @@ info = 65
 warning = 70
 format = " {max}°"
 interval = 5
+{{- end }}
 
 [[block]]
 block = "net"
@@ -94,6 +103,7 @@ format="{speed_down} {speed_up}"
 speed_min_unit = "M"
 interval = 5
 
+{{ if ( get $sensors "amdgpu-pci-0a00" ) -}}
 [[block]]
 block = "temperature"
 collapsed = false
@@ -105,6 +115,7 @@ info = 70
 warning = 75
 format = "GPU: {max}°"
 interval = 5
+{{- end }}
 
 [[block]]
 block = "load"
@@ -116,6 +127,7 @@ block = "cpu"
 format="{frequency} {barchart}"
 interval = 5
 
+{{ if ( get $sensors "k10temp-pci-00c3" ) -}}
 [[block]]
 block = "temperature"
 collapsed = false
@@ -127,3 +139,4 @@ info = 75
 warning = 80
 format = " {max}°"
 interval = 5
+{{- end }}
