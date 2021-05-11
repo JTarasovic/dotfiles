@@ -1,2 +1,3 @@
 export AWS_PROFILE=prod
 export AWS_REGION=us-east-1
+export DOCKER_BUILDKIT=1
