@@ -42,6 +42,7 @@ buttons = [ "play" ]
 block = "bluetooth"
 mac = {{ $headphone_mac | quote }}
 label = " Bose NC700"
+format = "{label}"
 {{- end }}
 
 [[block]]
@@ -55,6 +56,7 @@ on_click = 'pactl set-source-mute @DEFAULT_SOURCE@ toggle'
 
 [[block]]
 block = "weather"
+format = "{weather} {temp}"
 service = { name = "openweathermap", api_key = "{{ .openweathermap.api_key }}", city_id = "4377664", units = "imperial" }
 interval = 900
 
