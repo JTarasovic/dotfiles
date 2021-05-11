@@ -111,6 +111,10 @@ symbol = " "
 [rust]
 symbol = " "
 
+[shlvl]
+disabled = false
+symbol = "↕️"
+
 [status]
 disabled = false
 style = '#BF616A'
