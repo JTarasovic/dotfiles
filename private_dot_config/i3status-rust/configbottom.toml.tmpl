@@ -1,28 +1,13 @@
+# vi:syntax=toml
+
 {{/* TODO: pull critical temps from sensors output */}}
 {{- $sensors := fromJson "{}" -}}
 {{- if lookPath "sensors" -}}
 {{- $sensors = fromJson ( output "sensors" "-j" ) -}}
 {{- end -}}
 
-# vi:syntax=toml
-
-# base16-i3status-rust (https://github.com/mystfox/base16-i3status-rust)
-# Nord by arcticicestudio
-
 [theme]
-name = "slick"
-[theme.overrides]
-idle_bg = "#2E3440"
-idle_fg = "#E5E9F0"
-info_bg = "#5E81AC"
-info_fg = "#2E3440"
-good_bg = "#A3BE8C"
-good_fg = "#2E3440"
-warning_bg = "#EBCB8B"
-warning_fg = "#2E3440"
-critical_bg = "#BF616A"
-critical_fg = "#2E3440"
-# The rest of the theme settings are left at default.
+name = "nord-dark"
 
 [icons]
 name = "awesome"
@@ -39,6 +24,8 @@ info = 60
 warning = 70
 format = "/ {max}"
 interval = 5
+{{- else -}}
+# skipped nvme-pci-0400
 {{- end }}
 
 [[block]]
@@ -62,6 +49,8 @@ info = 60
 warning = 70
 format = "~ {max}"
 interval = 5
+{{- else -}}
+# skipped nvme-pci-0100
 {{- end }}
 
 [[block]]
@@ -97,6 +86,8 @@ info = 65
 warning = 70
 format = " {max}"
 interval = 5
+{{- else -}}
+# skipped iwlwifi_1
 {{- end }}
 
 [[block]]
@@ -116,6 +107,8 @@ info = 70
 warning = 75
 format = "GPU: {max}"
 interval = 5
+{{- else -}}
+# skipped amdgpu
 {{- end }}
 
 [[block]]
@@ -140,4 +133,6 @@ info = 75
 warning = 80
 format = " {max}"
 interval = 5
+{{- else -}}
+# skipped k10temp
 {{- end }}
