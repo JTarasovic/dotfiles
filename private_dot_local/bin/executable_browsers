@@ -1,5 +1,6 @@
-#!/bin/bash
+#!/bin/zsh
 
+set -euo pipefail
 
 declare -A browsers
 
@@ -36,9 +37,17 @@ do_echo() {
     printf "%s" "${browsers[$1]}"
 }
 
-
-[[ "$1" = "GET" ]] && do_echo "$(get_current)"
-
-[[ "$1" = "SET" ]] && set_current "$2"
-
-[[ "$1" = "CYCLE" ]] && cycle
+case "$1" in
+    GET)
+        do_echo "$(get_current)"
+        ;;
+    SET)
+        set_current "$2"
+        ;;
+    CYCLE)
+        cycle
+        ;;
+    *)
+        echo "invalid argument: $1"
+        exit 1
+esac
