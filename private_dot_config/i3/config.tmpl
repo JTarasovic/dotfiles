@@ -282,6 +282,17 @@ exec_always --no-startup-id $HOME/.local/bin/browserchanger
 
 
 # auto-start applications
+{{ if (and (lookPath "thunderbird") (lookPath "newsboat") (false) ) -}}
+# TODO: figure this out
+exec --no-startup-id "i3-msg 'workspace $ws8; append_layout $HOME/.config/i3/layouts/ws8.json'"
+{{- end}}
+
+{{ if lookPath "thunderbird" -}}
+exec {{ lookPath "thunderbird" }}
+{{- else -}}
+# thunderbird startup skipped
+{{- end }}
+
 {{ if lookPath "yubioath-desktop" -}}
 exec --no-startup-id {{ lookPath "yubioath-desktop" }}
 {{- else -}}
@@ -298,12 +309,6 @@ exec --no-startup-id {{ lookPath "slack" }} -s
 exec --no-startup-id {{ lookPath "spotify" }}
 {{- else -}}
 # spotify startup skipped
-{{- end }}
-
-{{ if lookPath "thunderbird" -}}
-exec {{ lookPath "thunderbird" }}
-{{- else -}}
-# thunderbird startup skipped
 {{- end }}
 
 {{ if lookPath "firefox" -}}
@@ -323,4 +328,6 @@ exec /usr/bin/alacritty --class=newsboat -t newsboat -e /bin/zsh -l -c newsboat
 {{- else -}}
 # newsboat startup skipped
 {{- end }}
+
+exec --no-startup-id $HOME/.local/bin/launch_i3_terminals
 

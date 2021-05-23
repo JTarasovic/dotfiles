@@ -1,0 +1,22 @@
+#!/bin/bash
+
+declare -A vars
+vars[ws]="3:"
+vars[layout]="$HOME/.config/i3/layouts/arch-terminals.json"
+vars[term]="alacritty"
+vars[count]="7"
+vars[tag]=launch_i3_terminals
+
+echo "launching terminals" | systemd-cat -t "${vars[tag]}"
+echo "args: ${vars[*]}" | systemd-cat -t "${vars[tag]}"
+
+
+i3-msg "workspace ${vars[ws]}; append_layout ${vars[layout]}"
+
+declare -a terms
+for _ in $(seq 1 "${vars[count]}");
+do
+    terms+=("exec ${vars[term]};")
+done
+
+i3-msg "workspace ${vars[ws]}; ${terms[*]}"
