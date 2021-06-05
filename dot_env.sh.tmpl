@@ -20,7 +20,8 @@ export USER_LS_COLORS="$LS_COLORS"
 
 {{ if (eq .chezmoi.os "darwin" ) -}}
 export CLICOLOR=1
-export JAVA_HOME={{ output "/usr/libexec/java_home" "-v" "1.8" }}
+# TODO: dump iterm profile?
+{{ output (joinPath .chezmoi.sourceDir "helpers" "java-home.sh" ) }}
 {{- else -}}
 # darwin env skipped
 {{- end }}
