@@ -70,7 +70,7 @@ alias add='sudo add-apt-repository'
 {{- end }}
 
 {{ if lookPath "brew" -}}
-alias update='brew update && brew upgrade && brew cask upgrade'
+alias update='brew update && brew upgrade'
 alias install='brew install'
 alias search='brew search'
 {{- else -}}
