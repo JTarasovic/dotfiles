@@ -60,6 +60,7 @@ alias search='dnf search'
 # dnf aliases omitted
 {{- end }}
 
+# TODO: conflicts with java annotation processor
 {{ if lookPath "apt" -}}
 alias update='sudo apt-get update && sudo apt-get upgrade'
 alias install='sudo apt-get install'

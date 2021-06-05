@@ -29,4 +29,6 @@ source "$HOME/.env.sh"
 {{ template "aliases.tmpl" . }}
 {{ template "functions.tmpl" . }}
 
+source "$HOME/.bashrc.local"
+
 source <("/usr/bin/starship" init bash --print-full-init)

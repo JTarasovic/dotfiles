@@ -29,6 +29,7 @@ zstyle ':completion:*' list-colors ''
 
 
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([[:digit:]]#)*=34=31'
+# TODO: change for macos
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,cmd'
 autoload -Uz compinit
 compinit

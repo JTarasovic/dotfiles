@@ -15,17 +15,17 @@ export EDITOR={{ lookPath "nvim" }}
 {{ output "dircolors" ( joinPath .chezmoi.sourceDir "helpers" "nord_dir_colors") }}
 export USER_LS_COLORS="$LS_COLORS"
 {{- else -}}
-# linux colors skipped
+# linux env skipped
 {{- end }}
 
 {{ if (eq .chezmoi.os "darwin" ) -}}
 export CLICOLOR=1
+export JAVA_HOME={{ output "/usr/libexec/java_home" "-v" "1.8" }}
 {{- else -}}
-# darwin colors skipped
+# darwin env skipped
 {{- end }}
 
 # fzf nord theme
 export FZF_DEFAULT_OPTS='--color=bg+:#3B4252,bg:#2E3440,spinner:#81A1C1,hl:#616E88,fg:#D8DEE9,header:#616E88,info:#81A1C1,pointer:#81A1C1,marker:#81A1C1,fg+:#D8DEE9,prompt:#81A1C1,hl+:#81A1C1'
 
-{{/* TODO: add mysql for osx */}}
 {{ output (joinPath .chezmoi.sourceDir "helpers" "path.sh" ) }}

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: generalize this script?
+
 HIGHLIGHT=zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 for dir in /usr/local/share /usr/share /usr/share/zsh/plugins;

@@ -2,10 +2,22 @@ helpers/
 README.md
 
 {{ if (eq .chezmoi.os "darwin") }}
-private_dot_config/dunst/
-private_dot_config/i3/
-private_dot_config/i3status-rust/
-private_dot_config/rofi/
-private_dot_config/systemd/
+.config/dunst/
+.config/i3/
+.config/i3status-rust/
+.config/rofi/
+.config/systemd/
+# figure out for osx
+.config/Yubico
+
+.local/bin/browser*
+.local/bin/kubectl*
+.local/bin/launch_i3_terminals
+.local/bin/powermenu
+.local/bin/reload_status_bars
+.local/bin/rofi-power-menu
+.local/bin/vpn
+
+.Xresources
 {{- end }}
 
