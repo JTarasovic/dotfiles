@@ -31,7 +31,7 @@ brew install \
 brew tap homebrew/cask-fonts && brew install --cask font-dejavu-sans-mono-nerd-font
 
 lpass login $USERNAME
-PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH" chezmoi init $USERNAME --apply
+chezmoi init $USERNAME --apply
 ```
 
 ### all
