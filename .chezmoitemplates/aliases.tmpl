@@ -44,6 +44,35 @@ alias k='kubectl'
 alias yml2yaml='for f in *.yml; do mv -- "$f" "${f%.yml}.yaml"; done'
 alias flatten='find ./ -type f -exec mv '{}' . \;'
 
+
+{{ if (eq .chezmoi.os "darwin") -}}
+alias l='ls'
+alias l.='ls -d .*'
+alias la='ls -lah'
+alias ll='ls -lh'
+alias dtls='apropos dtrace'
+
+{{ if lookPath "brew" -}}
+alias update='brew update && brew upgrade'
+alias install='brew install'
+alias search='brew search'
+{{- else -}}
+# brew aliases omitted
+{{- end }}
+
+{{- else -}}
+# darwin aliases omitted
+{{- end }}
+
+{{ if (eq .chezmoi.os "linux") -}}
+alias l='ls --color=auto'
+alias l.='ls -d .* --color=auto'
+alias la='ls -lah --color=auto'
+alias ll='ls -lh --color=auto'
+alias ls='ls --color=auto'
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
+
 {{ if lookPath "yum" -}}
 alias update='sudo yum update'
 alias install='sudo yum install'
@@ -60,7 +89,6 @@ alias search='dnf search'
 # dnf aliases omitted
 {{- end }}
 
-# TODO: conflicts with java annotation processor
 {{ if lookPath "apt" -}}
 alias update='sudo apt-get update && sudo apt-get upgrade'
 alias install='sudo apt-get install'
@@ -70,32 +98,6 @@ alias add='sudo add-apt-repository'
 # apt aliases omitted
 {{- end }}
 
-{{ if lookPath "brew" -}}
-alias update='brew update && brew upgrade'
-alias install='brew install'
-alias search='brew search'
-{{- else -}}
-# brew aliases omitted
-{{- end }}
-
-{{ if (eq .chezmoi.os "linux") -}}
-alias l='ls --color=auto'
-alias l.='ls -d .* --color=auto'
-alias la='ls -lah --color=auto'
-alias ll='ls -lh --color=auto'
-alias ls='ls --color=auto'
-alias pbcopy='xclip -selection clipboard'
-alias pbpaste='xclip -selection clipboard -o'
 {{- else -}}
 # linux aliases omitted
-{{- end }}
-
-{{ if (eq .chezmoi.os "darwin") -}}
-alias l='ls'
-alias l.='ls -d .*'
-alias la='ls -lah'
-alias ll='ls -lh'
-alias dtls='apropos dtrace'
-{{- else -}}
-# darwin aliases omitted
 {{- end }}
