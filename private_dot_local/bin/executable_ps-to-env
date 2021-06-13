@@ -1,0 +1,13 @@
+#!/bin/sh
+
+SERVICE="$1"
+while read -r name value;
+do
+    echo "$(echo "$name" | sed -e s:/dev/$SERVICE/::g)=$value";
+done < <(\
+    aws ssm get-parameters-by-path \
+        --path /dev/"$SERVICE"/ \
+        --recursive \
+        --with-decryption \
+    | jq -rc \
+        '.Parameters[] | [ .Name, .Value ] | @tsv')
