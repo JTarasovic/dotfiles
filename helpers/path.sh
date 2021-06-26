@@ -2,7 +2,7 @@
 
 # start with an empty path
 # shellcheck disable=2123
-PATH=""
+PATH="/bin"
 
 resolvelink() {
     /usr/bin/perl -MCwd -le 'print Cwd::abs_path(shift)' "$1"
@@ -22,7 +22,6 @@ pathmunge() {
     fi
 }
 
-pathmunge /bin
 pathmunge /sbin
 pathmunge /usr/bin
 pathmunge /usr/sbin
