@@ -8,6 +8,11 @@
 {{-   $fullname = promptString "full name" -}}
 {{- end -}}
 
+{{- $mysql_db_name := .mysql_db_name -}}
+{{- if not $mysql_db_name -}}
+{{-   $mysql_db_name = promptString "mysql DB Name" -}}
+{{- end -}}
+
 {{- $reddit_url := .feed.reddit_url -}}
 {{- if not $reddit_url -}}
 {{-   $reddit_url = (index (lastpass "reddit_private_feed") 0).url -}}
@@ -42,3 +47,6 @@ data:
     yubico:
         favorites: |-
             {{ $yubico_favorites }}
+
+    mysql:
+        db_name: {{ $mysql_db_name }}
