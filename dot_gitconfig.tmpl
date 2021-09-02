@@ -16,6 +16,7 @@
     lg = log -p
     ll = log --oneline --graph --decorate
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    po = !git push -u origin $(git branch --show-current)
     tracked = ls-tree -r @ --full-tree --name-only
 
 [branch]
