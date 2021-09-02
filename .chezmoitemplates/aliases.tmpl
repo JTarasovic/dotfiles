@@ -109,6 +109,12 @@ alias add='sudo add-apt-repository'
 # apt aliases omitted
 {{- end }}
 
+{{ if lookPath "pacman" -}}
+alias update_mirrors='sudo reflector -c US --score 75 -l 75 -n 20 --connection-timeout 1 --download-timeout 2 --save /etc/pacman.d/mirrorlist'
+{{- else -}}
+# pacman aliases omitted
+{{- end }}
+
 {{- else -}}
 # linux aliases omitted
 {{- end }}
