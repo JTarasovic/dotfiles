@@ -1,0 +1,25 @@
+#!/bin/sh
+
+tmpfile="$(mktemp)"
+trap 'rm -rf $tmpfile' EXIT
+
+cat - > "$tmpfile"
+
+if [ -s "$tmpfile" ]; then
+    sed -e 's/^favorites.*/favorites={{ .yubico.favorites }}/' "$tmpfile"
+else
+    cat <<EOF
+[General]
+closeToTray=true
+favorites={{ .yubico.favorites }}
+hideOnLaunch=true
+otpMode=false
+requireTouch=true
+slot1digits=0
+slot2digits=0
+theme=1
+useCustomReader=false
+EOF
+fi
+
+# vi: ft=sh
