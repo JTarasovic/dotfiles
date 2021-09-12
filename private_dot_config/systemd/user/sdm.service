@@ -1,0 +1,19 @@
+[Unit]
+Description=strongDM database proxy service.
+ConditionFileIsExecutable=/opt/strongdm/bin/sdm
+
+[Service]
+ExecStart=/opt/strongdm/bin/sdm "listen"
+
+
+WorkingDirectory=/home/jason/.sdm
+
+
+Restart=always
+RestartSec=3
+EnvironmentFile=-/etc/sysconfig/sdm
+
+[Install]
+WantedBy=default.target
+
+# vi: ft=systemd
