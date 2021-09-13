@@ -6,7 +6,7 @@ ConditionFileIsExecutable=/opt/strongdm/bin/sdm
 ExecStart=/opt/strongdm/bin/sdm "listen"
 
 
-WorkingDirectory=/home/jason/.sdm
+WorkingDirectory=%h/.sdm
 
 
 Restart=always

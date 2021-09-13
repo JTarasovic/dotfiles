@@ -1,9 +1,9 @@
 [Unit]
 Description=kube config file watcher
-ConditionFileIsExecutable=/home/jason/go/bin/simplewatcher
+ConditionFileIsExecutable=%h/go/bin/simplewatcher
 
 [Service]
-ExecStart=/home/jason/go/bin/simplewatcher \
+ExecStart=%h/go/bin/simplewatcher \
             -path=~/.kube/config \
             -log-format=plain \
             -- pkill --signal "SIGRTMIN+1" "i3status-rs"
