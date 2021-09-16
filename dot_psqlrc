@@ -8,9 +8,9 @@
 \set HISTFILE ~/.psql/history
 \set HISTSIZE 100000
 
-\set linestyle unicode
-\set border 2
-\set null ¤
+\pset linestyle unicode
+\pset border 2
+\pset null 'ﳠ'
 
 
 \timing
