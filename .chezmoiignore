@@ -18,6 +18,7 @@ plug.vim
 .local/bin/reload_status_bars
 .local/bin/rofi-power-menu
 .local/bin/vpn
+.local/share/applications
 
 .Xresources
 {{- end }}
