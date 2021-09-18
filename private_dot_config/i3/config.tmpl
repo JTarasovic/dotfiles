@@ -36,7 +36,7 @@ bindsym $mod+q kill
 {{ if has "calc" ( splitList " " $enabled_modi ) -}}
 {{ $modi = append $modi "calc" -}}
 {{ end -}}
-{{ $mod_space = cat "rofi -show combi -show-icons -modi" (join "," $modi) | quote -}}
+{{ $mod_space = cat "rofi -show combi -modi" (join "," $modi) | quote -}}
 {{ end -}}
 
 bindsym $mod+space exec {{ $mod_space }}
