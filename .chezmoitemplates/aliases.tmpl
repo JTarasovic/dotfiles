@@ -49,6 +49,14 @@ alias mprod='mysql -P13338 -D{{ .mysql.db_name }} -A'
 # mysql aliases omitted
 {{- end }}
 
+{{ if lookPath "nvim" -}}
+# nvim
+alias vimdiff='nvim -d'
+{{- else -}}
+# nvim aliases omitted
+{{- end }}
+
+
 # misc
 alias yml2yaml='for f in *.yml; do mv -- "$f" "${f%.yml}.yaml"; done'
 alias flatten='find ./ -type f -exec mv '{}' . \;'
