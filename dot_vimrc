@@ -12,7 +12,8 @@ Plug 'arcticicestudio/nord-vim'
 " utilities / generic
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-fugitive'
-Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-commentary'
 Plug 'godlygeek/tabular'
@@ -22,8 +23,8 @@ Plug 'shougo/deoplete.nvim',            { 'do': ':UpdateRemotePlugins' }
 Plug 'ervandew/supertab'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
-Plug 'ryanoasis/vim-devicons'
 Plug 'ap/vim-css-color'
+Plug 'ryanoasis/vim-devicons'
 
 " tmux and prompt generators
 " leave these commented out normally
@@ -107,6 +108,9 @@ if has('langmap') && exists('+langnoremap')
 endif
 
 " VARIABLES
+" nerdtree-git-status
+let g:NERDTreeGitStatusUseNerdFonts = 1
+
 " airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
