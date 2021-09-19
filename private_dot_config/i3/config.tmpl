@@ -30,13 +30,8 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+q kill
 
 {{ $mod_space := "--no-startup-id \"dmenu_run\"" -}}
-{{ $modi := list "combi" -}}
 {{ if lookPath "rofi" -}}
-{{ $enabled_modi := output (joinPath .chezmoi.sourceDir "helpers" "rofi-modi.sh" ) -}}
-{{ if has "calc" ( splitList " " $enabled_modi ) -}}
-{{ $modi = append $modi "calc" -}}
-{{ end -}}
-{{ $mod_space = cat "rofi -show combi -modi" (join "," $modi) | quote -}}
+{{ $mod_space = "rofi -show combi" | quote -}}
 {{ end -}}
 
 bindsym $mod+space exec {{ $mod_space }}
