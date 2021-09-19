@@ -12,7 +12,10 @@ export EDITOR={{ lookPath "nvim" }}
 {{- end }}
 
 {{ if (eq .chezmoi.os "linux" ) -}}
-{{ output "dircolors" ( joinPath .chezmoi.sourceDir "helpers" "nord_dir_colors") }}
+{{ $nord_dir_colors := joinPath .chezmoi.homeDir ".nord_dir_colors" -}}
+{{ if stat $nord_dir_colors -}}
+{{ output "dircolors" $nord_dir_colors }}
+{{- end }}
 export USER_LS_COLORS="$LS_COLORS"
 {{- else -}}
 # linux env skipped
