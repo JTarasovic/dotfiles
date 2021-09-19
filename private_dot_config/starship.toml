@@ -114,6 +114,7 @@ symbol = " "
 [shlvl]
 disabled = false
 symbol = "§"
+threshold = 3
 
 [status]
 disabled = false

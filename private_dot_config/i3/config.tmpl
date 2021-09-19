@@ -244,36 +244,6 @@ bar {
         }
 }
 
-# auto-start daemons
-{{ if lookPath "light-locker" -}}
-exec {{ lookPath "light-locker" }}
-{{- else -}}
-# light-locker startup skipped
-{{- end }}
-
-{{ if stat "/usr/lib/polkit-gnome" -}}
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-{{- else -}}
-# polkit-gnome startup skipped
-{{- end }}
-
-{{ if lookPath "udiskie" -}}
-exec --no-startup-id {{ lookPath "udiskie" }} --smart-tray
-{{- else -}}
-# udiskie startup skipped
-{{- end }}
-
-{{ if lookPath "playerctld" -}}
-exec --no-startup-id {{ lookPath "playerctld" }} daemon
-{{- else -}}
-# playerctld startup skipped
-{{- end }}
-
-# will exit gracefully on restart so always exec
-exec_always --no-startup-id $HOME/.local/bin/browserchanger
-
-
-
 # auto-start applications
 {{ if (and (lookPath "thunderbird") (lookPath "newsboat") (false) ) -}}
 # TODO: figure this out
