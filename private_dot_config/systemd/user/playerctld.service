@@ -2,7 +2,7 @@
 Description=playerctl daemon
 
 [Service]
-ExecStart=/usr/bin/playerctld daemon
+ExecStart=/usr/bin/playerctld
 
 Restart=always
 RestartSec=3
