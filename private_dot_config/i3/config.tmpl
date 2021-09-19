@@ -41,6 +41,15 @@ bindsym $mod+q kill
 
 bindsym $mod+space exec {{ $mod_space }}
 
+
+{{ $flameshot := lookPath "flameshot" -}}
+{{ if $flameshot -}}
+{{ $scrots_dir := joinPath (output "xdg-user-dir" "PICTURES" | trim) "scrots/" -}}
+# screenshot
+bindsym XF86Tools exec {{ ( cat $flameshot "gui" "-p" $scrots_dir ) | quote }}              # selection
+bindsym Shift+XF86Tools exec {{ ( cat $flameshot "screen" "-p" $scrots_dir ) | quote }}     # current screen
+{{- end }}
+
 # TODO: reconcile
 # change focus
 bindsym $mod+h focus left
