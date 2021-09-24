@@ -7,11 +7,12 @@
 {{- end -}}
 
 [theme]
-file = "nord-dark.toml"
+name = "nord-dark"
+[theme.overrides]
+separator = ""
 
 [icons]
-name = "awesome"
-
+name = "material-nf"
 
 {{ if ( get $sensors "nvme-pci-0400" ) -}}
 [[block]]
