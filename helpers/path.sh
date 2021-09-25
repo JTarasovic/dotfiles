@@ -28,6 +28,7 @@ pathmunge /usr/sbin
 pathmunge /usr/local/bin
 pathmunge /usr/local/go/bin
 pathmunge /usr/local/heroku/bin
+pathmunge /snap/bin
 pathmunge "/usr/local/opt/mysql-client@5.7/bin"
 pathmunge "$HOME/.rvm/bin"
 pathmunge "$HOME/mongo/current/bin"
