@@ -6,6 +6,10 @@
 {{- $sensors = fromJson ( output "sensors" "-j" ) -}}
 {{- end -}}
 
+{{ $mouse_mac := output
+    ( joinPath .chezmoi.sourceDir "helpers" "bluetooth-device-paired.sh")
+    "Bluetooth Ergonomic Mouse" -}}
+
 [theme]
 name = "nord-dark"
 [theme.overrides]
@@ -13,6 +17,14 @@ separator = ""
 
 [icons]
 name = "material-nf"
+
+{{ if $mouse_mac -}}
+[[block]]
+block = "bluetooth"
+mac = {{ $mouse_mac | quote }}
+{{- else -}}
+# skipped mouse
+{{- end }}
 
 {{ if ( get $sensors "nvme-pci-0400" ) -}}
 [[block]]
