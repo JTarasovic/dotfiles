@@ -8,30 +8,52 @@
 {{-   $fullname = promptString "full name" -}}
 {{- end -}}
 
-{{- $mysql_db_name := .mysql_db_name -}}
+{{- $mysql_db_name := .mysql.db_name -}}
 {{- if not $mysql_db_name -}}
 {{-   $mysql_db_name = promptString "mysql DB Name" -}}
 {{- end -}}
 
+
 {{- $reddit_url := .feed.reddit_url -}}
+{{- $reddit_username := .feed.reddit_username -}}
+{{- $openweathermap_api_key := .openweathermap.api_key -}}
+{{- $yubico_favorites := .yubico.favorites -}}
+
+{{- if lookPath "lpass" -}}
 {{- if not $reddit_url -}}
 {{-   $reddit_url = (index (lastpass "reddit_private_feed") 0).url -}}
 {{- end -}}
 
-{{- $reddit_username := .feed.reddit_username -}}
 {{- if not $reddit_username -}}
 {{-   $reddit_username = (index (lastpass "reddit_private_feed") 0).username -}}
 {{- end -}}
 
-{{- $openweathermap_api_key := .openweathermap.api_key -}}
 {{- if not $openweathermap_api_key -}}
 {{-   $openweathermap_api_key = (index (lastpass "openweathermap_api_key") 0).password -}}
 {{- end -}}
 
-{{- $yubico_favorites := .yubico.favorites -}}
 {{- if not $yubico_favorites -}}
 {{-   $yubico_favorites = (index (lastpassRaw "yubico_favorites") 0).note -}}
 {{- end -}}
+{{- else -}}
+{{- if not $reddit_url -}}
+{{-   $reddit_url = "" | quote -}}
+{{- end -}}
+
+{{- if not $reddit_username -}}
+{{-   $reddit_username = "" | quote -}}
+{{- end -}}
+
+{{- if not $openweathermap_api_key -}}
+{{-   $openweathermap_api_key = "" | quote -}}
+{{- end -}}
+
+{{- if not $yubico_favorites -}}
+{{-   $yubico_favorites = "" | quote -}}
+{{- end -}}
+
+{{- end -}}
+
 data:
     email: {{ $email }}
     fullname: {{ $fullname }}
