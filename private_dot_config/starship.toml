@@ -8,7 +8,6 @@ $package\
 $golang\
 $java\
 $python\
-$ruby\
 $rust\
 $terraform\
 $nix_shell\
@@ -107,6 +106,7 @@ symbol = " "
 
 [ruby]
 symbol = " "
+disabled = true
 
 [rust]
 symbol = " "
@@ -119,7 +119,8 @@ threshold = 3
 [status]
 disabled = false
 style = '#BF616A'
-format = ' [$status]($style) '
+format = '[$symbol$status]($style) '
+map_symbol = true
 
 [swift]
 symbol = "ﯣ "
