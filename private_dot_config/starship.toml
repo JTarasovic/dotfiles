@@ -1,4 +1,6 @@
 format = """
+$username\
+$hostname\
 $shlvl\
 $directory\
 $git_branch\
