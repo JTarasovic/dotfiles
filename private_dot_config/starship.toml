@@ -3,6 +3,7 @@ $username\
 $hostname\
 $shlvl\
 $directory\
+$fill\
 $git_branch\
 $git_status\
 $git_state\
@@ -18,7 +19,8 @@ $cmd_duration\
 $line_break\
 $jobs\
 $status\
-$character"""
+$character\
+"""
 
 [aws]
 symbol = " "
@@ -55,6 +57,9 @@ symbol = " "
 
 [elm]
 symbol = " "
+
+[fill]
+symbol = " "
 
 [git_branch]
 style = '#5E81AC'
