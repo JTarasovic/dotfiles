@@ -1,4 +1,4 @@
 git_protocol: ssh
 prompt: enabled
 aliases:
-    draft: '!gh pr create -d -F "$(git rev-parse --show-toplevel)/docs/pull-request-template.md" -t "P2 - M - $(git log -1 --pretty=format:"%s")"'
+    draft: '!gh pr create -d -F "$(git rev-parse --show-toplevel)/docs/pull-request-template.md" -t "P2 - $(git log -1 --pretty=format:"%s")"'
