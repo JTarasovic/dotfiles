@@ -21,5 +21,6 @@ plug.vim
 .local/share/applications
 
 .Xresources
+.xinitrc
 {{- end }}
 
