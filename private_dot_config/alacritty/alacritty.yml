@@ -96,12 +96,12 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: DejaVuSansMono Nerd Font Mono
-    style: Book
+    family: B612Mono Nerd Font
+    style: Regular
 
   # Bold font face
   bold:
-    family: DejaVuSansMono Nerd Font Mono
+    family: B612Mono Nerd Font
     style: Bold
     # Font family
     #
@@ -114,8 +114,8 @@ font:
 
   # Italic font face
   italic:
-    family: DejaVuSansMono Nerd Font Mono
-    style: Oblique
+    family: B612Mono Nerd Font
+    style: Italic
     # Font family
     #
     # If the italic family is not specified, it will fall back to the
@@ -127,8 +127,8 @@ font:
 
   # Bold italic font face
   bold_italic:
-    family: DejaVuSansMono Nerd Font Mono
-    style: Bold Oblique
+    family: B612Mono Nerd Font
+    style: Bold Italic
     # Font family
     #
     # If the bold italic family is not specified, it will fall back to the
@@ -139,7 +139,7 @@ font:
     #style: Bold Italic
 
   # Point size
-  size: 11.0
+  size: 10.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
