@@ -6,7 +6,6 @@ configuration {
 	icon-theme: "Arc";
 	combi-modi: "drun,run,window,ssh";
 	matching: "fuzzy";
-    theme: "nord";
     timeout {
         action: "kb-cancel";
         delay:  0;
@@ -16,3 +15,5 @@ configuration {
         sorting-method:    "name";
     }
 }
+
+@theme "nord"
