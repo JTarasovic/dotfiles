@@ -2,6 +2,7 @@ auto-reload yes
 refresh-on-startup no
 suppress-first-reload yes
 reload-time 30
+confirm-mark-feed-read no
 
 color listnormal cyan default
 color listfocus black yellow standout bold
