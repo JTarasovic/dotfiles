@@ -37,8 +37,28 @@
     gpgSign = true
 
 [core]
-    pager = less -R
     excludesfile=~/.vcsignore
+{{- if not (lookPath "delta") }}
+    pager = less -R 
+{{ end }}
+
+{{ if lookPath "delta" -}}
+[pager]
+    diff = delta
+    show = delta
+    log = delta
+    blame = delta
+    reflog = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta "custom"]
+    syntax-theme = Nord
+
+[delta]
+    features = custom
+{{- end }}
 
 [fetch]
     prune = true
