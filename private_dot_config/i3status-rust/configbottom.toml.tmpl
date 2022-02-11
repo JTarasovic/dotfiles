@@ -51,6 +51,11 @@ warning = 20.0
 alert = 10.0
 interval = 120
 
+[[block]]
+block = "docker"
+format = "T:{total} R:{running} S:{stopped} P:{paused} I:{images}"
+interval = 60
+
 {{ if ( get $sensors "nvme-pci-0100" ) -}}
 [[block]]
 block = "temperature"
@@ -76,10 +81,14 @@ warning = 20.0
 alert = 10.0
 interval = 120
 
+{{ $dockerSock := output (joinPath .chezmoi.sourceDir "helpers" "docker-sock-exists.sh") -}}
+{{ if $dockerSock -}}
 [[block]]
 block = "docker"
 format = "T:{total} R:{running} S:{stopped} P:{paused} I:{images}"
 interval = 60
+socket_path = "{{ $dockerSock }}"
+{{- end }}
 
 [[block]]
 block = "memory"
