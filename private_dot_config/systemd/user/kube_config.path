@@ -1,0 +1,11 @@
+[Unit]
+Description=kube config file watcher
+
+[Path] 
+PathChanged=%h/.kube
+Unit=signal-i3status-rs.service
+
+[Install]
+WantedBy=default.target
+
+# vi: ft=systemd
