@@ -46,7 +46,7 @@ bindsym $mod+space exec {{ $mod_space }}
 # screenshot
 
 # selection
-bindsym XF86Tools exec {{ ( cat $flameshot "gui" "-p" $scrots_dir ) | quote }}
+bindsym XF86Tools exec {{ ( cat $flameshot "gui" ) | quote }}
 # screen
 bindsym Shift+XF86Tools exec {{ ( cat $flameshot "screen" "-p" $scrots_dir ) | quote }}
 {{- end }}
