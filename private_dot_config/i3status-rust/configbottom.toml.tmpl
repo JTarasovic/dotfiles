@@ -117,11 +117,11 @@ block = "net"
 format="{speed_down;M*b} {speed_up;M*b}"
 interval = 5
 
-{{ if ( get $sensors "amdgpu-pci-0a00" ) -}}
+{{ if ( get $sensors "amdgpu-pci-0c00" ) -}}
 [[block]]
 block = "temperature"
 collapsed = false
-chip = "amdgpu-pci-0a00"
+chip = "amdgpu-pci-0c00"
 inputs = [ 'edge' ]
 good = 20
 idle = 30
