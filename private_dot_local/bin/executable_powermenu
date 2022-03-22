@@ -3,4 +3,4 @@
 rofi \
     -show powermenu \
     -modi \
-    "powermenu:$HOME/.local/bin/rofi-power-menu --choices=lockscreen/logout/suspend/reboot/shutdown"
+    "powermenu:$HOME/.local/bin/rofi-power-menu --choices=lockscreen/logout/suspend/reboot/firmware/shutdown"
