@@ -39,7 +39,7 @@
 [core]
     excludesfile=~/.vcsignore
 {{- if not (lookPath "delta") }}
-    pager = less -R 
+    pager = less -R
 {{ end }}
 
 {{ if lookPath "delta" -}}
@@ -90,13 +90,14 @@
 
 [url "git@github.com:"]
     insteadOf = gh:
-[url "git@github.com:attentive-mobile/"]
-    insteadOf = am:
+[url "git@github.com:powertoolsdev/"]
+    insteadOf = pt:
 [url "git@gitlab.com:"]
     insteadOf = gl:
 [url "git@bitbucket.org:"]
     insteadOf = bb:
-
+[url "git@github.com:"]
+      insteadOf = https://github.com/
 
 [user]
     name = {{ .fullname }}
