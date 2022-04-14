@@ -2,5 +2,5 @@
 
 current=$(kubectl config current-context)
 output=$(kubectl config view -o json \
-    | jq -r --arg ctx "$current" '.contexts[] | select(.name==$ctx) | .context | .cluster+"/"+.namespace')
+    | jq -r --arg ctx "$current" '.contexts[] | select(.name==$ctx) | .name+"/"+.context.namespace')
 printf "\u2388 %s" "$output"
