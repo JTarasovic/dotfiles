@@ -1,0 +1,18 @@
+#!/bin/bash
+
+BACKLIGHT_FEATURE_CODE=0x10
+CURRENT_BRIGHTNESS=$(ddcutil -t getvcp "$BACKLIGHT_FEATURE_CODE" | awk '{print $4}')
+
+SLEEP_TIME=$((30 / CURRENT_BRIGHTNESS))
+
+for ((i=0; i < CURRENT_BRIGHTNESS; i++))
+do
+    ddcutil setvcp "$BACKLIGHT_FEATURE_CODE" - 1;
+    sleep "$SLEEP_TIME"
+done
+
+trap 'exit 0' TERM INT
+trap 'ddcutil setvcp $BACKLIGHT_FEATURE_CODE $CURRENT_BRIGHTNESS' EXIT
+
+sleep infinity &
+wait
