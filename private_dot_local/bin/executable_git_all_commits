@@ -1,0 +1,24 @@
+#!/bin/zsh
+
+ORG="$1"
+
+declare -A CONTRIBUTORS
+
+for repo in $(gh api orgs/$ORG/repos \
+                --paginate \
+                --jq '.[] | select(.archived == false) | .name');
+do
+    while read -r user total;
+    do
+        prev=${CONTRIBUTORS[$user]:-0}
+        CONTRIBUTORS[$user]=$(( $prev + $total ))
+    done < <(gh api repos/$ORG/$repo/stats/contributors \
+                --paginate \
+                --jq '.[] | [.author.login, .total]' \
+                | jq -r '. | @sh')
+done
+
+for user total in ${(@kv)CONTRIBUTORS};
+do
+    printf "%s\t%s\n" $total $user
+done | sort -nr | awk '{printf ("%4s\t%6s\t%s\n",NR,$1,$2)}'
