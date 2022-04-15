@@ -5,3 +5,7 @@
 [".nord_dir_colors"]
     type = "file"
     url = "https://raw.githubusercontent.com/arcticicestudio/nord-dircolors/develop/src/dir_colors"
+
+[".config/nvim/lua/lspkind/init.lua"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/onsails/lspkind-nvim/master/lua/lspkind/init.lua"
