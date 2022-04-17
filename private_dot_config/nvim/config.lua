@@ -1,9 +1,12 @@
 local nvim_lsp = require('lspconfig')
 
-vim.g.mapleader = ';'
+-- vim.g.mapleader = ';'
+
+require("lsp-format").setup {}
 
 local on_attach = function(client, bufnr)
     -- require('completion').on_attach()
+    require('lsp-format').on_attach(client)
 
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -98,7 +101,7 @@ cmp.setup.cmdline(':', {
 
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-local servers = {'pyright', 'gopls', 'rust_analyzer', 'sumneko_lua'}
+local servers = {'pyright', 'gopls', 'rust_analyzer', 'sumneko_lua', 'terraformls'}
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
         capabilities = capabilities,
@@ -106,7 +109,7 @@ for _, lsp in ipairs(servers) do
     }
 end
 
-require('lspconfig').sumneko_lua.setup {
+nvim_lsp.sumneko_lua.setup {
     settings = {
         Lua = {
             diagnostics = {

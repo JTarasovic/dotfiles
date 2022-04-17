@@ -18,6 +18,7 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'lukas-reineke/lsp-format.nvim'
 
 " utilities / generic
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
