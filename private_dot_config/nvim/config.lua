@@ -2,6 +2,11 @@ local nvim_lsp = require('lspconfig')
 
 -- vim.g.mapleader = ';'
 
+local has_words_before = function()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
 require("lsp-format").setup {}
 
 local on_attach = function(client, bufnr)
@@ -43,11 +48,12 @@ vim.opt.completeopt = {"menu", "menuone", "noselect"}
 
 local cmp = require('cmp')
 local lspkind = require('lspkind')
+local luasnip = require('luasnip')
 
 cmp.setup({
     snippet = {
         expand = function(args)
-            require('luasnip').lsp_expand(args.body)
+            luasnip.lsp_expand(args.body)
         end,
     },
     mapping = cmp.mapping.preset.insert({
@@ -55,10 +61,32 @@ cmp.setup({
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            elseif has_words_before() then
+                cmp.complete()
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
+
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
     }),
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
+        { name = 'nvim_lsp_signature_help' },
         { name = 'path' },
         { name = 'buffer', keyword_length = 5 },
     }, {
@@ -67,7 +95,7 @@ cmp.setup({
     formatting = {
         format = lspkind.cmp_format({
             mode = 'symbol', -- show only symbol annotations
-            maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+            maxwidth = 80, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
         })
     }
 })
@@ -112,10 +140,19 @@ end
 nvim_lsp.sumneko_lua.setup {
     settings = {
         Lua = {
-            diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = {'vim'},
+            runtime = {
+                version = 'LuaJIT',
             },
+            diagnostics = {
+                enable = true,
+                globals = {'vim', 'use'},
+            },
+            workspace = {
+                library = vim.api.nvim_get_runtime_file('', true),
+                maxPreload = 10000,
+                preloadFileSize = 10000,
+            },
+            telemetry = {enable = false},
         },
     },
 }

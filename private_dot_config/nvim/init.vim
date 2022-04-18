@@ -15,6 +15,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
@@ -26,11 +27,13 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'
 
 Plug 'ctrlpvim/ctrlp.vim'
 
+" nerdtree / directory
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
@@ -97,21 +100,19 @@ inoremap jj <esc>l                              " escape insert mode if you type
 inoremap <C-U> <C-G>u<C-U>
 
 " location and quick fix helpers
-noremap [l :lprevious<CR>
-noremap ]l :lnext<CR>
-noremap [L :lfirst<CR>
-noremap ]L :llast<CR>
-noremap [q :cprevious<CR>
-noremap ]q :cnext<CR>
-noremap [Q :cfirst<CR>
-noremap ]Q :clast<CR>
+" noremap [l :lprevious<CR>
+" noremap ]l :lnext<CR>
+" noremap [L :lfirst<CR>
+" noremap ]L :llast<CR>
+" noremap [q :cprevious<CR>
+" noremap ]q :cnext<CR>
+" noremap [Q :cfirst<CR>
+" noremap ]Q :clast<CR>
 
 " custom functions
 if !exists(":DiffOrig")
     command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis | wincmd p | diffthis
 endif
-
-runtime config.lua
 
 augroup general
         au!
@@ -126,3 +127,5 @@ augroup general
 augroup END
 
 colorscheme nord
+
+runtime config.lua
