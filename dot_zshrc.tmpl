@@ -39,6 +39,10 @@ compinit
 
 source "$HOME/.zshrc.local"
 
+{{ if stat "/opt/asdf-vm/asdf.sh" -}}
+source "/opt/asdf-vm/asdf.sh"
+{{- end }}
+
 {{ if lookPath "starship" -}}
 {{ output "starship" "init" "zsh" }}
 {{- else -}}
@@ -47,4 +51,3 @@ source "$HOME/.zshrc.local"
 
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 {{ output (joinPath .chezmoi.sourceDir "helpers" "zsh-syntax-highlighter-finder.sh") }}
-

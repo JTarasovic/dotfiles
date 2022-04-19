@@ -31,6 +31,10 @@ source "$HOME/.env.sh"
 
 source "$HOME/.bashrc.local"
 
+{{ if stat "/opt/asdf-vm/asdf.sh" -}}
+source "/opt/asdf-vm/asdf.sh"
+{{- end }}
+
 {{/* would be cool to bypass this level of indirection w/o replicating logic */}}
 {{ if lookPath "starship" -}}
 eval "$(starship init bash)"
