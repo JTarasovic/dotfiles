@@ -109,6 +109,8 @@ inoremap <C-U> <C-G>u<C-U>
 " noremap [Q :cfirst<CR>
 " noremap ]Q :clast<CR>
 
+nnoremap <silent> <C-_> :let @/ = ""<CR>
+
 " custom functions
 if !exists(":DiffOrig")
     command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis | wincmd p | diffthis
