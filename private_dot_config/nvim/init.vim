@@ -23,10 +23,11 @@ Plug 'lukas-reineke/lsp-format.nvim'
 
 " utilities / generic
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'terrortylor/nvim-comment'
 
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-commentary'
+" Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'
