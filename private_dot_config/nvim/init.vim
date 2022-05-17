@@ -43,6 +43,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'ap/vim-css-color'
 Plug 'ryanoasis/vim-devicons'
 
+" languages w/o server
+Plug 'earthly/earthly.vim'
+
 call plug#end()
 
 " set variables and such

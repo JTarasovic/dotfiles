@@ -131,11 +131,14 @@ cmp.setup.cmdline(':', {
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local servers = {
+    -- 'denols',
     'gopls',
     'pyright',
     'rust_analyzer',
     -- 'sumneko_lua',
-    'terraformls'
+    -- 'solargraph',
+    'terraformls',
+    'tsserver',
 }
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
@@ -147,6 +150,19 @@ for _, lsp in ipairs(servers) do
         }
     }
 end
+
+nvim_lsp.solargraph.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+
+    settings = {
+        solargraph = {
+            autoformat = false,
+            formatting = false,
+        }
+    }
+
+}
 
 nvim_lsp.sumneko_lua.setup {
     capabilities = capabilities,
