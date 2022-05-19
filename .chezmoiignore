@@ -1,6 +1,7 @@
 helpers/
 README.md
 plug.vim
+tool-versions
 
 {{ if (eq .chezmoi.os "darwin") }}
 .config/dunst/
