@@ -1,8 +1,12 @@
 # vi:syntax=toml
 
-{{ $headphone_mac := output
+{{ $nc700 := output
     ( joinPath .chezmoi.sourceDir "helpers" "bluetooth-device-paired.sh")
     "Bose NC 700 Head" -}}
+
+{{ $px7 := output
+    ( joinPath .chezmoi.sourceDir "helpers" "bluetooth-device-paired.sh")
+    "PX7 Bowers & Wilkins" -}}
 
 [theme]
 name = "nord-dark"
@@ -11,6 +15,12 @@ separator = ""
 
 [icons]
 name = "material-nf"
+
+[[block]]
+block = "custom"
+interval = "once"
+command = ''' jq -n --arg k "$(uname -r)" '{"state": "Info", "text": $k}' '''
+json = true
 
 [[block]]
 block = "custom"
@@ -24,14 +34,25 @@ max_width = 100
 dynamic_width = true
 buttons = [ "play" ]
 
-{{ if $headphone_mac -}}
-[[block]]
-block = "bluetooth"
-mac = {{ $headphone_mac | quote }}
-label = " Bose NC700"
-format = "{label}"
+{{ if $nc700 -}}
+# [[block]]
+# block = "bluetooth"
+# mac = {{ $nc700 | quote }}
+# format = "Bose NC700 {percentage}"
+# format_unavailable = "Bose NC700 x"
 {{- else -}}
 # skipped Bose NC700
+{{- end }}
+
+{{ if $px7 -}}
+# [[block]]
+# block = "bluetooth"
+# mac = {{ $px7 | quote }}
+# hide_disconnected = false
+# format = " B&W PX7 {percentage}"
+# format_unavailable = " B&W PX7 x"
+{{- else -}}
+# skipped PX7
 {{- end }}
 
 [[block]]
