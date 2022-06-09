@@ -132,63 +132,57 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 
 local servers = {
     -- 'denols',
-    'gopls',
-    'pyright',
-    'rust_analyzer',
-    -- 'sumneko_lua',
-    -- 'solargraph',
-    'terraformls',
-    'tsserver',
+    bashls = {},
+    gopls = { settings = { gopls = { buildFlags = { "-tags=integration" } } } },
+    pyright = {},
+    rust_analyzer = {},
+    sumneko_lua = {
+        settings = {
+            Lua = {
+                runtime = {
+                    version = 'LuaJIT',
+                },
+                diagnostics = {
+                    enable = true,
+                    globals = { 'vim', 'use' },
+                },
+                workspace = {
+                    library = vim.api.nvim_get_runtime_file('', true),
+                    maxPreload = 10000,
+                    preloadFileSize = 10000,
+                },
+                telemetry = { enable = false },
+            },
+        },
+    },
+    solargraph = { settings = { solargraph = { autoformat = false, formatting = false, } } },
+    terraformls = {},
+    tsserver = {},
 }
-for _, lsp in ipairs(servers) do
+
+for lsp, overrides in pairs(servers) do
     nvim_lsp[lsp].setup {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        flags = {
+        capabilities = overrides['capabilities'] or capabilities,
+        on_attach = overrides['on_attach'] or on_attach,
+        flags = overrides['flags'] or {
             -- This will be the default in neovim 0.7+
             debounce_text_changes = 150,
-        }
+        },
+        settings = overrides['settings'] or nil,
+        init_options = overrides['init_options'] or nil,
     }
 end
 
-nvim_lsp.solargraph.setup {
-    capabilities = capabilities,
+local efmls = require 'efmls-configs'
+efmls.init {
     on_attach = on_attach,
-
-    settings = {
-        solargraph = {
-            autoformat = false,
-            formatting = false,
-        }
-    }
-
+    capabilities = capabilities,
+    init_options = { documentFormatting = true, hover = true, documentSymbol = true, codeAction = true, completion = true, },
 }
-
-nvim_lsp.sumneko_lua.setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-    flags = {
-        -- This will be the default in neovim 0.7+
-        debounce_text_changes = 150,
-    },
-
-    settings = {
-        Lua = {
-            runtime = {
-                version = 'LuaJIT',
-            },
-            diagnostics = {
-                enable = true,
-                globals = { 'vim', 'use' },
-            },
-            workspace = {
-                library = vim.api.nvim_get_runtime_file('', true),
-                maxPreload = 10000,
-                preloadFileSize = 10000,
-            },
-            telemetry = { enable = false },
-        },
-    },
+efmls.setup {
+    dockerfile = { linter = require('efmls-configs.linters.hadolint'), },
+    vim = { linter = require('efmls-configs.linters.vint'), },
+    yaml = { linter = require('efmls-configs.linters.yamllint'), },
 }
 
 require('nvim-treesitter.configs').setup {
@@ -202,3 +196,8 @@ require('nvim-treesitter.configs').setup {
 }
 
 require('nvim_comment').setup()
+require('todo-comments').setup {
+    highlight = {
+        pattern = [[.*<(KEYWORDS).*:]],
+    }
+}

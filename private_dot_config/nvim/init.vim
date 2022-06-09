@@ -4,13 +4,9 @@ filetype plugin indent on
 " Plugins (vim-plug)
 call plug#begin('~/.vim/plugged')
 
-" colorschemes
-Plug 'flazz/vim-colorschemes'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'arcticicestudio/nord-vim'
-
 " lsp
 Plug 'neovim/nvim-lspconfig'
+Plug 'creativenull/efmls-configs-nvim'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
@@ -42,15 +38,20 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
 Plug 'ap/vim-css-color'
 Plug 'ryanoasis/vim-devicons'
+Plug 'folke/todo-comments.nvim'
+
+" colorschemes
+Plug 'flazz/vim-colorschemes'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'arcticicestudio/nord-vim'
 
 " languages w/o server
-Plug 'earthly/earthly.vim'
+Plug 'earthly/earthly.vim', {'for': 'Earthfile'}
 
 call plug#end()
 
 " set variables and such
 set termguicolors
-set nocompatible                    " ignore backwards compatibility - ignored by neovim
 set tabstop=4                       " by default tabs are 4 spaces
 set softtabstop=4
 set shiftwidth=4
@@ -122,14 +123,27 @@ endif
 
 augroup general
         au!
-        au BufWritePost .vimrc source %
-        au BufWritePost init.vim source %       " for neovim
-        " au BufWritePost * Neomake
+        " au BufWritePost .vimrc source %
+        " au BufWritePost init.vim source %       " for neovim
 
         " When editing a file, always jump to the last known cursor position.
         " Don't do it when the position is invalid or when inside an event handler
         au BufReadPost *
             \ if line("'\"") >= 1 && line("'\"") <= line("$") |  exe "normal! g`\"" | endif
+augroup END
+
+augroup commentstring
+    autocmd!
+    " double slash
+    autocmd BufEnter,BufFilePost
+        \ *.cpp,*.h
+        \ :lua vim.api.nvim_buf_set_option(0, "commentstring", "// %s")
+
+    " pound
+    autocmd BufEnter,BufFilePost
+        \ Earthfile
+        \ :lua vim.api.nvim_buf_set_option(0, "commentstring", "# %s")
+
 augroup END
 
 colorscheme nord

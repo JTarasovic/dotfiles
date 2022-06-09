@@ -1,0 +1,6 @@
+version: 2
+root-markers:
+  - .git/
+lint-debounce: 1s
+log-file: "/home/jason/.cache/nvim/efm.log"
+log-level: 10
