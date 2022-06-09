@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+set -eu
+
+# Get the ID for the current DEFAULT_SINK
+default_sink=$(pactl get-default-sink)
+
+# Query the list of all available sinks
+sinks=()
+i=0
+while read -r index sink _; do
+    sinks[${#sinks[@]}]=$index
+
+    # Find the current DEFAULT_SINK
+    if [ "$sink" = "$default_sink" ]; then
+        default_pos=$i
+    fi
+
+    i=$(( i + 1 ))
+done <<< "$(pactl list sinks short)"
+
+# Compute the ID of the new DEFAULT_SINK
+new_default_pos=$(( (default_pos + 1) % ${#sinks[@]} ))
+new_default_sink=${sinks[$new_default_pos]}
+
+# Update the DEFAULT_SINK
+pacmd set-default-sink "$new_default_sink"
+
+# Move all current playing streams to the new DEFAULT_SINK
+while read -r id _; do
+    # Check whether there is a stream playing in the first place
+    if [ -z "$id" ]; then
+        break
+    fi
+
+    pactl move-sink-input "$id" @DEFAULT_SINK@
+done <<< "$(pactl list short sink-inputs)"
+

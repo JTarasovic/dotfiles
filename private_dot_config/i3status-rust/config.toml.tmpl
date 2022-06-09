@@ -57,12 +57,12 @@ buttons = [ "play" ]
 
 [[block]]
 block = "sound"
-on_click = 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
+headphones_indicator = true
+on_click = {{ (joinPath .chezmoi.homeDir ".local" "bin" "toggle_sinks") | quote }}
 
 [[block]]
 block = "sound"
 device_kind = 'source'
-on_click = 'pactl set-source-mute @DEFAULT_SOURCE@ toggle'
 
 [[block]]
 block = "weather"
@@ -74,11 +74,6 @@ interval = 900
 block = "time"
 interval = 60
 format = "%a %b %d %R"
-
-# [[block]]
-# block = "custom"
-# interval = "once"
-# command = ''' printf "%s@%s" {{ .chezmoi.username }} {{ .chezmoi.hostname }} '''
 
 [[block]]
 block = "custom"
