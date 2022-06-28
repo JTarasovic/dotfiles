@@ -19,6 +19,7 @@
     po = !git push -u origin $(git branch --show-current)
     tracked = ls-tree -r @ --full-tree --name-only
     pb = !git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D
+    pf = push --force
 
 [branch]
     autoSetupMerge = always

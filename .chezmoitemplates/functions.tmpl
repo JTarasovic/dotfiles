@@ -25,6 +25,10 @@ clear_terminal_title() {
 }
 
 {{ if lookPath "git" -}}
+fixup() {
+    git commit "$1" --fixup=@ && git rebase -i @~2
+}
+
 get_default_branch() {
     git remote show origin | awk '/HEAD branch/ {print $NF}'
 }
@@ -89,5 +93,5 @@ cmet() {
 {{- end }}
 
 {{- /*
-vi: ft=sh
+# vi: ft=sh
 */ -}}
