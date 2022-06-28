@@ -117,7 +117,7 @@ inoremap <C-U> <C-G>u<C-U>
 nnoremap <silent> <C-_> :let @/ = ""<CR>
 
 " custom functions
-if !exists(":DiffOrig")
+if !exists(':DiffOrig')
     command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis | wincmd p | diffthis
 endif
 
@@ -141,7 +141,7 @@ augroup commentstring
 
     " pound
     autocmd BufEnter,BufFilePost
-        \ Earthfile
+        \ Earthfile,terraform,*.hcl
         \ :lua vim.api.nvim_buf_set_option(0, "commentstring", "# %s")
 
 augroup END
