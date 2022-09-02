@@ -52,6 +52,7 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 local servers = {
     -- 'denols',
     bashls = {},
+    golangci_lint_ls = {},
     gopls = { settings = { gopls = { buildFlags = { "-tags=integration" } } } },
     pyright = {},
     rust_analyzer = {},
