@@ -4,7 +4,7 @@ set -euo pipefail
 
 declare -A browsers
 
-browsers[firefox-developer-edition.desktop]='爵'
+browsers[firefoxdeveloperedition.desktop]='爵'
 browsers[firefox.desktop]=''
 browsers[chromium.desktop]=''
 
