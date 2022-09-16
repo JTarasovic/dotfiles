@@ -28,11 +28,9 @@ pathmunge /usr/sbin
 pathmunge /usr/local/bin
 pathmunge /usr/local/go/bin
 pathmunge /usr/local/heroku/bin
+pathmunge /opt/homebrew/bin
+pathmunge /opt/homebrew/sbin
 pathmunge /snap/bin
-pathmunge "/usr/local/opt/mysql-client@5.7/bin"
-pathmunge "$HOME/.rvm/bin"
-pathmunge "$HOME/mongo/current/bin"
-pathmunge "$HOME/Library/Python/3.7/bin"
 pathmunge "${KREW_ROOT:-$HOME/.krew}/bin"
 pathmunge "$HOME/.cargo/bin"
 pathmunge "$HOME/go/bin"
