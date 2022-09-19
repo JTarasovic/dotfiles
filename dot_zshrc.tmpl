@@ -43,15 +43,19 @@ autoload bashcompinit && bashcompinit
 
 # TODO: move to a bash completion file?
 complete -C '{{ lookPath "aws_completer" }}' aws
-complete -o nospace -C '/home/jason/.asdf/shims/terraform' terraform
+complete -o nospace -C "$HOME/.asdf/shims/terraform" terraform
 
 {{ template "aliases.tmpl" . }}
 {{ template "functions.tmpl" . }}
 
 source "$HOME/.zshrc.local"
 
+# TODO(jdt): refactor to find asdf and use correct location
 {{ if stat "/opt/asdf-vm/asdf.sh" -}}
 source "/opt/asdf-vm/asdf.sh"
+{{- end }}
+{{ if stat "/opt/homebrew/opt/asdf/libexec/asdf.sh" -}}
+source "/opt/homebrew/opt/asdf/libexec/asdf.sh"
 {{- end }}
 
 {{ if lookPath "starship" -}}
