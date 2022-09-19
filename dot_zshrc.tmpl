@@ -31,6 +31,13 @@ zstyle ':completion:*' list-colors ''
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([[:digit:]]#)*=34=31'
 # TODO: change for macos
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,cmd'
+
+{{ if lookPath "brew" -}}
+
+FPATH="{{- output "brew" "--prefix" | trim}}/share/zsh/site-functions:${FPATH}"
+FPATH="{{- output "brew" "--prefix" | trim}}/share/zsh-completions:${FPATH}"
+{{- end }}
+
 autoload -Uz compinit && compinit
 autoload bashcompinit && bashcompinit
 
