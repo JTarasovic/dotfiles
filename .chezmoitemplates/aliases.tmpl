@@ -136,6 +136,8 @@ alias update_mirrors='sudo reflector -c US --score 75 -l 75 -n 20 --connection-t
 
 alias assume='source assume'
 
+alias tfplan='terraform fmt && terraform validate && tflint && terraform plan'
+
 {{- /*
 vi: ft=sh
 */ -}}
