@@ -33,9 +33,12 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([[:digit:]]#)*=34
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,cmd'
 
 {{ if lookPath "brew" -}}
-
 FPATH="{{- output "brew" "--prefix" | trim}}/share/zsh/site-functions:${FPATH}"
 FPATH="{{- output "brew" "--prefix" | trim}}/share/zsh-completions:${FPATH}"
+{{- end }}
+
+{{ if stat (joinPath .chezmoi.homeDir ".local/share/zsh/site-functions") -}}
+FPATH="$HOME/.local/share/zsh/site-functions:${FPATH}"
 {{- end }}
 
 autoload -Uz compinit && compinit
