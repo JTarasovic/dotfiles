@@ -28,21 +28,7 @@ source "$HOME/.env.sh"
 
 {{ template "aliases.tmpl" . }}
 {{ template "functions.tmpl" . }}
+{{ template "asdf.tmpl" . }}
+{{ template "starship.tmpl" (dict "shell" "bash") }}
 
 source "$HOME/.bashrc.local"
-
-# TODO(jdt): refactor to find asdf and use correct location
-{{ if stat "/opt/asdf-vm/asdf.sh" -}}
-source "/opt/asdf-vm/asdf.sh"
-{{- end }}
-{{ if stat "/opt/homebrew/opt/asdf/libexec/asdf.sh" -}}
-source "/opt/homebrew/opt/asdf/libexec/asdf.sh"
-{{- end }}
-
-
-{{/* would be cool to bypass this level of indirection w/o replicating logic */}}
-{{ if lookPath "starship" -}}
-eval "$(starship init bash)"
-{{- else -}}
-# starship init omitted
-{{- end }}
