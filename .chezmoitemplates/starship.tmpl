@@ -2,7 +2,6 @@
 {{- $sem := replace " " "_" (cat "JDT_STARSHIP_INIT" (upper .shell)) -}}
 if [ -z "${{ $sem }}" ];
 then
-    echo "Init {{ .shell }}!!!"
     {{ output "starship" "init" .shell }}
     export {{ $sem }}=1
 fi
