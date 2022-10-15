@@ -47,7 +47,7 @@ end
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local servers = {
     -- 'denols',
@@ -93,17 +93,53 @@ for lsp, overrides in pairs(servers) do
     }
 end
 
-local efmls = require 'efmls-configs'
-efmls.init {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    init_options = { documentFormatting = true, hover = true, documentSymbol = true, codeAction = true, completion = true, },
-}
-efmls.setup {
-    dockerfile = { linter = require('efmls-configs.linters.hadolint'), },
-    vim = { linter = require('efmls-configs.linters.vint'), },
-    yaml = { linter = require('efmls-configs.linters.yamllint'), },
-}
+require('go').setup()
+vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
+
+-- local efmls = require 'efmls-configs'
+-- efmls.init {
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+--     init_options = { documentFormatting = true, hover = true, documentSymbol = true, codeAction = true, completion = true, },
+-- }
+-- efmls.setup {
+--     dockerfile = { linter = require('efmls-configs.linters.hadolint'), },
+--     vim = { linter = require('efmls-configs.linters.vint'), },
+--     yaml = { linter = require('efmls-configs.linters.yamllint'), },
+-- }
+
+require("trouble").setup()
+vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>",
+    { silent = true, noremap = true }
+)
+vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
+    { silent = true, noremap = true }
+)
+vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>",
+    { silent = true, noremap = true }
+)
+vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
+    { silent = true, noremap = true }
+)
+vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
+    { silent = true, noremap = true }
+)
+
+local null_ls = require("null-ls")
+null_ls.setup({
+    sources = {
+        null_ls.builtins.code_actions.eslint_d,
+        null_ls.builtins.code_actions.shellcheck,
+        null_ls.builtins.diagnostics.actionlint,
+        null_ls.builtins.diagnostics.eslint_d,
+        null_ls.builtins.diagnostics.hadolint,
+        null_ls.builtins.diagnostics.vint,
+        null_ls.builtins.diagnostics.yamllint,
+        null_ls.builtins.formatting.beautysh,
+        null_ls.builtins.formatting.eslint_d,
+        null_ls.builtins.hover.printenv,
+    },
+})
 
 require('nvim-treesitter.configs').setup {
     ensure_installed = "all",

@@ -6,7 +6,6 @@ call plug#begin('~/.vim/plugged')
 
 " lsp
 Plug 'neovim/nvim-lspconfig'
-Plug 'creativenull/efmls-configs-nvim'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
@@ -16,10 +15,16 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'lukas-reineke/lsp-format.nvim'
-
+"
 " utilities / generic
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'terrortylor/nvim-comment'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'folke/trouble.nvim'
+Plug 'jose-elias-alvarez/null-ls.nvim'
 
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-fugitive'
@@ -47,6 +52,12 @@ Plug 'arcticicestudio/nord-vim'
 
 " languages w/o server
 Plug 'earthly/earthly.vim', {'for': 'Earthfile'}
+
+Plug 'mfussenegger/nvim-dap', {'for': 'go'}
+Plug 'rcarriga/nvim-dap-ui', {'for': 'go'}
+Plug 'theHamsta/nvim-dap-virtual-text', {'for': 'go'}
+Plug 'ray-x/go.nvim', {'for': 'go'}
+Plug 'ray-x/guihua.lua', {'for': 'go'}
 
 call plug#end()
 
