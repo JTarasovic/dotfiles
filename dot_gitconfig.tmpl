@@ -64,6 +64,9 @@
 [fetch]
     prune = true
 
+[gpg]
+    format = ssh
+
 [help]
     autocorrect = 1
 
@@ -81,6 +84,7 @@
 [rebase]
     autoSquash = true
     autoStash = true
+    updateRefs = true
 
 [rerere]
     enabled = true
@@ -101,8 +105,9 @@
       insteadOf = https://github.com/
 
 [user]
-    name = {{ .fullname }}
     email = {{ .email }}
+    name = {{ .fullname }}
+    signingKey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJOXjK3lFzYXZx682Osg3hNagm5TmmGTygNHNETLbLNO
 
 [init]
     defaultBranch = main
