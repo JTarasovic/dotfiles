@@ -9,5 +9,8 @@ do
     asdf global "$tool" "$latest";
 done < "$HOME/.tool-versions"
 
-npm install -g bash-language-server typescript-language-server 
+npm install -g \
+    bash-language-server \
+    eslint_d \
+    typescript-language-server
 
