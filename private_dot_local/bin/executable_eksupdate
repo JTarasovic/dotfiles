@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-for prfl in $(aws configure list-profiles | grep NuonAdmin);
+for prfl in $(aws configure list-profiles | grep NuonAdmin | grep -v 'sandbox-testing');
 do
     for cluster in $(aws --profile "$prfl" eks list-clusters | jq -r '.clusters[]');
     do
