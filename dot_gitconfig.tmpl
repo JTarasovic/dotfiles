@@ -61,8 +61,17 @@
     features = custom
 {{- end }}
 
+[init]
+    defaultBranch = main
+
 [fetch]
     prune = true
+
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
 
 [gpg]
     format = ssh
@@ -109,5 +118,4 @@
     name = {{ .fullname }}
     signingKey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJOXjK3lFzYXZx682Osg3hNagm5TmmGTygNHNETLbLNO
 
-[init]
-    defaultBranch = main
+
