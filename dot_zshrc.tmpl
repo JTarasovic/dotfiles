@@ -42,10 +42,11 @@ FPATH="$HOME/.local/share/zsh/site-functions:${FPATH}"
 {{- end }}
 
 autoload -Uz compinit && compinit
-autoload bashcompinit && bashcompinit
+autoload -U +X bashcompinit && bashcompinit
 
 # TODO: move to a bash completion file?
 complete -C '{{ lookPath "aws_completer" }}' aws
+complete -o nospace -C '{{ lookPath "waypoint" }}' waypoint
 complete -o nospace -C "$HOME/.asdf/shims/terraform" terraform
 
 {{ template "aliases.tmpl" . }}
