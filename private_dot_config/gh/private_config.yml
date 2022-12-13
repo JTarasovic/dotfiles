@@ -2,4 +2,9 @@
 git_protocol: ssh
 prompt: enabled
 aliases:
-    clonept: clone-org -y -s "archived:false" powertoolsdev
+    clonept: >-
+      clone-org
+      -y
+      -s "archived:false"
+      -p /home/jason/Development/nuon/
+      powertoolsdev
