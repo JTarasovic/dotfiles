@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-for prfl in $(aws configure list-profiles | grep NuonAdmin | grep -v 'sandbox-testing');
-do
-    for cluster in $(aws --profile "$prfl" eks list-clusters | jq -r '.clusters[]');
-    do
-        aws --profile "$prfl" eks update-kubeconfig --name "$cluster" --alias "$cluster"
-    done
-done
