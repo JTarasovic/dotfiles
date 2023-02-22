@@ -9,12 +9,12 @@
     "PX7 Bowers & Wilkins" -}}
 
 [theme]
-name = "nord-dark"
+theme = "nord-dark"
 [theme.overrides]
 separator = ""
 
 [icons]
-name = "material-nf"
+icons = "material-nf"
 
 [[block]]
 block = "custom"
@@ -30,9 +30,7 @@ command = ''' current-context '''
 
 [[block]]
 block = "music"
-max_width = 100
-dynamic_width = true
-buttons = [ "play" ]
+format = " $icon {$combo.str(max_w:75,rot_interval:0.5) $play |}"
 
 {{ if $nc700 -}}
 # [[block]]
@@ -58,8 +56,13 @@ buttons = [ "play" ]
 [[block]]
 block = "sound"
 headphones_indicator = true
-on_click = {{ (joinPath .chezmoi.homeDir ".local" "bin" "toggle_sinks") | quote }}
-format = "{output_name} {volume}"
+show_volume_when_muted = true
+format = " $icon {$output_name} {$volume} |"
+
+[[block.click]]
+button = "left"
+cmd = {{ (joinPath .chezmoi.homeDir ".local" "bin" "toggle_sinks") | quote }}
+
 [block.mappings]
 "alsa_output.pci-0000_0e_00.4.analog-stereo" = "\uf025"
 "alsa_output.pci-0000_0c_00.1.hdmi-stereo" = "\uf9c2"
@@ -68,24 +71,35 @@ format = "{output_name} {volume}"
 [[block]]
 block = "sound"
 device_kind = 'source'
+show_volume_when_muted = true
 
 [[block]]
 block = "weather"
-format = "{weather} {temp}"
-service = { name = "openweathermap", api_key = "{{ .openweathermap.api_key }}", city_id = "4377664", units = "imperial" }
+format = " $icon $weather $temp"
 interval = 900
+
+[block.service]
+name = "openweathermap"
+api_key = "{{ .openweathermap.api_key }}"
+city_id = "4377664"
+units = "imperial"
 
 [[block]]
 block = "time"
 interval = 60
-format = "%a %b %d %R"
+
+[block.format]
+full = " $icon $timestamp.datetime(f:'%a %b %d %R') "
+short = " $icon $timestamp.datetime(f:%R) "
 
 [[block]]
 block = "custom"
 command = "browsers GET"
-on_click = "browsers CYCLE"
 interval = "once"
 signal = 2
+[[block.click]]
+button = "left"
+cmd = "{{ (joinPath .chezmoi.homeDir ".local" "bin" "browsers") }} CYCLE"
 
 [[block]]
 block = "notify"
@@ -93,5 +107,7 @@ block = "notify"
 [[block]]
 block = "custom"
 command = "echo \uf011"
-on_click = "powermenu"
 interval = "once"
+[[block.click]]
+button = "left"
+cmd = {{ (joinPath .chezmoi.homeDir ".local" "bin" "powermenu") | quote}}

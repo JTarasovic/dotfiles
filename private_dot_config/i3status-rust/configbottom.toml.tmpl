@@ -11,12 +11,12 @@
     "LIFT" -}}
 
 [theme]
-name = "nord-dark"
+theme = "nord-dark"
 [theme.overrides]
 separator = ""
 
 [icons]
-name = "material-nf"
+icons = "material-nf"
 
 {{ if $mouse_mac -}}
 [[block]]
@@ -29,13 +29,12 @@ mac = {{ $mouse_mac | quote }}
 {{ if ( get $sensors "nvme-pci-0400" ) -}}
 [[block]]
 block = "temperature"
-collapsed = false
 chip = "nvme-pci-0400"
 good = 20
 idle = 30
 info = 60
 warning = 70
-format = "/ {max}"
+format = " $icon / {$max} "
 interval = 5
 {{- else -}}
 # skipped nvme-pci-0400
@@ -44,28 +43,27 @@ interval = 5
 [[block]]
 block = "disk_space"
 path = "/"
-format = "{icon} / {free}"
+format = " $icon / {$free} "
 info_type = "available"
-unit = "GB"
 warning = 20.0
 alert = 10.0
 interval = 120
+alert_unit = "GB"
 
 [[block]]
 block = "docker"
-format = "T:{total} R:{running} S:{stopped} P:{paused} I:{images}"
+format = " $icon T:{$total} R:{$running} S:{$stopped} P:{$paused} I:{$images} "
 interval = 60
 
 {{ if ( get $sensors "nvme-pci-0100" ) -}}
 [[block]]
 block = "temperature"
-collapsed = false
 chip = "nvme-pci-0100"
 good = 20
 idle = 30
 info = 60
 warning = 70
-format = "~ {max}"
+format = " $icon ~ {$max} "
 interval = 5
 {{- else -}}
 # skipped nvme-pci-0100
@@ -74,39 +72,38 @@ interval = 5
 [[block]]
 block = "disk_space"
 path = "/home"
-format = "{icon} ~ {free}"
+format = " $icon ~ {$free} "
 info_type = "available"
-unit = "GB"
 warning = 20.0
 alert = 10.0
+alert_unit = "GB"
 interval = 120
 
 {{ $dockerSock := output (joinPath .chezmoi.sourceDir "helpers" "docker-sock-exists.sh") -}}
 {{ if $dockerSock -}}
 [[block]]
 block = "docker"
-format = "T:{total} R:{running} S:{stopped} P:{paused} I:{images}"
+format = " $icon T:{$total} R:{$running} S:{$stopped} P:{$paused} I:{$images} "
 interval = 60
 socket_path = "{{ $dockerSock }}"
 {{- end }}
 
 [[block]]
 block = "memory"
-display_type = "memory"
-format_mem = "{mem_free;G}"
-format_swap = "{swap_free;G}"
+# display_type = "memory"
+format = " $icon {$mem_free.eng(p:G)} "
+format_alt = " $icon_swap {$swap_free.eng(p:G)} "
 interval = 5
 
 {{ if ( get $sensors "iwlwifi_1-virtual-0" ) -}}
 [[block]]
 block = "temperature"
-collapsed = false
 chip = "iwlwifi_1-virtual-0"
 good = 10
 idle = 20
 info = 65
 warning = 70
-format = " {max}"
+format = "  {$max} "
 interval = 5
 {{- else -}}
 # skipped iwlwifi_1
@@ -114,20 +111,19 @@ interval = 5
 
 [[block]]
 block = "net"
-format="{speed_down;M*b} {speed_up;M*b}"
+format=" $icon {$speed_down.eng(w:3,p:M)} {$speed_up.eng(w:3,p:M)} "
 interval = 5
 
 {{ if ( get $sensors "amdgpu-pci-0c00" ) -}}
 [[block]]
 block = "temperature"
-collapsed = false
 chip = "amdgpu-pci-0c00"
 inputs = [ 'edge' ]
 good = 20
 idle = 40
 info = 70
 warning = 75
-format = "GPU: {max}"
+format = " GPU: {$max} "
 interval = 5
 {{- else -}}
 # skipped amdgpu
@@ -135,25 +131,24 @@ interval = 5
 
 [[block]]
 block = "load"
-format = "{1m} : {5m}"
+format = " $icon {$1m.eng(w:4)} {$5m.eng(w:4)} "
 interval = 5
 
 [[block]]
 block = "cpu"
-format="{frequency} {barchart}"
+format=" $icon{$frequency.eng(w:2)} {$barchart} "
 interval = 5
 
 {{ if ( get $sensors "k10temp-pci-00c3" ) -}}
 [[block]]
 block = "temperature"
-collapsed = false
 chip = "k10temp-pci-00c3"
 inputs = [ 'Tctl' ]
 good = 20
 idle = 30
 info = 75
 warning = 80
-format = " {max}"
+format = "  {$max} "
 interval = 5
 {{- else -}}
 # skipped k10temp
