@@ -93,6 +93,10 @@ full = " $icon $timestamp.datetime(f:'%a %b %d %R') "
 short = " $icon $timestamp.datetime(f:%R) "
 
 [[block]]
+block = "tea_timer"
+done_cmd = "dunstify -a Tea Timer -u critical 'Timer finished!'; espeak '[[_::_::_::]] timer finished'"
+
+[[block]]
 block = "custom"
 command = "browsers GET"
 interval = "once"
