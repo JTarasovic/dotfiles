@@ -50,8 +50,11 @@ vim.opt.completeopt = { "menu", "menuone", "noselect" }
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local servers = {
-    -- 'denols',
     bashls = {},
+    denols = {
+        root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
+        single_file_support = false,
+    },
     golangci_lint_ls = {},
     gopls = { settings = { gopls = { buildFlags = { "-tags=integration" } } } },
     pyright = {},
@@ -77,36 +80,26 @@ local servers = {
     },
     solargraph = { settings = { solargraph = { autoformat = false, formatting = false, } } },
     terraformls = {},
-    tsserver = {},
+    tsserver = {
+        root_dir = nvim_lsp.util.root_pattern("package.json"),
+        single_file_support = false,
+    },
 }
 
 for lsp, overrides in pairs(servers) do
     nvim_lsp[lsp].setup {
         capabilities = overrides['capabilities'] or capabilities,
         on_attach = overrides['on_attach'] or on_attach,
-        flags = overrides['flags'] or {
-            -- This will be the default in neovim 0.7+
-            debounce_text_changes = 150,
-        },
+        flags = overrides['flags'] or {},
         settings = overrides['settings'] or nil,
         init_options = overrides['init_options'] or nil,
+        root_dir = overrides['root_dir'] or nil,
+        single_file_support = overrides['single_file_support'] or true,
     }
 end
 
 require('go').setup()
 vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
-
--- local efmls = require 'efmls-configs'
--- efmls.init {
---     on_attach = on_attach,
---     capabilities = capabilities,
---     init_options = { documentFormatting = true, hover = true, documentSymbol = true, codeAction = true, completion = true, },
--- }
--- efmls.setup {
---     dockerfile = { linter = require('efmls-configs.linters.hadolint'), },
---     vim = { linter = require('efmls-configs.linters.vint'), },
---     yaml = { linter = require('efmls-configs.linters.yamllint'), },
--- }
 
 require("trouble").setup()
 vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>",
@@ -148,7 +141,7 @@ require('nvim-treesitter.configs').setup {
         "php",
         "phpdoc",
         "vala",
-    };
+    },
 
     highlight = {
         enable = true,
@@ -179,12 +172,12 @@ cmp.setup({
         end,
     },
     mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
-        ["<Tab>"] = cmp.mapping(function(fallback)
+            ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+            ['<C-f>'] = cmp.mapping.scroll_docs(4),
+            ['<C-Space>'] = cmp.mapping.complete(),
+            ['<C-e>'] = cmp.mapping.abort(),
+            ['<CR>'] = cmp.mapping.confirm({ select = true }),
+            ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
             elseif luasnip.expand_or_jumpable() then
@@ -195,8 +188,7 @@ cmp.setup({
                 fallback()
             end
         end, { "i", "s" }),
-
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
+            ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
             elseif luasnip.jumpable(-1) then
@@ -210,14 +202,14 @@ cmp.setup({
         { name = 'nvim_lsp' },
         { name = 'nvim_lsp_signature_help' },
         { name = 'path' },
-        { name = 'buffer', keyword_length = 5 },
+        { name = 'buffer',                 keyword_length = 5 },
     }, {
         { name = 'buffer' },
     }),
     formatting = {
         format = lspkind.cmp_format({
             mode = 'symbol', -- show only symbol annotations
-            maxwidth = 80, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+            maxwidth = 80,   -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
         })
     }
 })
