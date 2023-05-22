@@ -46,9 +46,7 @@ autoload -U +X bashcompinit && bashcompinit
 
 # TODO: move to a bash completion file?
 complete -C '{{ lookPath "aws_completer" }}' aws
-complete -o nospace -C '{{ lookPath "earthly" }}' terraform
 complete -o nospace -C '{{ lookPath "terraform" }}' terraform
-complete -o nospace -C '{{ lookPath "waypoint" }}' waypoint
 
 {{ template "aliases.tmpl" . }}
 {{ template "functions.tmpl" . }}
