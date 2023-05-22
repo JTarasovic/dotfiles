@@ -148,7 +148,6 @@ assign      [class="^firefox$"]                     $ws2
 assign      [title="(?i)zoom"]                      $ws7
 assign      [class="Chromium"]                      $ws7
 assign      [class="(?i)thunderbird"]               $ws8
-assign      [title="newsboat"]                      $ws8
 assign      [class="^Slack$"]                       $ws9
 for_window  [class="Spotify"] move to workspace     $ws10
 
@@ -254,12 +253,6 @@ bar {
         }
 }
 
-# auto-start applications
-{{ if (and (lookPath "thunderbird") (lookPath "newsboat") (false) ) -}}
-# TODO: figure this out
-exec --no-startup-id "i3-msg 'workspace $ws8; append_layout $HOME/.config/i3/layouts/ws8.json'"
-{{- end}}
-
 {{ if lookPath "thunderbird" -}}
 exec {{ lookPath "thunderbird" }}
 {{- else -}}
@@ -294,12 +287,6 @@ exec {{ lookPath "firefox" }}
 exec {{ lookPath "firefox-developer-edition" }}
 {{- else -}}
 # firefox-developer-edition startup skipped
-{{- end }}
-
-{{ if lookPath "newsboat" -}}
-exec /usr/bin/alacritty --class=newsboat -t newsboat -e /bin/zsh -l -c newsboat
-{{- else -}}
-# newsboat startup skipped
 {{- end }}
 
 exec --no-startup-id $HOME/.local/bin/launch-i3-terminals
