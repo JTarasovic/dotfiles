@@ -33,9 +33,9 @@ block = "music"
 format = " $icon {$combo.str(max_w:75,rot_interval:0.5) $play |}"
 
 {{ if $nc700 -}}
-# [[block]]
-# block = "bluetooth"
-# mac = {{ $nc700 | quote }}
+[[block]]
+block = "bluetooth"
+mac = {{ $nc700 | quote }}
 # format = "Bose NC700 {percentage}"
 # format_unavailable = "Bose NC700 x"
 {{- else -}}
@@ -43,12 +43,11 @@ format = " $icon {$combo.str(max_w:75,rot_interval:0.5) $play |}"
 {{- end }}
 
 {{ if $px7 -}}
-# [[block]]
-# block = "bluetooth"
-# mac = {{ $px7 | quote }}
-# hide_disconnected = false
-# format = " B&W PX7 {percentage}"
-# format_unavailable = " B&W PX7 x"
+[[block]]
+block = "bluetooth"
+mac = {{ $px7 | quote }}
+# format = " $icon B&W PX7{ $percentage|} "
+# disconnected_format = " $icon{ B&W PX7|} "
 {{- else -}}
 # skipped PX7
 {{- end }}
@@ -64,9 +63,9 @@ button = "left"
 cmd = {{ (joinPath .chezmoi.homeDir ".local" "bin" "toggle_sinks") | quote }}
 
 [block.mappings]
-"alsa_output.pci-0000_0e_00.4.analog-stereo" = "\uf025"
-"alsa_output.pci-0000_0c_00.1.hdmi-stereo" = "\uf9c2"
-"alsa_output.pci-0000_0c_00.1.hdmi-stereo-extra3" = "\uf9c2"
+"alsa_output.pci-0000_0e_00.4.analog-stereo" = "󰋋"
+"alsa_output.pci-0000_0c_00.1.hdmi-stereo-extra3" = "󰴸"
+"bluez_sink.B0_67_2F_1C_94_26.*" = "󰂰"
 
 [[block]]
 block = "sound"
