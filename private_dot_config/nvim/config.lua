@@ -55,6 +55,9 @@ local servers = {
         root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
         single_file_support = false,
     },
+    elixirls = {
+        cmd = { "/usr/lib/elixir-ls/language_server.sh" },
+    },
     golangci_lint_ls = {},
     gopls = { settings = { gopls = { buildFlags = { "-tags=integration" } } } },
     pyright = {},
@@ -95,6 +98,7 @@ for lsp, overrides in pairs(servers) do
         init_options = overrides['init_options'] or nil,
         root_dir = overrides['root_dir'] or nil,
         single_file_support = overrides['single_file_support'] or true,
+        cmd = overrides['cmd'] or nil,
     }
 end
 
