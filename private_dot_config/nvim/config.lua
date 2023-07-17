@@ -62,7 +62,7 @@ local servers = {
     gopls = { settings = { gopls = { buildFlags = { "-tags=integration" } } } },
     pyright = {},
     rust_analyzer = {},
-    sumneko_lua = {
+    lua_ls = {
         settings = {
             Lua = {
                 runtime = {
@@ -74,8 +74,6 @@ local servers = {
                 },
                 workspace = {
                     library = vim.api.nvim_get_runtime_file('', true),
-                    maxPreload = 10000,
-                    preloadFileSize = 10000,
                 },
                 telemetry = { enable = false },
             },
@@ -176,12 +174,12 @@ cmp.setup({
         end,
     },
     mapping = cmp.mapping.preset.insert({
-            ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-            ['<C-f>'] = cmp.mapping.scroll_docs(4),
-            ['<C-Space>'] = cmp.mapping.complete(),
-            ['<C-e>'] = cmp.mapping.abort(),
-            ['<CR>'] = cmp.mapping.confirm({ select = true }),
-            ["<Tab>"] = cmp.mapping(function(fallback)
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
             elseif luasnip.expand_or_jumpable() then
@@ -192,7 +190,7 @@ cmp.setup({
                 fallback()
             end
         end, { "i", "s" }),
-            ["<S-Tab>"] = cmp.mapping(function(fallback)
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
             elseif luasnip.jumpable(-1) then
