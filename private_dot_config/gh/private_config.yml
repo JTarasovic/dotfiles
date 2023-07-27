@@ -8,3 +8,9 @@ aliases:
       -s "archived:false"
       -p /home/jason/Development/nuon/
       powertoolsdev
+    clonebi: >-
+      clone-org
+      -y
+      -s "archived:false"
+      -p /home/jason/Development/bi/
+      batteries-included
