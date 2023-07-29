@@ -10,6 +10,15 @@
     ( joinPath .chezmoi.sourceDir "helpers" "bluetooth-device-paired.sh")
     "LIFT" -}}
 
+{{ $nc700 := output
+    ( joinPath .chezmoi.sourceDir "helpers" "bluetooth-device-paired.sh")
+    "Bose NC 700 Head" -}}
+
+{{ $px7 := output
+    ( joinPath .chezmoi.sourceDir "helpers" "bluetooth-device-paired.sh")
+    "PX7 Bowers & Wilkins" -}}
+
+
 [theme]
 theme = "nord-dark"
 [theme.overrides]
@@ -17,6 +26,27 @@ separator = ""
 
 [icons]
 icons = "material-nf"
+
+{{ if $nc700 -}}
+[[block]]
+block = "bluetooth"
+mac = {{ $nc700 | quote }}
+# format = "Bose NC700 {percentage}"
+# format_unavailable = "Bose NC700 x"
+{{- else -}}
+# skipped Bose NC700
+{{- end }}
+
+{{ if $px7 -}}
+[[block]]
+block = "bluetooth"
+mac = {{ $px7 | quote }}
+# format = " $icon B&W PX7{ $percentage|} "
+# disconnected_format = " $icon{ B&W PX7|} "
+{{- else -}}
+# skipped PX7
+{{- end }}
+
 
 {{ if $mouse_mac -}}
 [[block]]

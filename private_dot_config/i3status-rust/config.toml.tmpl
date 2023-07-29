@@ -1,13 +1,4 @@
 # vi:syntax=toml
-
-{{ $nc700 := output
-    ( joinPath .chezmoi.sourceDir "helpers" "bluetooth-device-paired.sh")
-    "Bose NC 700 Head" -}}
-
-{{ $px7 := output
-    ( joinPath .chezmoi.sourceDir "helpers" "bluetooth-device-paired.sh")
-    "PX7 Bowers & Wilkins" -}}
-
 [theme]
 theme = "nord-dark"
 [theme.overrides]
@@ -31,26 +22,6 @@ command = ''' current-context '''
 [[block]]
 block = "music"
 format = " $icon {$combo.str(max_w:75,rot_interval:0.5) $play |}"
-
-{{ if $nc700 -}}
-[[block]]
-block = "bluetooth"
-mac = {{ $nc700 | quote }}
-# format = "Bose NC700 {percentage}"
-# format_unavailable = "Bose NC700 x"
-{{- else -}}
-# skipped Bose NC700
-{{- end }}
-
-{{ if $px7 -}}
-[[block]]
-block = "bluetooth"
-mac = {{ $px7 | quote }}
-# format = " $icon B&W PX7{ $percentage|} "
-# disconnected_format = " $icon{ B&W PX7|} "
-{{- else -}}
-# skipped PX7
-{{- end }}
 
 [[block]]
 block = "sound"
