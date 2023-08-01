@@ -31,4 +31,8 @@ source "$HOME/.env.sh"
 {{ template "asdf.tmpl" . }}
 {{ template "starship.tmpl" (dict "shell" "bash") }}
 
+{{- if lookPath "direnv" }}
+{{- output "direnv" "hook" "bash" }}
+{{- end }}
+
 source "$HOME/.bashrc.local"
