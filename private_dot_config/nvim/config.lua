@@ -126,6 +126,8 @@ null_ls.setup({
         null_ls.builtins.code_actions.eslint_d,
         null_ls.builtins.code_actions.shellcheck,
         null_ls.builtins.diagnostics.actionlint,
+        null_ls.builtins.diagnostics.credo,
+        null_ls.builtins.diagnostics.dotenv_linter,
         null_ls.builtins.diagnostics.eslint_d,
         null_ls.builtins.diagnostics.hadolint,
         null_ls.builtins.diagnostics.vint,
