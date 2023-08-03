@@ -111,6 +111,8 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'nord'
 
+let g:ctrlp_cmd = 'CtrlPMixed'
+
 " MAPS
 map Q gq                                        " Don't use Ex mode, use Q for formatting
 " nmap <space> :set hlsearch! hlsearch?<CR>       " clear highlighted search

@@ -1,6 +1,6 @@
 local nvim_lsp = require('lspconfig')
 
--- vim.g.mapleader = ';'
+vim.g.mapleader = ';'
 
 local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -79,7 +79,7 @@ local servers = {
             },
         },
     },
-    solargraph = { settings = { solargraph = { autoformat = false, formatting = false, } } },
+    -- solargraph = { settings = { solargraph = { autoformat = false, formatting = false, } } },
     terraformls = {},
     tsserver = {
         root_dir = nvim_lsp.util.root_pattern("package.json"),
