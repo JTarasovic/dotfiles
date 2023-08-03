@@ -46,7 +46,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'folke/todo-comments.nvim'
 
 " colorschemes
-Plug 'flazz/vim-colorschemes'
+" Plug 'flazz/vim-colorschemes'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'arcticicestudio/nord-vim'
 
@@ -97,6 +97,10 @@ set backupdir=~/.local/share/nvim/backup//
 if has('langmap') && exists('+langnoremap')
     set langnoremap
 endif
+
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set nofoldenable
 
 " VARIABLES
 " nerdtree-git-status

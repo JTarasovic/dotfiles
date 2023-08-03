@@ -139,17 +139,42 @@ null_ls.setup({
 })
 
 require('nvim-treesitter.configs').setup {
-    ensure_installed = "all",
+    ensure_installed = {
+        "bash",
+        "comment",
+        "diff",
+        "dockerfile",
+        "eex",
+        "elixir",
+        "git_config",
+        "git_rebase",
+        "gitattributes",
+        "gitcommit",
+        "gitignore",
+        "go",
+        "gomod",
+        "gosum",
+        "graphql",
+        "heex",
+        "nix",
+        "rust",
+        "terraform",
+        "yaml" },
+
     sync_install = false,
-    ignore_install = {
-        "php",
-        "phpdoc",
-        "vala",
-    },
+    auto_install = true,
+    ignore_install = {},
 
     highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
+    },
+    -- TODO(jdt): figure this out
+    incremental_selection = {
+        enable = false,
+    },
+    indent = {
+        enable = true,
     },
 }
 
