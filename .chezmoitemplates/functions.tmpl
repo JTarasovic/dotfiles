@@ -26,7 +26,7 @@ clear_terminal_title() {
 
 {{ if lookPath "git" -}}
 fixup() {
-    git commit "$1" --fixup=@ && git rebase -i @~2
+    git commit $1 --fixup=@ && git rebase -i @~2
 }
 
 get_default_branch() {
