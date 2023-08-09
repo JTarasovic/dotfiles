@@ -172,6 +172,7 @@ interval = "once"
 [[block]]
 block = "amd_gpu"
 format_alt = " $icon MEM: $vram_used_percents ($vram_used/$vram_total) "
+device = "card1"
 
 {{ if ( get $sensors "amdgpu-pci-0c00" ) -}}
 [[block]]
