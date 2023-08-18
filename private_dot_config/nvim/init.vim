@@ -158,7 +158,7 @@ augroup commentstring
 
     " pound
     autocmd BufEnter,BufFilePost
-        \ Earthfile,terraform,*.hcl
+        \ Earthfile,terraform,*.hcl,*.nix
         \ :lua vim.api.nvim_buf_set_option(0, "commentstring", "# %s")
 
 augroup END

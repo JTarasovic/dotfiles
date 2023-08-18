@@ -37,12 +37,9 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
     buf_set_keymap('n', "<leader>q", '<cmd>lua vim.diagnostic.set_loclist()<CR>', opts)
 
-    -- Set some keybinds conditional on server capabilities
-    if client.server_capabilities.document_formatting then
-        buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-    elseif client.server_capabilities.document_range_formatting then
-        buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-    end
+    buf_set_keymap("n", "<leader>f", function()
+        vim.lsp.buf.format { async = false }
+    end, opts)
 end
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
@@ -57,6 +54,17 @@ local servers = {
     },
     elixirls = {
         cmd = { "/usr/lib/elixir-ls/language_server.sh" },
+        -- root_dir = function(fname)
+        --     local git_root = nvim_lsp.util.find_git_ancestor(fname)
+        --     if git_root then
+        --         mix_dirs = scandir.scan_dir(fname, { only_dirs = true, respect_gitignore = true, search_pattern = 'mix.exs' })
+        --     end
+        --
+        --     if ! git_root and ! mix_dirs then
+        --         return nil
+        --     end
+        -- end
+        -- nvim_lsp.util.root_pattern('.git')
     },
     golangci_lint_ls = {},
     gopls = { settings = { gopls = { buildFlags = { "-tags=integration" } } } },
@@ -79,6 +87,7 @@ local servers = {
             },
         },
     },
+    nixd = {},
     -- solargraph = { settings = { solargraph = { autoformat = false, formatting = false, } } },
     terraformls = {},
     tsserver = {
