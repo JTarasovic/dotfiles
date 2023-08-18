@@ -105,7 +105,7 @@ set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7:󰄀"
 set $ws8 "8:󰇮"
-set $ws9 "9:"
+set $ws9 "9:󰍦"
 set $ws10 "10:"
 
 # switch to workspace
@@ -149,6 +149,7 @@ assign      [title="(?i)zoom"]                      $ws7
 assign      [class="Chromium"]                      $ws7
 assign      [class="(?i)thunderbird"]               $ws8
 assign      [class="^Slack$"]                       $ws9
+assign      [class="^Element$"]                     $ws9
 for_window  [class="Spotify"] move to workspace     $ws10
 
 # reload the configuration file
@@ -269,6 +270,12 @@ exec --no-startup-id {{ lookPath "yubioath-desktop" }}
 exec --no-startup-id {{ lookPath "slack" }} -s
 {{- else -}}
 # slack startup skipped
+{{- end }}
+
+{{ if lookPath "element-desktop" -}}
+exec {{ lookPath "element-desktop" }} -s
+{{- else -}}
+# element-desktop startup skipped
 {{- end }}
 
 {{ if lookPath "spotify" -}}
