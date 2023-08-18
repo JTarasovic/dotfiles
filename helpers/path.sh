@@ -14,7 +14,7 @@ pathmunge() {
     [ ! -d "$path" ] && return
 
     # resolve symlink
-    path="$(resolvelink "$path")"
+    # path="$(resolvelink "$path")"
 
     # if path isn't already in $PATH
     if ! echo "$PATH" | /usr/bin/grep -Eq "(^|:)$path($|:)" ; then
@@ -35,5 +35,6 @@ pathmunge "${KREW_ROOT:-$HOME/.krew}/bin"
 pathmunge "$HOME/.cargo/bin"
 pathmunge "$HOME/go/bin"
 pathmunge "$HOME/.local/bin"
+pathmunge "$HOME/.nix-profile/bin"
 
 echo "export PATH=\"$PATH\""
