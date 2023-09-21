@@ -41,6 +41,10 @@ FPATH="{{- output "brew" "--prefix" | trim}}/share/zsh-completions:${FPATH}"
 FPATH="$HOME/.local/share/zsh/site-functions:${FPATH}"
 {{- end }}
 
+{{ if stat "/nix/var/nix/profiles/default/share/zsh/site-functions/" -}}
+FPATH="/nix/var/nix/profiles/default/share/zsh/site-functions:${FPATH}"
+{{- end }}
+
 autoload -Uz compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 
