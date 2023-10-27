@@ -1,14 +1,4 @@
-[".vim/autoload/plug.vim"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-    refreshPeriod = "24h"
-
 [".nord_dir_colors"]
     type = "file"
     url = "https://raw.githubusercontent.com/arcticicestudio/nord-dircolors/develop/src/dir_colors"
-    refreshPeriod = "24h"
-
-[".config/nvim/lua/lspkind/init.lua"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/onsails/lspkind-nvim/master/lua/lspkind/init.lua"
     refreshPeriod = "24h"
