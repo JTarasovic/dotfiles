@@ -31,7 +31,11 @@ export CLICOLOR=1
 {{- end }}
 
 # fzf nord theme
-export FZF_DEFAULT_OPTS='--color=bg+:#3B4252,bg:#2E3440,spinner:#81A1C1,hl:#616E88,fg:#D8DEE9,header:#616E88,info:#81A1C1,pointer:#81A1C1,marker:#81A1C1,fg+:#D8DEE9,prompt:#81A1C1,hl+:#81A1C1'
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+    --color=fg:#e5e9f0,bg:-1,hl:#81a1c1
+    --color=fg+:#eceff4,bg+:#4c566a,hl+:#8fbcbb
+    --color=info:#b48ead,prompt:#88c0d0,pointer:#eceff4
+    --color=marker:#e5e9f0,spinner:#5e81ac,header:#a3be8c'
 
 # rootless docker?
 {{ output (joinPath $helpersDir "rootless-docker-helper.sh") (joinPath $helpersDir "docker-sock-exists.sh") }}

@@ -1,4 +1,14 @@
 [".nord_dir_colors"]
     type = "file"
-    url = "https://raw.githubusercontent.com/arcticicestudio/nord-dircolors/develop/src/dir_colors"
+    url = "https://raw.githubusercontent.com/nordtheme/dircolors/develop/src/dir_colors"
+    refreshPeriod = "24h"
+
+[".config/rofi/themes/amayer5125-nord.rasi"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/amayer5125/nord-rofi/master/nord.rasi"
+    refreshPeriod = "24h"
+
+[".config/rofi/themes/undiabler-nord.rasi"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/undiabler/nord-rofi-theme/master/nord.rasi"
     refreshPeriod = "24h"
