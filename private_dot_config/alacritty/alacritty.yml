@@ -90,26 +90,26 @@ scrolling:
 font:
   # Normal (roman) font face
   normal:
-    family: Hack Nerd Font Mono
+    family: IosevkaTerm Nerd Font Mono
     style: Regular
 
   # Bold font face
   bold:
-    family: Hack Nerd Font Mono
+    family: IosevkaTerm Nerd Font Mono
     style: Bold
 
   # Italic font face
   italic:
-    family: Hack Nerd Font Mono
+    family: IosevkaTerm Nerd Font Mono
     style: Italic
 
   # Bold italic font face
   bold_italic:
-    family: Hack Nerd Font Mono
+    family: IosevkaTerm Nerd Font Mono
     style: Bold Italic
 
   # Point size
-  size: 10.0
+  size: 11.5
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
