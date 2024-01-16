@@ -2,7 +2,7 @@
 {{- $sem := replace " " "_" (cat "JDT_STARSHIP_INIT" (upper .shell)) -}}
 if [ -z "${{ $sem }}" ];
 then
-    {{ output "starship" "init" .shell }}
+    eval "$(starship init {{ .shell }})"
     export {{ $sem }}=1
 fi
 {{- else -}}
