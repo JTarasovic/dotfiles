@@ -32,21 +32,28 @@ return {
             return vim.fs.dirname(root[1])
         end
 
+        local util = lsp_config.util
+
         local servers = {
             bashls = {},
             denols = {
-                root_dir = lsp_config.util.root_pattern("deno.json", "deno.jsonc"),
+                root_dir = util.root_pattern("deno.json", "deno.jsonc"),
                 single_file_support = false,
             },
             elixirls = {
                 cmd = { els_path },
                 root_dir = function(fname)
                     -- vim.notify(vim.inspect(els_path), vim.log.levels.INFO)
-                    return get_mix_under_git(fname)
+                    return
+                        get_mix_under_git(fname)
+                        or util.find_git_ancestor(fname)
+                        or util.root_pattern 'mix.exs' (fname)
+                        or vim.loop.os_homedir()
                 end
             },
             lua_ls = lsp_zero.nvim_lua_ls(),
             nixd = {},
+            rust_analyzer = {},
             terraformls = {},
             tsserver = {
                 root_dir = lsp_config.util.root_pattern("package.json"),
