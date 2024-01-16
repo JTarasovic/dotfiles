@@ -92,6 +92,11 @@ cmet() {
 # chezmoi functions omitted
 {{- end }}
 
+wg-restart() {
+    local if="$1"
+    sudo zsh -c "wg syncconf $if <(wg-quick strip $if)"
+}
+
 {{- /*
 # vi: ft=sh
 */ -}}
