@@ -5,8 +5,6 @@ return {
             require("lint").linters_by_ft = {
                 dockerfile = { "hadolint" },
                 elixir = { "credo" },
-                javascript = { "eslint_d" },
-                typescript = { "eslint_d" },
                 yaml = { "yamllint", "actionlint", },
             }
 

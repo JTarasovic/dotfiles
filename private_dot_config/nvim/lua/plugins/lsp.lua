@@ -37,7 +37,7 @@ return {
         local servers = {
             bashls = {},
             denols = {
-                root_dir = util.root_pattern("deno.json", "deno.jsonc"),
+                root_dir = util.root_pattern("deno.json", "deno.jsonc", "package.json"),
                 single_file_support = false,
             },
             elixirls = {
@@ -55,10 +55,10 @@ return {
             nixd = {},
             rust_analyzer = {},
             terraformls = {},
-            tsserver = {
-                root_dir = lsp_config.util.root_pattern("package.json"),
-                single_file_support = false,
-            },
+            -- tsserver = {
+            --     root_dir = lsp_config.util.root_pattern("package.json"),
+            --     single_file_support = false,
+            -- },
         }
 
         for lsp, overrides in pairs(servers) do
