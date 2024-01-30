@@ -22,9 +22,7 @@ pathmunge() {
     fi
 }
 
-pathmunge /sbin
 pathmunge /usr/bin
-pathmunge /usr/sbin
 pathmunge /usr/local/bin
 pathmunge /usr/local/go/bin
 pathmunge /usr/local/heroku/bin
