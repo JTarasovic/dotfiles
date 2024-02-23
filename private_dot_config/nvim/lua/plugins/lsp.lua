@@ -51,6 +51,8 @@ return {
                         or vim.loop.os_homedir()
                 end
             },
+            golangci_lint_ls = {},
+            gopls = {},
             lua_ls = lsp_zero.nvim_lua_ls(),
             nixd = {},
             rust_analyzer = {},
