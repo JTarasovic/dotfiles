@@ -297,5 +297,6 @@ exec {{ lookPath "firefox-developer-edition" }}
 {{- end }}
 
 exec --no-startup-id $HOME/.local/bin/launch-i3-terminals
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock
 
 # vi: ft=conf
