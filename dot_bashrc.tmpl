@@ -28,7 +28,6 @@ source "$HOME/.env.sh"
 
 {{ template "aliases.tmpl" . }}
 {{ template "functions.tmpl" . }}
-{{ template "asdf.tmpl" . }}
 {{ template "starship.tmpl" (dict "shell" "bash") }}
 
 {{- if lookPath "direnv" }}

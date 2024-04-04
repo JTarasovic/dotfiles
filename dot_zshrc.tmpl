@@ -54,7 +54,6 @@ complete -o nospace -C '{{ lookPath "terraform" }}' terraform
 
 {{ template "aliases.tmpl" . }}
 {{ template "functions.tmpl" . }}
-{{ template "asdf.tmpl" . }}
 {{ template "starship.tmpl" (dict "shell" "zsh") }}
 
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
