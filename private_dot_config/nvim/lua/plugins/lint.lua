@@ -5,7 +5,8 @@ return {
             require("lint").linters_by_ft = {
                 dockerfile = { "hadolint" },
                 elixir = { "credo" },
-                yaml = { "yamllint", "actionlint", },
+                yaml = { "yamllint", },
+                ["yaml.gha"] = { "yamllint", "actionlint", },
             }
 
             vim.api.nvim_create_autocmd({ "BufWritePost" }, {
@@ -14,6 +15,9 @@ return {
                 end,
             })
         end
-
-    }
+    },
+    {
+        "yasuhiroki/github-actions-yaml.vim",
+        lazy = false,
+    },
 }
