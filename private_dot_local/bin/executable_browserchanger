@@ -7,7 +7,7 @@ do
     while read -r current old;
     do
         if [[ "$old" =~ 9 ]]; then
-            "$HOME"/.local/bin/browsers SET firefoxdeveloperedition.desktop > /dev/null
+            "$HOME"/.local/bin/browsers SET firefox-developer-edition.desktop > /dev/null
             echo "set browser to Firefox Developer Edition" | systemd-cat -t "$MYTAG"
         fi
         if [[ "$current" =~ 9 ]]; then
