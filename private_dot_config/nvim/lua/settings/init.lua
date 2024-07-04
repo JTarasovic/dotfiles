@@ -15,11 +15,8 @@ o.shiftwidth = 4
 o.expandtab = true
 -- allow backspacing over everything in insert mode
 o.backspace = "indent,eol,start"
-o.t_Co = 256
 o.encoding = "utf-8"
-o.termencoding = "utf-8"
 o.laststatus = 2
-o.noshowmode = true
 o.history = 50
 -- show the cursor position all the time
 o.ruler = true
