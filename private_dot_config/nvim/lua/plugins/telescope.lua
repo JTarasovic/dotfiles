@@ -99,6 +99,13 @@ return {
                 prompt_prefix = " ",
                 selection_caret = " ",
                 winblend = 15,
+                layout_strategy = "vertical",
+                layout_config = {
+                    vertical = {
+                        height = 0.99,
+                        preview_height = 0.66,
+                    }
+                },
             },
         },
 
