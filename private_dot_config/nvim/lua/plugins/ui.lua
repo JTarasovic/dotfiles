@@ -19,5 +19,5 @@ return {
 
     },
     { "nvim-tree/nvim-web-devicons", lazy = true },
-
+    { 'echasnovski/mini.nvim',       version = false },
 }
