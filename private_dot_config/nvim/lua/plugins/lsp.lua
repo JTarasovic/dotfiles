@@ -48,7 +48,7 @@ return {
                         get_mix_under_git(fname)
                         or util.find_git_ancestor(fname)
                         or util.root_pattern 'mix.exs' (fname)
-                        or vim.loop.os_homedir()
+                        or vim.uv.os_homedir()
                 end
             },
             golangci_lint_ls = {},
