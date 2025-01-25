@@ -36,5 +36,5 @@ fi
 
 export SSH_AUTH_SOCK
 
-numlockx on
+# numlockx on
 exec i3
