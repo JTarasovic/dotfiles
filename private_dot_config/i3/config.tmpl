@@ -254,50 +254,58 @@ bar {
         }
 }
 
-{{ if lookPath "thunderbird" -}}
-exec {{ lookPath "thunderbird" }}
+{{ $prog := lookPath "thunderbird" -}}
+{{ if $prog -}}
+exec {{ ( cat $prog ) | quote }}
 {{- else -}}
 # thunderbird startup skipped
 {{- end }}
 
-{{ if lookPath "yubioath-desktop" -}}
-exec --no-startup-id {{ lookPath "yubioath-desktop" }}
+{{ $prog := lookPath "yubico-authenticator" -}}
+{{ if $prog -}}
+exec --no-startup-id {{ ( cat $prog ) | quote }}
 {{- else -}}
-# yubioath-desktop startup skipped
+# yubico-authenticator startup skipped
 {{- end }}
 
-{{ if lookPath "slack" -}}
-exec --no-startup-id {{ lookPath "slack" }} -s
+{{ $prog := lookPath "slack" -}}
+{{ if $prog -}}
+exec --no-startup-id {{ ( cat $prog "-s" ) | quote }}
 {{- else -}}
 # slack startup skipped
 {{- end }}
 
-{{ if lookPath "element-desktop" -}}
-exec {{ lookPath "element-desktop" }} -s
+{{ $prog := lookPath "element-desktop" -}}
+{{ if $prog -}}
+exec --no-startup-id {{ ( cat $prog "-s") | quote }}
 {{- else -}}
 # element-desktop startup skipped
 {{- end }}
 
-{{ if lookPath "spotify" -}}
-exec --no-startup-id {{ lookPath "spotify" }}
+{{ $prog := lookPath "spotify" -}}
+{{ if $prog -}}
+exec --no-startup-id {{ ( cat $prog ) | quote }}
 {{- else -}}
 # spotify startup skipped
 {{- end }}
 
-{{ if lookPath "firefox" -}}
-exec {{ lookPath "firefox" }}
+{{ $prog := lookPath "firefox" -}}
+{{ if $prog -}}
+exec {{ ( cat $prog ) | quote }}
 {{- else -}}
 # firefox startup skipped
 {{- end }}
 
-{{ if lookPath "firefox-developer-edition" -}}
-exec {{ lookPath "firefox-developer-edition" }}
+{{ $prog := lookPath "firefox-developer-edition" -}}
+{{ if $prog -}}
+exec {{ ( cat $prog ) | quote }}
 {{- else -}}
 # firefox-developer-edition startup skipped
 {{- end }}
 
-{{ if lookPath "udiskie" -}}
-exec {{ lookPath "udiskie" }} --tray
+{{ $prog := lookPath "udiskie" -}}
+{{ if $prog -}}
+exec {{ ( cat $prog "--tray") | quote }}
 {{- else -}}
 # udiskie startup skipped
 {{- end }}
