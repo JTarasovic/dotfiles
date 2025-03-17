@@ -296,6 +296,12 @@ exec {{ lookPath "firefox-developer-edition" }}
 # firefox-developer-edition startup skipped
 {{- end }}
 
+{{ if lookPath "udiskie" -}}
+exec {{ lookPath "udiskie" }} --tray
+{{- else -}}
+# udiskie startup skipped
+{{- end }}
+
 exec --no-startup-id $HOME/.local/bin/launch-i3-terminals
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock
 
