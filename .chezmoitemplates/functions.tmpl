@@ -34,8 +34,16 @@ get_default_branch() {
 }
 
 clean () {
-    old=$(git rev-parse --abbrev-ref HEAD);
-    git checkout "${1:-$(get_default_branch)}" && git pull && git br -D "$old"
+    set -e
+    [[ -z ${TRACE:-""} ]] || set -x
+    local old=$(git rev-parse --abbrev-ref HEAD)
+    local br=$(get_default_branch)
+    git fetch --prune origin
+    git checkout "${1:-$br}"
+    git rebase
+    git br -D "$old"
+    git gc --prune=now
+    set +e
 }
 
 # https://stackoverflow.com/questions/1029969/why-is-my-git-repository-so-big
