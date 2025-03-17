@@ -59,8 +59,4 @@ complete -o nospace -C '{{ lookPath "terraform" }}' terraform
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 {{ output (joinPath .chezmoi.sourceDir "helpers" "zsh-syntax-highlighter-finder.sh") }}
 
-{{- if lookPath "direnv" }}
-{{- output "direnv" "hook" "zsh" }}
-{{- end }}
-
 source "$HOME/.zshrc.local"
