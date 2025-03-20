@@ -14,6 +14,7 @@ wk.add({
     { "<leader>k",  "<cmd>bprevious<cr>",                                                    desc = "Previous buffer" },
     { "<leader>n",  group = "noice" },
     { "<leader>q",  "<cmd>bdelete<cr>",                                                      desc = "Delete buffer" },
+    { "<leader>Q",  "<cmd>bdelete!<cr>",                                                     desc = "Delete buffer (force)" },
     { "<leader>w",  group = "workspace" },
     { "<leader>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>",                       desc = "Add folder" },
     { "<leader>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>", desc = "List folders" },
