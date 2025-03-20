@@ -40,10 +40,10 @@ return {
                     desc = "Telescope buffers (all)",
                 },
                 {
-                    "<leader>ff",
-                    wrap(t.find_files, {}),
+                    "<leader>fb",
+                    "<cmd>:lua require('telescope').extensions.file_browser.file_browser()<CR>",
                     mode = "n",
-                    desc = "Telescope find_files",
+                    desc = "Telescope file_browser",
                 },
                 {
                     "<leader>fF",
@@ -52,16 +52,22 @@ return {
                     desc = "Telescope find_files (relative)",
                 },
                 {
-                    "<leader>fr",
-                    wrap(t.oldfiles, {}),
+                    "<leader>ff",
+                    wrap(t.find_files, {}),
                     mode = "n",
-                    desc = "Telescope oldfiles",
+                    desc = "Telescope find_files",
                 },
                 {
                     "<leader>fR",
                     wrap(t.oldfiles, function() return { cwd = utils.buffer_dir() } end),
                     mode = "n",
                     desc = "Telescope oldfiles (relative)",
+                },
+                {
+                    "<leader>fr",
+                    wrap(t.oldfiles, {}),
+                    mode = "n",
+                    desc = "Telescope oldfiles",
                 },
                 {
                     "<leader>fg",
