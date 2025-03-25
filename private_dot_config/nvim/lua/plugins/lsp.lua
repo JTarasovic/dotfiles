@@ -40,6 +40,9 @@ return {
                 root_dir = util.root_pattern("deno.json", "deno.jsonc", "package.json"),
                 single_file_support = false,
             },
+            -- emmet_language_server = {
+            --     filetypes = { "css", "eruby", "html", "htmldjango", "javascriptreact", "less", "pug", "sass", "scss", "typescriptreact", "htmlangular", "elixir", "eelixir", "heex" }
+            -- },
             elixirls = {
                 cmd = { els_path },
                 root_dir = function(fname)
@@ -56,7 +59,15 @@ return {
             lua_ls = lsp_zero.nvim_lua_ls(),
             nixd = {},
             rust_analyzer = {},
+            -- tailwindcss = {},
             terraformls = {},
+            yamlls = {
+                settings = {
+                    schemas = {
+                        ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+                    },
+                },
+            },
             -- tsserver = {
             --     root_dir = lsp_config.util.root_pattern("package.json"),
             --     single_file_support = false,
