@@ -33,24 +33,24 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([[:digit:]]#)*=34
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,cmd'
 
 {{ if lookPath "brew" -}}
-FPATH="{{- output "brew" "--prefix" | trim}}/share/zsh/site-functions:${FPATH}"
-FPATH="{{- output "brew" "--prefix" | trim}}/share/zsh-completions:${FPATH}"
+fpath=( "{{- output "brew" "--prefix" | trim}}/share/zsh/site-functions" "${fpath[@]}" )
+fpath=( "{{- output "brew" "--prefix" | trim}}/share/zsh-completions" "${fpath[@]}" )
 {{- end }}
 
 {{ if stat (joinPath .chezmoi.homeDir ".local/share/zsh/site-functions") -}}
-FPATH="$HOME/.local/share/zsh/site-functions:${FPATH}"
+fpath=( "$HOME/.local/share/zsh/site-functions" "${fpath[@]}" )
 {{- end }}
 
 {{ if stat "/nix/var/nix/profiles/default/share/zsh/site-functions/" -}}
-FPATH="/nix/var/nix/profiles/default/share/zsh/site-functions:${FPATH}"
+fpath=( "/nix/var/nix/profiles/default/share/zsh/site-functions" "${fpath[@]}" )
 {{- end }}
 
 autoload -Uz compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 
-# TODO: move to a bash completion file?
-complete -C '{{ lookPath "aws_completer" }}' aws
-complete -o nospace -C '{{ lookPath "terraform" }}' terraform
+{{ if stat "/usr/bin/aws_zsh_completer.sh" -}}
+source "/usr/bin/aws_zsh_completer.sh"
+{{- end }}
 
 {{ template "aliases.tmpl" . }}
 {{ template "functions.tmpl" . }}
