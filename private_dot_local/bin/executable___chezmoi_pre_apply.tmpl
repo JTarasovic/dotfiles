@@ -2,4 +2,19 @@
 
 set -euo pipefail
 
-kubectl completion zsh > "{{ joinPath .chezmoi.homeDir ".local/share/zsh/site-functions/_kubectl" }}"
+{{ $compDir := (joinPath .chezmoi.homeDir ".local/share/zsh/site-functions") -}}
+{{ if lookPath "kubectl" -}}
+kubectl completion zsh > "{{ joinPath $compDir "_kubectl" }}"
+{{- end }}
+
+{{ if lookPath "kind" -}}
+kind completion zsh > "{{ joinPath $compDir "_kind" }}"
+{{- end }}
+
+{{ if lookPath "goreleaser" -}}
+goreleaser completion zsh > "{{ joinPath $compDir "_goreleaser" }}"
+{{- end }}
+
+{{ if lookPath "npm" -}}
+npm completion > "{{ joinPath $compDir "_npm" }}"
+{{- end }}
