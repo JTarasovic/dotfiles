@@ -1,6 +1,6 @@
 configuration {
 	modi: "combi,calc";
-	font: "SauceCodePro NFP 13";
+	font: "JetBrainsMono NFP 13";
 	show-icons: true;
 	terminal: "alacritty";
 	icon-theme: "Arc";

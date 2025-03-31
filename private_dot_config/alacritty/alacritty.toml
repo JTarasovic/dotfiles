@@ -61,19 +61,19 @@ text = "#2e3440"
 size = 11
 
 [font.bold]
-family = "SauceCodePro NFP"
+family = "JetBrainsMono NFP"
 style = "Bold"
 
 [font.bold_italic]
-family = "SauceCodePro NFP"
+family = "JetBrainsMono NFP"
 style = "Bold Italic"
 
 [font.italic]
-family = "SauceCodePro NFP"
+family = "JetBrainsMono NFP"
 style = "Italic"
 
 [font.normal]
-family = "SauceCodePro NFP"
+family = "JetBrainsMono NFP"
 style = "Regular"
 
 [scrolling]
