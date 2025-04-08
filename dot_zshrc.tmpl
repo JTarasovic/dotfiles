@@ -1,4 +1,6 @@
-
+{{- /*
+# vi: ft=gotmpl
+*/ -}}
 # set history options
 HISTSIZE=10000
 SAVEHIST=10000
@@ -54,9 +56,16 @@ source "/usr/bin/aws_zsh_completer.sh"
 
 {{ template "aliases.tmpl" . }}
 {{ template "functions.tmpl" . }}
-{{ template "starship.tmpl" (dict "shell" "zsh") }}
+{{ if lookPath "starship" -}}
+eval -- "$(starship init zsh)"
+{{- end }}
+
 
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 {{ output (joinPath .chezmoi.sourceDir "helpers" "zsh-syntax-highlighter-finder.sh") }}
+
+{{- if lookPath "direnv" }}
+{{- output "direnv" "hook" "zsh" }}
+{{- end }}
 
 source "$HOME/.zshrc.local"

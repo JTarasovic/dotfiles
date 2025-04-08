@@ -1,11 +1,9 @@
 watch_url() {
-    while :;
-    do
-        curl -s -o /dev/null -w "%{http_code} - %{size_download}\n" --connect-timeout 2 -k "$1";
-        sleep "${2:-5}";
+    while :; do
+        curl -s -o /dev/null -w "%{http_code} - %{size_download}\n" --connect-timeout 2 -k "$1"
+        sleep "${2:-5}"
     done
 }
-
 
 curl_time() {
     echo -E '
@@ -21,7 +19,7 @@ curl_time() {
 }
 
 clear_terminal_title() {
-    echo -en "\e]2;Alacritty\a";
+    echo -en "\e]2;Alacritty\a"
 }
 
 {{ if lookPath "git" -}}
@@ -33,7 +31,7 @@ get_default_branch() {
     git remote show origin | awk '/HEAD branch/ {print $NF}'
 }
 
-clean () {
+clean() {
     set -e
     [[ -z ${TRACE:-""} ]] || set -x
     local old=$(git rev-parse --abbrev-ref HEAD)
@@ -48,17 +46,17 @@ clean () {
 
 # https://stackoverflow.com/questions/1029969/why-is-my-git-repository-so-big
 git-fatfiles() {
-    git rev-list --all --objects | \
-        sed -n $(git rev-list --objects --all | \
-        cut -f1 -d' ' | \
-        git cat-file --batch-check | \
-        grep blob | \
-        sort -n -k 3 | \
-        tail -n40 | \
-        while read hash type size; do
-             echo -n "-e s/$hash/$size/p ";
-        done) | \
-        sort -nr -k1
+    git rev-list --all --objects \
+        | sed -n $(git rev-list --objects --all \
+            | cut -f1 -d' ' \
+            | git cat-file --batch-check \
+            | grep blob \
+            | sort -n -k 3 \
+            | tail -n40 \
+            | while read hash type size; do
+                echo -n "-e s/$hash/$size/p "
+            done) \
+        | sort -nr -k1
 }
 
 {{- else -}}
@@ -82,10 +80,15 @@ pods_ready() {
     namespace="$1"
     label_selector="$2"
 
-    while IFS="|" read -r pod node statuses;
-    do
-        [[ "$statuses" =~ false ]] && echo "$pod in $namespace has unready containers on instance $node"
-    done < <(kubectl -n "$namespace" get pod -l "$label_selector" -o jsonpath='{range .items[*]}{.metadata.name}|{.spec.nodeName}|{.status.containerStatuses[*].ready}{"\n"}{end}')
+    while IFS="|" read -r pod node statuses; do
+        [[ $statuses =~ false ]] && echo "$pod in $namespace has unready containers on instance $node"
+    done < <(
+        kubectl \
+            -n "$namespace" \
+            get pod \
+            -l "$label_selector" \
+            -o jsonpath='{range .items[*]}{.metadata.name}|{.spec.nodeName}|{.status.containerStatuses[*].ready}{"\n"}{end}'
+    )
 }
 {{- else -}}
 # kubectl functions omitted
@@ -94,17 +97,32 @@ pods_ready() {
 {{ if lookPath "chezmoi" -}}
 cmet() {
     local template="$1"
-    chezmoi execute-template < "$(chezmoi source-path)/$1"
+    shift
+    chezmoi execute-template $@ < "$(chezmoi source-path)/$template"
+}
+cmetf() {
+    cmet "$@" | shfmt -d -s -bn -i 4 -ci -sr
 }
 {{- else -}}
 # chezmoi functions omitted
+{{- end }}
+
+{{ if lookPath "asdf" -}}
+asdf_cleanup() {
+    for plugin in $(asdf plugin list); do
+        for v in $(asdf list "$plugin" | rg -v '\*'); do
+            asdf uninstall "$plugin" "$v"
+        done
+    done
+}
+{{- else -}}
+# asdf functions omitted
 {{- end }}
 
 wg-restart() {
     local if="$1"
     sudo zsh -c "wg syncconf $if <(wg-quick strip $if)"
 }
-
 {{- /*
-# vi: ft=sh
+# vi: ft=gotmpl
 */ -}}

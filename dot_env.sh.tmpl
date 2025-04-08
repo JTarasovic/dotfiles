@@ -1,3 +1,6 @@
+{{- /*
+# vi: ft=gotmpl
+*/ -}}
 {{- $helpersDir := (joinPath .chezmoi.sourceDir "helpers") -}}
 {{ if lookPath "bat" -}}
 export BAT_THEME="Nord"
@@ -54,5 +57,3 @@ export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
 
 export TF_PLUGIN_CACHE_DIR="$HOME/.cache/terraform"
 mkdir -p "$TF_PLUGIN_CACHE_DIR"
-
-# vi: ft=sh

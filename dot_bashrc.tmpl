@@ -1,9 +1,12 @@
+{{- /*
+# vi: ft=gotmpl
+*/ -}}
 #!/bin/bash
 
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
-      *) return;;
+    *) return ;;
 esac
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -28,10 +31,12 @@ source "$HOME/.env.sh"
 
 {{ template "aliases.tmpl" . }}
 {{ template "functions.tmpl" . }}
-{{ template "starship.tmpl" (dict "shell" "bash") }}
+{{ if lookPath "starship" -}}
+eval -- "$(starship init bash --print-full-init)"
+{{- end }}
 
-{{- if lookPath "direnv" }}
-{{- output "direnv" "hook" "bash" }}
+{{- if lookPath "direnv" -}}
+{{- output "direnv" "hook" "bash" -}}
 {{- end }}
 
 source "$HOME/.bashrc.local"
