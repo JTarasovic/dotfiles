@@ -4,4 +4,9 @@ prompt: enabled
 aliases:
     clonebi: |
       clone-org -y -s "archived:false" -p /home/jason/Development/bi/ batteries-included
+    cache-size: |
+        !gh cache list -L 1000 --json sizeInBytes --jq '[.[].sizeInBytes] | add' \
+        | numfmt  --suffix=B --to=si --format='%.2f'
+    w: run watch
+    merge: pr merge -d
 version: "1"
