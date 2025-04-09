@@ -2,6 +2,7 @@ return {
     {
         'numToStr/Comment.nvim',
         lazy = false,
+        version = false,
         opts = {},
     },
     {
@@ -11,6 +12,10 @@ return {
         lazy = false,
         opts = {
             highlight = { pattern = [[.*<(KEYWORDS).*:]] },
+            search = {
+                pattern = [[\b(KEYWORDS).*:]],
+
+            },
         },
     }
 }

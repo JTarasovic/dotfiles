@@ -1,4 +1,4 @@
 return {
     "bfredl/nvim-luadev",
-    "nvim-lua/plenary.nvim",
+    {"nvim-lua/plenary.nvim", version = false },
 }

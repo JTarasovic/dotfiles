@@ -23,7 +23,7 @@ return {
         auto_install = true,
         ignore_install = {},
         incremental_selection = {
-            -- TODO(jdt): figure this out
+            -- TODO: figure this out
             enable = true,
         },
     },

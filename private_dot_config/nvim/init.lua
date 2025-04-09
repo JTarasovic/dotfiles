@@ -1,7 +1,7 @@
 require("settings")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.uv.fs_stat(lazypath) then
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
     vim.fn.system({
         "git",
         "clone",
@@ -11,13 +11,32 @@ if not vim.uv.fs_stat(lazypath) then
         lazypath,
     })
 end
+
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("plugins", {})
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 
--- TODO(jdt): move completion configuration into plugin config...
-require("cmpltn")
-require("keymap")
+require("lazy").setup({
+    spec = { { import = "plugins" } },
+    install = { colorscheme = { "nord" } },
+    checker = { enabled = true },
+    defaults = { version = "*" },
+})
+
+
+vim.diagnostic.config({
+    virtual_lines = { current_line = true },
+    virtual_text = true,
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = '',
+            [vim.diagnostic.severity.WARN]  = '',
+            [vim.diagnostic.severity.HINT]  = '󰌵',
+            [vim.diagnostic.severity.INFO]  = '',
+        },
+    },
+})
 
 -- local ft = require('Comment.ft')
 -- ft({ "cpp", }, { "//%s", "/*%s*/" })

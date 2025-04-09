@@ -11,13 +11,7 @@ return {
     {
         "nvim-lualine/lualine.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons", },
-        opts = {
-            options = {
-                theme = "nord",
-            },
-        },
-
+        opts = { options = { theme = "nord" }, },
     },
     { "nvim-tree/nvim-web-devicons", lazy = true },
-    { 'echasnovski/mini.nvim',       version = false },
 }

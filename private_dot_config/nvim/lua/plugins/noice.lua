@@ -2,7 +2,7 @@ return {
     "folke/noice.nvim",
     event = "VeryLazy",
     dependencies = {
-        "MunifTanjim/nui.nvim",
+        { "MunifTanjim/nui.nvim", version = false },
         "rcarriga/nvim-notify",
     },
     opts = {
@@ -10,7 +10,7 @@ return {
             override = {
                 ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
                 ["vim.lsp.util.stylize_markdown"] = true,
-                ["cmp.entry.get_documentation"] = true,
+                -- ["cmp.entry.get_documentation"] = true,
             },
         },
         routes = {
@@ -30,7 +30,7 @@ return {
             bottom_search = true,
             command_palette = true,
             long_message_to_split = true,
-            inc_rename = true,
+            inc_rename = false,
         },
     },
     keys = {
