@@ -48,6 +48,7 @@ return {
             nixd = {},
             rust_analyzer = {},
             -- tailwindcss = {},
+            taplo = {},
             terraformls = {},
             yamlls = {
                 settings = {

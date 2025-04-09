@@ -1,79 +1,177 @@
+#:schema https://starship.rs/config-schema.json
+
+add_newline = true
+
 format = """
 $username\
 $hostname\
 $shlvl\
+$singularity\
+$nats\
+$kubernetes\
 $directory\
-$fill\
-$git_branch\
-$git_status\
-$git_state\
+$vcsh\
+$pijul_channel\
+$docker_context\
 $package\
+$bun\
+$c\
+$cmake\
+$cobol\
+$daml\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$fennel\
+$gleam\
 $golang\
+$gradle\
+$haskell\
+$haxe\
+$helm\
 $java\
+$julia\
+$kotlin\
+$lua\
+$mojo\
+$nim\
+$nodejs\
+$ocaml\
+$odin\
+$opa\
+$perl\
+$php\
+$pulumi\
+$purescript\
 $python\
+$quarto\
+$raku\
+$rlang\
+$red\
+$ruby\
 $rust\
+$scala\
+$solidity\
+$swift\
 $terraform\
+$typst\
+$vlang\
+$vagrant\
+$zig\
+$buf\
+$guix_shell\
 $nix_shell\
-$time\
+$conda\
+$meson\
+$spack\
+$memory_usage\
+$direnv\
+$env_var\
+$crystal\
+$custom\
+$sudo\
 $cmd_duration\
+$fill\
+$fossil_branch\
+$fossil_metrics\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$time\
 $line_break\
 $jobs\
+$battery\
 $status\
-$character\
+$container\
+$os\
+$shell\
+$character
 """
 
 [aws]
-symbol = " "
+symbol = "  "
 
 [battery]
-full_symbol = ""
-charging_symbol = ""
-discharging_symbol = ""
+disabled = true
 
-[cmd_duration]
-style = "#BF616A"
+[buf]
+symbol = " "
 
-[character]
-success_symbol = "[❯](#D8DEE9) "
-error_symbol = "[❯](#BF616A) "
-vicmd_symbol = "[❮](#D8DEE9) "
+[c]
+symbol = " "
+
+[cmake]
+symbol = " "
 
 [conda]
 symbol = " "
+
+[cmd_duration]
+show_milliseconds = true
+show_notifications = true
+
+[crystal]
+symbol = " "
 
 [dart]
 symbol = " "
 
 [directory]
-truncate_to_repo = false
-truncation_symbol = "⋯ /"
-style = 'bold #ECEFF4'
+read_only = " 󰌾"
+truncation_symbol = " /"
+truncate_to_repo = true
 
 [docker_context]
 symbol = " "
 
 [elixir]
-symbol = " "
+symbol = " "
 
 [elm]
 symbol = " "
 
-[fill]
-symbol = " "
+[fennel]
+symbol = " "
+
+[fossil_branch]
+symbol = " "
 
 [git_branch]
-style = '#5E81AC'
-format = '[$symbol$branch]($style) '
+symbol = " "
+
+[git_commit]
+tag_symbol = '  '
 
 [git_status]
-style = '218'
-format = '([$all_status]($style)[$ahead_behind](cyan) )'
+format = '([$all_status](218)[$ahead_behind](cyan) )'
+stashed = "≡"
 
 [golang]
 symbol = " "
 
+[gradle]
+symbol = " "
+
+[guix_shell]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[haxe]
+symbol = " "
+
 [hg_branch]
 symbol = " "
+
+[hostname]
+ssh_symbol = "󰣀 "
 
 [java]
 symbol = " "
@@ -81,42 +179,106 @@ symbol = " "
 [julia]
 symbol = " "
 
+[kotlin]
+symbol = " "
+
 [kubernetes]
-style = '#81A1C1'
 disabled = true
-symbol = '⎈'
-format = ' [$symbol $context:$namespace]($style) '
+
+[lua]
+symbol = " "
 
 [memory_usage]
-symbol = " "
+symbol = "󰍛 "
+
+[meson]
+symbol = "󰔷 "
 
 [nim]
-symbol = " "
+symbol = "󰆥 "
 
 [nix_shell]
-symbol = " "
+symbol = " "
 
 [nodejs]
-symbol = " "
+symbol = " "
+
+[ocaml]
+symbol = " "
+
+[os.symbols]
+Alpaquita = " "
+Alpine = " "
+AlmaLinux = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CachyOS = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
+Kali = " "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+Nobara = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+RockyLinux = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Void = " "
+Windows = "󰍲 "
 
 [package]
-symbol = " "
+symbol = "󰏗 "
 
 [perl]
-symbol = " "
+symbol = " "
 
 [php]
 symbol = " "
 
+[pijul_channel]
+symbol = " "
+
 [python]
-symbol = " "
+symbol = " "
+
+[rlang]
+symbol = "󰟔 "
 
 [ruby]
-symbol = " "
-disabled = true
+symbol = " "
 
 [rust]
-symbol = " "
+symbol = "󱘗 "
+
+[scala]
+symbol = " "
 
 [shlvl]
 disabled = false
@@ -125,13 +287,12 @@ threshold = 3
 
 [status]
 disabled = false
-style = '#BF616A'
-format = '[$symbol$status]($style) '
-map_symbol = true
 
 [swift]
-symbol = "ﯣ "
+symbol = " "
 
 [time]
 disabled = false
-style = "#B48EAD"
+
+[zig]
+symbol = " "
