@@ -1,0 +1,5 @@
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/pkill --signal SIGRTMIN+%i i3status-rs
+
+# vi: ft=systemd

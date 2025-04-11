@@ -15,7 +15,7 @@ get_current() {
 set_current() {
     xdg-settings set default-web-browser "$1"
     do_echo "$1";
-    pkill --signal "SIGRTMIN+2" "i3status-rs"
+    systemctl start --user signal-i3status-rs@2.service
 }
 
 cycle() {
