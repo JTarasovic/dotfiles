@@ -1,3 +1,7 @@
+{{- /*
+# vi: ft=gotmpl
+*/ -}}
+
 # terminal manipulation
 alias c='clear'
 alias ..='cd ..'
@@ -40,27 +44,12 @@ alias k='kubectl'
 # kubectl aliases omitted
 {{- end }}
 
-{{ if lookPath "mysql" -}}
-# mysql
-alias mdev='mysql -P13306 -D{{ .mysql.db_name }} -A'
-alias mstaging='mysql -P13335 -D{{ .mysql.db_name }} -A'
-alias mprod='mysql -P13338 -D{{ .mysql.db_name }} -A'
-{{- else -}}
-# mysql aliases omitted
-{{- end }}
-
 {{ if lookPath "nvim" -}}
 # nvim
 alias vimdiff='nvim -d'
 {{- else -}}
 # nvim aliases omitted
 {{- end }}
-
-
-# misc
-alias yml2yaml='for f in *.yml; do mv -- "$f" "${f%.yml}.yaml"; done'
-alias flatten='find ./ -type f -exec mv '{}' . \;'
-
 
 {{ if (eq .chezmoi.os "darwin") -}}
 alias l='ls'
@@ -134,10 +123,7 @@ alias update_mirrors='sudo reflector --fastest 10 --score 25 --country US --prot
 # linux aliases omitted
 {{- end }}
 
+# misc
+alias yml2yaml='for f in *.yml; do mv -- "$f" "${f%.yml}.yaml"; done'
+alias flatten='find ./ -type f -exec mv '{}' . \;'
 alias assume='source assume'
-
-alias tfplan='terraform fmt && terraform validate && tflint && terraform plan'
-
-{{- /*
-vi: ft=sh
-*/ -}}

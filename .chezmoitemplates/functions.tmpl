@@ -1,3 +1,6 @@
+{{- /*
+# vi: ft=gotmpl
+*/ -}}
 watch_url() {
     while :; do
         curl -s -o /dev/null -w "%{http_code} - %{size_download}\n" --connect-timeout 2 -k "$1"
@@ -5,21 +8,21 @@ watch_url() {
     done
 }
 
+# e.g. curl -so /dev/null https://www.google.com/ -w "$(curl_time)"
 curl_time() {
-    echo -E '
-    time_nslookup:      %{time_namelookup} s
-    time_connect:       %{time_connect} s
-    time_appconnect:    %{time_appconnect} s
-    time_pretransfer:   %{time_pretransfer} s
-    time_redirect:      %{time_redirect} s
-    time_starttransfer: %{time_starttransfer} s
-                        ----------------------
-    time_total:         %{time_total} s\n
-'
+    printf '
+time_nslookup:      %%{time_namelookup} s
+time_connect:       %%{time_connect} s
+time_appconnect:    %%{time_appconnect} s
+time_pretransfer:   %%{time_pretransfer} s
+time_redirect:      %%{time_redirect} s
+time_starttransfer: %%{time_starttransfer} s
+                    ----------
+time_total:         %%{time_total} s\\n'
 }
 
 clear_terminal_title() {
-    echo -en "\e]2;Alacritty\a"
+    printf "\e]2;Alacritty\a"
 }
 
 {{ if lookPath "git" -}}
@@ -34,10 +37,17 @@ get_default_branch() {
 clean() {
     set -e
     [[ -z ${TRACE:-""} ]] || set -x
-    local old=$(git rev-parse --abbrev-ref HEAD)
-    local br=$(get_default_branch)
+    local old
+    local br
+
+    old=$(git rev-parse --abbrev-ref HEAD)
+    br=$(get_default_branch)
+
     git fetch --prune origin
-    git checkout "${1:-$br}"
+    git checkout "${1:-$br}" || {
+        echo "couldn't check out branch!"
+        return
+    }
     git rebase
     git br -D "$old"
     git gc --prune=now
@@ -53,12 +63,11 @@ git-fatfiles() {
             | grep blob \
             | sort -n -k 3 \
             | tail -n40 \
-            | while read hash type size; do
-                echo -n "-e s/$hash/$size/p "
+            | while read -r hash _type size; do
+                printf "-e s/%s/%s/p " "$hash" "$size"
             done) \
         | sort -nr -k1
 }
-
 {{- else -}}
 # git functions omitted
 {{- end }}
@@ -90,15 +99,19 @@ pods_ready() {
             -o jsonpath='{range .items[*]}{.metadata.name}|{.spec.nodeName}|{.status.containerStatuses[*].ready}{"\n"}{end}'
     )
 }
+
+kjq() {
+    local spec="$1"
+    shift
+    kubectl get -o json $@ | jq "$spec"
+}
 {{- else -}}
 # kubectl functions omitted
 {{- end }}
 
 {{ if lookPath "chezmoi" -}}
 cmet() {
-    local template="$1"
-    shift
-    chezmoi execute-template $@ < "$(chezmoi source-path)/$template"
+    chezmoi execute-template $@
 }
 cmetf() {
     cmet "$@" | shfmt -d -s -bn -i 4 -ci -sr
@@ -119,10 +132,23 @@ asdf_cleanup() {
 # asdf functions omitted
 {{- end }}
 
+{{ if lookPath "wg" -}}
 wg-restart() {
     local if="$1"
     sudo zsh -c "wg syncconf $if <(wg-quick strip $if)"
 }
-{{- /*
-# vi: ft=gotmpl
-*/ -}}
+{{- else -}}
+# wg functions omitted
+{{- end }}
+
+{{ if lookPath "docker" -}}
+clean_docker_images() {
+    docker rmi --force $(docker images -qa)
+
+    if [ $1 == "--deep" ]; then
+        docker system prune --all --force --volumes
+    fi
+}
+{{- else -}}
+# docker functions omitted
+{{- end }}
