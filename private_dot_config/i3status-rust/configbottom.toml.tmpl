@@ -21,8 +21,6 @@
 
 [theme]
 theme = "nord-dark"
-[theme.overrides]
-separator = ""
 
 [icons]
 icons = "material-nf"
@@ -57,11 +55,6 @@ mac = {{ $mouse_mac|quote }}
 {{- end }}
 
 [[block]]
-block = "custom"
-command = "echo '|'"
-interval = "once"
-
-[[block]]
 block = "disk_space"
 path = "/"
 format = " $icon / {$free} "
@@ -73,7 +66,7 @@ alert_unit = "GB"
 
 [[block]]
 block = "docker"
-format = " $icon T:{$total} R:{$running} S:{$stopped} P:{$paused} I:{$images} "
+format = " $icon T:{$total.tally} R:{$running.tally} S:{$stopped.tally} P:{$paused.tally} I:{$images.tally} "
 interval = 60
 
 {{ if ( get $sensors "nvme-pci-0400" ) -}}
@@ -91,11 +84,6 @@ interval = 5
 {{- end }}
 
 [[block]]
-block = "custom"
-command = "echo '|'"
-interval = "once"
-
-[[block]]
 block = "disk_space"
 path = "/home"
 format = " $icon ~ {$free} "
@@ -109,7 +97,7 @@ interval = 120
 {{ if $dockerSock -}}
 [[block]]
 block = "docker"
-format = " $icon T:{$total} R:{$running} S:{$stopped} P:{$paused} I:{$images} "
+format = " $icon T:{$total.tally} R:{$running.tally} S:{$stopped.tally} P:{$paused.tally} I:{$images.tally} "
 interval = 60
 socket_path = "{{ $dockerSock }}"
 {{- end }}
@@ -129,21 +117,11 @@ interval = 5
 {{- end }}
 
 [[block]]
-block = "custom"
-command = "echo '|'"
-interval = "once"
-
-[[block]]
 block = "memory"
 # display_type = "memory"
 format = " $icon {$mem_free.eng(p:G)} "
 format_alt = " $icon_swap {$swap_free.eng(p:G)} "
 interval = 5
-
-[[block]]
-block = "custom"
-command = "echo '|'"
-interval = "once"
 
 [[block]]
 block = "net"
@@ -158,21 +136,15 @@ good = 10
 idle = 20
 info = 65
 warning = 70
-format = "  {$max} "
+format = " 󰖩 {$max} "
 interval = 5
 {{- else -}}
 # skipped iwlwifi_1
 {{- end }}
 
 [[block]]
-block = "custom"
-command = "echo '|'"
-interval = "once"
-
-[[block]]
 block = "amd_gpu"
-format_alt = " $icon MEM: $vram_used_percents ($vram_used/$vram_total) "
-device = "card1"
+format_alt = " $icon $vram_used_percents ($vram_used/$vram_total) "
 
 {{ if ( get $sensors "amdgpu-pci-0c00" ) -}}
 [[block]]
@@ -188,11 +160,6 @@ interval = 5
 {{- else -}}
 # skipped amdgpu
 {{- end }}
-
-[[block]]
-block = "custom"
-command = "echo '|'"
-interval = "once"
 
 [[block]]
 block = "load"
@@ -213,7 +180,7 @@ good = 20
 idle = 30
 info = 75
 warning = 80
-format = "  {$max} "
+format = "  {$max} "
 interval = 5
 {{- else -}}
 # skipped k10temp

@@ -1,8 +1,10 @@
 # vi:syntax=toml
+
+# TODO: fix colors i.e. where idle_{f,b}g = something
+# it doesn't currently look great
+
 [theme]
 theme = "nord-dark"
-[theme.overrides]
-separator = ""
 
 [icons]
 icons = "material-nf"
@@ -23,11 +25,16 @@ command = ''' current-context '''
 block = "music"
 format = " $icon {$combo.str(max_w:75,rot_interval:0.5) $play |}"
 
+[block.theme_overrides]
+idle_fg = { link = "warning_fg" }
+idle_bg = { link = "warning_bg" }
+
+
 [[block]]
 block = "sound"
 headphones_indicator = true
 show_volume_when_muted = true
-format = " $icon {$output_name} {$volume} |"
+format = " {$output_name} {$volume} "
 
 [[block.click]]
 button = "left"
@@ -36,8 +43,8 @@ cmd = {{ (joinPath .chezmoi.homeDir ".local" "bin" "toggle_sinks") | quote }}
 [block.mappings]
 "alsa_output.pci-0000_0e_00.4.analog-stereo" = "󰋋"
 "alsa_output.usb-Schiit_Audio_I_m_Fulla_Schiit-00.analog-stereo" = "󰋋"
-"alsa_output.pci-0000_0c_00.1.hdmi-stereo-extra3" = "󰴸"
-"bluez_sink.B0_67_2F_1C_94_26.*" = "󰂰"
+"alsa_output.pci-0000_0c_00.1.hdmi-stereo-extra3" = "󰓃"
+"bluez_sink.B0_67_2F_1C_94_26.*" = "󰥰"
 
 [[block]]
 block = "sound"
@@ -46,8 +53,12 @@ show_volume_when_muted = true
 
 [[block]]
 block = "weather"
-format = " $icon $weather $temp"
+format = "$icon $weather $temp "
 interval = 900
+
+[block.theme_overrides]
+idle_fg = { link = "info_fg" }
+idle_bg = { link = "info_bg" }
 
 [block.service]
 name = "openweathermap"
@@ -63,6 +74,10 @@ interval = 60
 full = " $icon $timestamp.datetime(f:'%a %b %d %R') "
 short = " $icon $timestamp.datetime(f:%R) "
 
+[block.theme_overrides]
+idle_fg = { link = "good_fg" }
+idle_bg = { link = "good_bg" }
+
 [[block]]
 block = "tea_timer"
 done_cmd = "dunstify -a Tea Timer -u critical 'Timer finished!'; espeak '[[_::_::_::]] timer finished'"
@@ -77,11 +92,16 @@ button = "left"
 cmd = "{{ (joinPath .chezmoi.homeDir ".local" "bin" "browsers") }} CYCLE"
 
 [[block]]
+block = "privacy"
+[[block.driver]]
+name = "pipewire"
+
+[[block]]
 block = "notify"
 
 [[block]]
 block = "custom"
-command = "echo \uf011"
+command = "echo ''"
 interval = "once"
 [[block.click]]
 button = "left"
