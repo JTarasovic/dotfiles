@@ -29,10 +29,18 @@ return {
             end
 
             local get_root_dir = function()
-                lsputils.root_pattern(".git")(utils.buffer_dir())
+                return lsputils.root_pattern(".git")(utils.buffer_dir())
             end
 
             return {
+                {
+                    "<leader>0", -- TODO: figure out a better mapping for this
+                    wrap(function()
+                        print(get_root_dir())
+                    end, {}),
+                    mode = "n",
+                    desc = "get root dir",
+                },
                 {
                     "<leader>:",
                     wrap(t.command_history, {}),
@@ -61,7 +69,7 @@ return {
                     -- This will restrict the list of files to only those in the current dir
                     -- Generally, not very helpful unless you want to open a sibling
                     "<leader>fF",
-                    wrap(t.find_files, function() return { cwd = utils.buffer_dir, hidden = true, } end),
+                    wrap(t.find_files, function() return { cwd = utils.buffer_dir(), hidden = true, } end),
                     mode = "n",
                     desc = "Telescope find_files (relative)",
                 },
