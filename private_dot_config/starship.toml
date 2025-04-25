@@ -114,7 +114,6 @@ symbol = " "
 
 [cmd_duration]
 show_milliseconds = true
-show_notifications = true
 
 [crystal]
 symbol = " "
