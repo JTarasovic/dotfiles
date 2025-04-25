@@ -18,6 +18,7 @@ return {
         set_keymap("i", "jj", "<esc>l", { remap = false })
 
         wk.add({
+            -- TODO: fix up these icons and colors.
             { "<leader>g", group = "grep", icon = { icon = "󰑑", hl = "WhichKeyIconBlue" } },
             { "<leader>x", group = "trouble", icon = { icon = "󰒺", hl = "WhichKeyIconBlue" } },
             { "<leader>w", group = "workspace", icon = { icon = "", hl = "WhichKeyIconBlue" } },
