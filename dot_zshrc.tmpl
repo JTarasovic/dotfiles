@@ -61,7 +61,7 @@ eval "$(register-python-argcomplete pipx)"
 {{ template "aliases.tmpl" . }}
 {{ template "functions.tmpl" . }}
 {{ if lookPath "starship" -}}
-eval -- "$(starship init zsh)"
+type starship_zle-keymap-select >/dev/null || eval -- "$(starship init zsh)"
 {{- end }}
 
 
