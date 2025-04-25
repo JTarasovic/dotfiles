@@ -40,7 +40,9 @@ local servers = {
     elixirls = {
         cmd = { io.popen("which elixir-ls"):read() },
     },
-    golangci_lint_ls = {},
+    golangci_lint_ls = {
+        on_attach = {}, -- doesn't support formatting
+    },
     gopls = {},
     harper_ls = {
         on_attach = {}, -- doesn't support formatting
