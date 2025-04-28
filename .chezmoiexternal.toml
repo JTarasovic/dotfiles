@@ -1,14 +1,19 @@
 [".nord_dir_colors"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/nordtheme/dircolors/develop/src/dir_colors"
-    refreshPeriod = "24h"
+type = "file"
+url = "https://raw.githubusercontent.com/nordtheme/dircolors/develop/src/dir_colors"
+refreshPeriod = "24h"
 
 [".config/rofi/themes/amayer5125-nord.rasi"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/amayer5125/nord-rofi/master/nord.rasi"
-    refreshPeriod = "24h"
+type = "file"
+url = "https://raw.githubusercontent.com/amayer5125/nord-rofi/master/nord.rasi"
+refreshPeriod = "24h"
 
 [".config/rofi/themes/undiabler-nord.rasi"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/undiabler/nord-rofi-theme/master/nord.rasi"
-    refreshPeriod = "24h"
+type = "file"
+url = "https://raw.githubusercontent.com/undiabler/nord-rofi-theme/master/nord.rasi"
+refreshPeriod = "24h"
+
+[".local/share/zsh/plugins/zsh-better-npm-completion"]
+type = "file"
+url = "https://raw.githubusercontent.com/lukechilds/zsh-better-npm-completion/refs/heads/master/zsh-better-npm-completion.plugin.zsh"
+refreshPeriod = "24h"

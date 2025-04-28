@@ -58,6 +58,11 @@ complete -C aws_completer aws
 eval "$(register-python-argcomplete pipx)"
 {{- end }}
 
+{{ $npmPlugin := (joinPath .chezmoi.homeDir ".local/share/zsh/plugins/zsh-better-npm-completion") -}}
+{{ if stat $npmPlugin -}}
+source {{ $npmPlugin }}
+{{- end }}
+
 {{ template "aliases.tmpl" . }}
 {{ template "functions.tmpl" . }}
 {{ if lookPath "starship" -}}
