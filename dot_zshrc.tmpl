@@ -50,8 +50,8 @@ fpath=( "/nix/var/nix/profiles/default/share/zsh/site-functions" "${fpath[@]}" )
 autoload -Uz compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 
-{{ if stat "/usr/bin/aws_zsh_completer.sh" -}}
-source "/usr/bin/aws_zsh_completer.sh"
+{{ if lookPath "aws_completer" -}}
+complete -C aws_completer aws
 {{- end }}
 
 {{ if lookPath "pipx" -}}
