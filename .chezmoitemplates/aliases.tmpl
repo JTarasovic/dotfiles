@@ -114,7 +114,20 @@ alias add='sudo add-apt-repository'
 {{- end }}
 
 {{ if lookPath "pacman" -}}
-alias update_mirrors='sudo reflector --fastest 10 --score 25 --country US --protocol https --sort rate --connection-timeout 1 --download-timeout 1 --threads 4 --verbose --save /etc/pacman.d/mirrorlist'
+alias update_mirrors='sudo systemctl start reflector.service'
+
+# settings in /etc/xdg/reflector/reflector.conf
+# --connection-timeout 1
+# --download-timeout 1
+# --threads 4
+# --verbose
+# --save /etc/pacman.d/mirrorlist
+# --protocol https
+# --country US
+# --score 25
+# --fastest 10
+# --sort rate
+# --ipv6
 {{- else -}}
 # pacman aliases omitted
 {{- end }}
