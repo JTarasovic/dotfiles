@@ -31,7 +31,7 @@ fixup() {
 }
 
 get_default_branch() {
-    git remote show origin | awk '/HEAD branch/ {print $NF}'
+    git symbolic-ref refs/remotes/origin/HEAD | cut -d'/' -f4
 }
 
 clean() {
@@ -48,7 +48,10 @@ clean() {
         echo "couldn't check out branch!"
         return
     }
-    git rebase
+    git rebase || {
+        echo "couldn't rebase!"
+        return
+    }
     git br -D "$old"
     git gc --prune=now
     set +e
