@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 {{ if (eq .chezmoi.os "darwin") -}}
 # shellcheck source=/dev/null
-[ -f "$HOME/.bashrc" ] && source $HOME/.bashrc
+test -f "$HOME/.bashrc" && source "$_"
 {{- else -}}
 # darwin aliases omitted
 {{- end }}
