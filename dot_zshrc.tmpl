@@ -64,6 +64,13 @@ source {{ $npmPlugin }}
 {{- end }}
 
 {{ template "aliases.tmpl" . }}
+# zsh specific aliases
+{{ if lookPath "bat" -}}
+alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
+alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
+{{- else -}}
+# additional bat aliases omitted
+{{- end }}
 {{ template "functions.tmpl" . }}
 {{ if lookPath "starship" -}}
 type starship_zle-keymap-select >/dev/null || eval -- "$(starship init zsh)"

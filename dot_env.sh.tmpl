@@ -4,8 +4,12 @@
 {{- $helpersDir := (joinPath .chezmoi.sourceDir "helpers") -}}
 {{ if lookPath "bat" -}}
 export BAT_THEME="Nord"
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-export MANROFFOPT="-c"
+{{- else -}}
+# bat export omitted
+{{- end }}
+
+{{ if lookPath "batman" -}}
+{{ output "batman" "--export-env" }}
 {{- else -}}
 # bat export omitted
 {{- end }}
