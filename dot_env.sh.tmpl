@@ -60,6 +60,3 @@ export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
 {{- else -}}
 # brew init omitted
 {{- end }}
-
-export TF_PLUGIN_CACHE_DIR="$HOME/.cache/terraform"
-mkdir -p "$TF_PLUGIN_CACHE_DIR"
