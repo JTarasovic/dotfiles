@@ -44,10 +44,10 @@ local servers = {
         on_attach = {}, -- doesn't support formatting
     },
     gopls = {},
-    harper_ls = {
-        on_attach = {}, -- doesn't support formatting
-        settings = { ["harper-ls"] = { userDictPath = "~/.config/harper-ls/dictionary.txt" }, },
-    },
+    -- harper_ls = {
+    --     on_attach = {}, -- doesn't support formatting
+    --     settings = { ["harper-ls"] = { userDictPath = "~/.config/harper-ls/dictionary.txt" }, },
+    -- },
     lua_ls = {
         on_init = lua_on_init,
         settings = { Lua = { telemetry = { enable = false }, } }
