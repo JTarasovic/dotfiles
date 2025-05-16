@@ -80,6 +80,10 @@ type starship_zle-keymap-select >/dev/null || eval -- "$(starship init zsh)"
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 {{ output (joinPath .chezmoi.sourceDir "helpers" "zsh-syntax-highlighter-finder.sh") }}
 
+{{- if lookPath "mise" }}
+eval -- "$(mise activate zsh)"
+{{- end }}
+
 {{- if lookPath "direnv" }}
 {{- output "direnv" "hook" "zsh" }}
 {{- end }}
