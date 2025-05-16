@@ -8,5 +8,5 @@ aliases:
         !gh cache list -L 1000 --json sizeInBytes --jq '[.[].sizeInBytes] | add' \
         | numfmt  --suffix=B --to=si --format='%.2f'
     w: run watch
-    merge: pr merge -d
+    merge: pr merge --squash --delete-branch
 version: "1"

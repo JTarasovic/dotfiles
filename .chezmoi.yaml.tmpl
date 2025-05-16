@@ -54,6 +54,11 @@
 
 {{- end -}}
 
+hooks:
+    apply:
+        post:
+            command: __chezmoi_post_apply
+
 data:
     email: {{ $email }}
     fullname: {{ $fullname }}
