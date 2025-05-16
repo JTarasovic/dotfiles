@@ -15,6 +15,19 @@ kind completion zsh > "{{ joinPath $compDir "_kind" }}"
 goreleaser completion zsh > "{{ joinPath $compDir "_goreleaser" }}"
 {{- end }}
 
+{{ if lookPath "rg" -}}
+rg --generate complete-zsh > "{{ joinPath $compDir "_rg" }}"
+{{- end }}
+
+{{ if lookPath "gh" -}}
+gh completion -s zsh > "{{ joinPath $compDir "_gh" }}"
+{{- end }}
+
+{{ if lookPath "chezmoi" -}}
+chezmoi completion zsh > "{{ joinPath $compDir "_chezmoi" }}"
+{{- end }}
+
 ## {{ if lookPath "npm" -}}
 ## npm completion > "{{ joinPath $compDir "_npm" }}"
 ## {{- end }}
+
