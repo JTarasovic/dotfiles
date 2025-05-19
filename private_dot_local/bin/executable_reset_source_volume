@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+pactl set-source-volume "$(pactl get-default-source)" 100%

@@ -51,6 +51,10 @@ block = "sound"
 device_kind = 'source'
 show_volume_when_muted = true
 
+[[block.click]]
+button = "left"
+cmd = {{ (joinPath .chezmoi.homeDir ".local" "bin" "reset_source_volume") | quote }}
+
 [[block]]
 block = "weather"
 format = "$icon $weather $temp "
