@@ -27,6 +27,7 @@ export EDITOR={{ lookPath "nvim" }}
 {{ output "dircolors" $nord_dir_colors }}
 {{- end }}
 export USER_LS_COLORS="$LS_COLORS"
+export LESS='-R'
 {{- else -}}
 # linux env skipped
 {{- end }}
