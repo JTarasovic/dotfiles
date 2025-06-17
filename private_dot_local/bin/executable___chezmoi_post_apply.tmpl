@@ -27,6 +27,10 @@ gh completion -s zsh > "{{ joinPath $compDir "_gh" }}"
 chezmoi completion zsh > "{{ joinPath $compDir "_chezmoi" }}"
 {{- end }}
 
+{{ if lookPath "helm" -}}
+helm completion zsh > "{{ joinPath $compDir "_helm" }}"
+{{- end }}
+
 ## {{ if lookPath "npm" -}}
 ## npm completion > "{{ joinPath $compDir "_npm" }}"
 ## {{- end }}
