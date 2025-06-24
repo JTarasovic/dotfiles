@@ -29,7 +29,6 @@ format = " $icon {$combo.str(max_w:75,rot_interval:0.5) $play |}"
 idle_fg = { link = "warning_fg" }
 idle_bg = { link = "warning_bg" }
 
-
 [[block]]
 block = "sound"
 headphones_indicator = true
@@ -69,6 +68,10 @@ name = "openweathermap"
 api_key = "{{ .openweathermap.api_key }}"
 city_id = "4377664"
 units = "imperial"
+
+[[block.click]]
+button = "left"
+cmd = "firefox-developer-edition --new-tab https://openweathermap.org/city/4377664"
 
 [[block]]
 block = "time"
