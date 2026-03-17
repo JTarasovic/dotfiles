@@ -31,6 +31,10 @@ chezmoi completion zsh > "{{ joinPath $compDir "_chezmoi" }}"
 helm completion zsh > "{{ joinPath $compDir "_helm" }}"
 {{- end }}
 
+{{ if lookPath "istioctl" -}}
+istioctl completion zsh > "{{ joinPath $compDir "_istioctl" }}"
+{{- end }}
+
 ## {{ if lookPath "npm" -}}
 ## npm completion > "{{ joinPath $compDir "_npm" }}"
 ## {{- end }}
