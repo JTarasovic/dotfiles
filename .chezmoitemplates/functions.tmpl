@@ -108,6 +108,22 @@ kjq() {
     shift
     kubectl get -o json $@ | jq "$spec"
 }
+
+clean_kube_config() {
+    local tmp
+    tmp=$(mktemp)
+    trap 'rm -rf "$tmp"; trap - EXIT' EXIT
+
+    kubectl config-cleanup --raw >"$tmp"
+    mv "$tmp" ~/.kube/config
+}
+
+kdiff() {
+    local a=shift
+    local b=shift
+    local x=$@
+    diff -y -W 80 <(kubectl --context="$a" get -o yaml $x) <(kubectl --context="$b" get -o yaml $x)
+}
 {{- else -}}
 # kubectl functions omitted
 {{- end }}
