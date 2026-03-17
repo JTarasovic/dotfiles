@@ -34,6 +34,7 @@ block = "sound"
 headphones_indicator = true
 show_volume_when_muted = true
 format = " {$output_name} {$volume} "
+driver = "pulseaudio"
 
 [[block.click]]
 button = "left"
@@ -49,6 +50,7 @@ cmd = {{ (joinPath .chezmoi.homeDir ".local" "bin" "toggle_sinks") | quote }}
 block = "sound"
 device_kind = 'source'
 show_volume_when_muted = true
+driver = "pulseaudio"
 
 [[block.click]]
 button = "left"
@@ -88,6 +90,7 @@ idle_bg = { link = "good_bg" }
 [[block]]
 block = "tea_timer"
 done_cmd = "dunstify -a Tea Timer -u critical 'Timer finished!'; espeak '[[_::_::_::]] timer finished'"
+increment = 60
 
 [[block]]
 block = "custom"
