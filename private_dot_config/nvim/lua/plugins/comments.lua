@@ -2,7 +2,6 @@ return {
     {
         'numToStr/Comment.nvim',
         lazy = false,
-        version = false,
         opts = {},
     },
     {

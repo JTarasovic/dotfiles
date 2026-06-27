@@ -1,3 +1,5 @@
+.claude/
+CLAUDE.md
 helpers/
 README.md
 plug.vim
