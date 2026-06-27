@@ -1,6 +1,7 @@
 #:schema https://starship.rs/config-schema.json
 
 add_newline = true
+palette = "nord"
 
 format = """
 $username\
@@ -148,7 +149,7 @@ symbol = " "
 tag_symbol = '  '
 
 [git_status]
-format = '([$all_status](218)[$ahead_behind](cyan) )'
+format = '([$all_status](purple)[$ahead_behind](cyan) )'
 stashed = "≡"
 
 [golang]
@@ -295,3 +296,21 @@ disabled = false
 
 [zig]
 symbol = " "
+
+[palettes.nord]
+black         = "#2E3440"   # Nord0  — polar night darkest
+bright-black  = "#4C566A"   # Nord3  — polar night lightest / comments
+red           = "#BF616A"   # Nord11 — aurora red
+bright-red    = "#BF616A"
+green         = "#A3BE8C"   # Nord14 — aurora green
+bright-green  = "#A3BE8C"
+yellow        = "#EBCB8B"   # Nord13 — aurora yellow
+bright-yellow = "#EBCB8B"
+blue          = "#5E81AC"   # Nord10 — frost deep blue
+bright-blue   = "#81A1C1"   # Nord9  — frost medium blue
+purple        = "#B48EAD"   # Nord15 — aurora purple
+bright-purple = "#B48EAD"
+cyan          = "#88C0D0"   # Nord8  — frost light blue
+bright-cyan   = "#8FBCBB"   # Nord7  — frost teal
+white         = "#E5E9F0"   # Nord5  — snow storm mid
+bright-white  = "#ECEFF4"   # Nord6  — snow storm bright
