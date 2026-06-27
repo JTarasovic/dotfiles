@@ -83,6 +83,9 @@
 [gpg]
     format = ssh
 
+[gpg "ssh"]
+    allowedSignersFile = ~/.ssh/allowed_signers
+
 [help]
     autocorrect = 1
 
@@ -121,4 +124,4 @@
 [user]
     email = {{ .email }}
     name = {{ .fullname }}
-    signingKey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJOXjK3lFzYXZx682Osg3hNagm5TmmGTygNHNETLbLNO
+    signingKey = ~/.ssh/id_ed25519

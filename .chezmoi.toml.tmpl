@@ -1,23 +1,23 @@
-{{- $email := .email -}}
+{{- $email := dig "email" "" . -}}
 {{- if not $email -}}
 {{-   $email = promptString "email" -}}
 {{- end -}}
 
-{{- $fullname := .fullname -}}
+{{- $fullname := dig "fullname" "" . -}}
 {{- if not $fullname -}}
 {{-   $fullname = promptString "full name" -}}
 {{- end -}}
 
-{{- $mysql_db_name := .mysql.db_name -}}
+{{- $mysql_db_name := dig "mysql" "db_name" "" . -}}
 {{- if not $mysql_db_name -}}
 {{-   $mysql_db_name = promptString "mysql DB Name" -}}
 {{- end -}}
 
 
-{{- $reddit_url := .feed.reddit_url -}}
-{{- $reddit_username := .feed.reddit_username -}}
-{{- $openweathermap_api_key := .openweathermap.api_key -}}
-{{- $yubico_favorites := .yubico.favorites -}}
+{{- $reddit_url := dig "feed" "reddit_url" "" . -}}
+{{- $reddit_username := dig "feed" "reddit_username" "" . -}}
+{{- $openweathermap_api_key := dig "openweathermap" "api_key" "" . -}}
+{{- $yubico_favorites := dig "yubico" "favorites" "" . -}}
 
 {{- if lookPath "lpass" -}}
 {{- if not $reddit_url -}}
@@ -37,45 +37,40 @@
 {{- end -}}
 {{- else -}}
 {{- if not $reddit_url -}}
-{{-   $reddit_url = "" | quote -}}
+{{-   $reddit_url = "" -}}
 {{- end -}}
 
 {{- if not $reddit_username -}}
-{{-   $reddit_username = "" | quote -}}
+{{-   $reddit_username = "" -}}
 {{- end -}}
 
 {{- if not $openweathermap_api_key -}}
-{{-   $openweathermap_api_key = "" | quote -}}
+{{-   $openweathermap_api_key = "" -}}
 {{- end -}}
 
 {{- if not $yubico_favorites -}}
-{{-   $yubico_favorites = "" | quote -}}
+{{-   $yubico_favorites = "" -}}
 {{- end -}}
 
 {{- end -}}
 
-hooks:
-    apply:
-        post:
-            command: __chezmoi_post_apply
+[hooks.apply.post]
+command = "__chezmoi_post_apply"
 
-data:
-    email: {{ $email }}
-    fullname: {{ $fullname }}
-    nerd_font: JetBrainsMono NFM
+[data]
+email = {{ $email | quote }}
+fullname = {{ $fullname | quote }}
+nerd_font = "JetBrainsMono NFM"
 
-    feed:
-        reddit_username: {{ $reddit_username }}
-        reddit_url: |-
-            {{ $reddit_url }}
+[data.feed]
+reddit_username = {{ $reddit_username | quote }}
+reddit_url = {{ $reddit_url | quote }}
 
-    openweathermap:
-        api_key: {{ $openweathermap_api_key }}
+[data.openweathermap]
+api_key = {{ $openweathermap_api_key | quote }}
 
-    yubico:
-        favorites: |-
-            {{ $yubico_favorites }}
+[data.yubico]
+favorites = {{ $yubico_favorites | quote }}
 
-    mysql:
-        db_name: {{ $mysql_db_name }}
-
+[data.mysql]
+db_name = {{ $mysql_db_name | quote }}
