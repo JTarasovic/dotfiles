@@ -1,0 +1,2 @@
+[post-start]
+symlink-settings = "mkdir -p .claude && ln -sf {{ primary_worktree_path }}/.claude/settings.local.json .claude/settings.local.json"

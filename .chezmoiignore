@@ -1,4 +1,5 @@
 .claude/
+.config/
 CLAUDE.md
 helpers/
 README.md
