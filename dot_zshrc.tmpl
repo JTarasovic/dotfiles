@@ -1,6 +1,9 @@
 {{- /*
 # vi: ft=gotmpl
 */ -}}
+# Exit early when running under Claude Code — prevents aliases/prompt from polluting shell snapshots
+[[ -n "$CLAUDECODE" ]] && return
+
 # set history options
 HISTSIZE=10000
 SAVEHIST=10000
