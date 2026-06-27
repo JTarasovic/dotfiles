@@ -91,4 +91,8 @@ eval -- "$(mise activate zsh)"
 {{- output "direnv" "hook" "zsh" }}
 {{- end }}
 
+{{- if lookPath "wt" }}
+eval -- "$(wt config shell init zsh)"
+{{- end }}
+
 source "$HOME/.zshrc.local"

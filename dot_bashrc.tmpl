@@ -43,4 +43,8 @@ eval -- "$(mise activate bash)"
 {{- output "direnv" "hook" "bash" -}}
 {{- end }}
 
+{{- if lookPath "wt" }}
+eval -- "$(wt config shell init bash)"
+{{- end }}
+
 source "$HOME/.bashrc.local"
