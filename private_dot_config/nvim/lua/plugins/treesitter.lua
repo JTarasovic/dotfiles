@@ -39,7 +39,7 @@ return {
                 return true
             end, opts.ensure_installed)
         end
-        require("nvim-treesitter.configs").setup(opts)
+        require("nvim-treesitter").setup(opts)
         if opts.textobjects then
             for _, mod in ipairs({ "move", "select", "swap", "lsp_interop" }) do
                 if opts.textobjects[mod] and opts.textobjects[mod].enable then
@@ -52,7 +52,7 @@ return {
             end
         end
         vim.o.foldmethod = "expr"
-        vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+        vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
         vim.o.foldenable = false
     end,
 }

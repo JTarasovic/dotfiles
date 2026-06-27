@@ -38,7 +38,7 @@ local servers = {
         root_markers = { 'Dockerfile', 'docker-compose.yaml', 'docker-compose.yml', 'compose.yaml', 'compose.yml', '.git' },
     },
     elixirls = {
-        cmd = { io.popen("which elixir-ls"):read() },
+        cmd = { io.popen("which elixir-ls"):read() or "elixir-ls" },
     },
     golangci_lint_ls = {
         on_attach = {}, -- doesn't support formatting
@@ -90,7 +90,7 @@ return {
             virtual_lines = true,
             virtual_text = false,
             jump = {
-                float = true,
+                on_jump = function() vim.diagnostic.open_float() end,
             },
             signs = {
                 text = {

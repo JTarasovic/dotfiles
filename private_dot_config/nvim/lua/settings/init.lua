@@ -41,5 +41,6 @@ o.inccommand = "split"
 vim.opt.clipboard:append { "unnamedplus" }
 -- vim.opt.fillchars:append { 'stl:\\', 'stlnc:\\' }
 
--- HACK(jdt): just truncate lsp log every time we start otherwise it gets YUGE.
-io.popen(string.format("truncate --size 0 %s", require("vim.lsp.log").get_filename()), "w")
+-- truncate lsp log every time we start otherwise it gets YUGE.
+local _lsp_log = io.open(require("vim.lsp.log").get_filename(), "w")
+if _lsp_log then _lsp_log:close() end

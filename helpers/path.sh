@@ -26,6 +26,7 @@ pathmunge /usr/bin
 pathmunge /usr/local/bin
 pathmunge /usr/local/go/bin
 pathmunge /usr/local/heroku/bin
+pathmunge /usr/local/opt/rustup/bin/
 pathmunge /opt/homebrew/bin
 pathmunge /opt/homebrew/sbin
 pathmunge /snap/bin

@@ -4,3 +4,5 @@
 
 # ignore .DS_Store (thanks Apple...)
 .DS_Store
+
+**/.claude/settings.local.json
