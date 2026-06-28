@@ -6,14 +6,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a [chezmoi](https://chezmoi.io) dotfiles repository managing shell configuration, editor setup, and system tooling across macOS and Linux.
 
+## Critical Rule: Edit Source, Never Target
+
+**Never edit a file that chezmoi manages directly in `$HOME`.** Always edit the source file in this repo, then apply. Editing the target file directly will be overwritten on the next `chezmoi apply`.
+
+To check whether a file is managed: `chezmoi managed | grep <path>`. If it's listed, find the corresponding source file in this repo (reverse the naming conventions below) and edit that instead.
+
 ## Key Commands
 
 ```bash
-chezmoi diff              # preview what would change before applying
-chezmoi apply             # apply all managed files to $HOME
-chezmoi apply ~/.zshrc    # apply a single file
-chezmoi execute-template < dot_zshrc.tmpl   # render a template to stdout
-chezmoi git -- <args>     # run git in the source directory
+chezmoi diff                              # preview what would change before applying
+chezmoi -w /path/to/worktree diff         # diff against a specific worktree
+chezmoi apply                             # apply all managed files to $HOME
+chezmoi apply ~/.zshrc                    # apply a single file
+chezmoi execute-template < dot_zshrc.tmpl # render a template to stdout
+chezmoi git -- <args>                     # run git in the source directory
 ```
 
 After editing template files, run `chezmoi diff` to verify the rendered output before `chezmoi apply`.
