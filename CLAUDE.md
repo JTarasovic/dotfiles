@@ -146,13 +146,23 @@ Most plugins use event-based loading. Common events:
 
 ### Plugin version management
 
-`lazy-lock.json` is tracked in chezmoi (`private_dot_config/nvim/lazy-lock.json`). It pins exact commit SHAs for all plugins and is the source of truth for what's installed. The global `defaults = { version = "*" }` in `init.lua` means plugins without an explicit `version` field use the latest stable tag — the lockfile then freezes that to a specific commit.
+The lockfile is stored as `private_dot_config/nvim/.lazy-lock.json` (dot-prefixed so chezmoi
+ignores it as a target). `private_dot_config/nvim/symlink_lazy-lock.json.tmpl` tells chezmoi
+to create `~/.config/nvim/lazy-lock.json` as a symlink pointing into the source dir. lazy.nvim
+writes through the symlink directly, so changes land in the repo automatically.
+
+`lazy-lock.json` pins exact commit SHAs for all plugins and is the source of truth for what's
+installed. The global `defaults = { version = "*" }` in `init.lua` means plugins without an
+explicit `version` field use the latest stable tag — the lockfile then freezes that to a
+specific commit.
 
 **To upgrade plugins:**
 1. Open neovim → `:Lazy update`
 2. Review with `:Lazy log`
-3. `chezmoi add ~/.config/nvim/lazy-lock.json`
+3. `git -C ~/.local/share/chezmoi add private_dot_config/nvim/.lazy-lock.json`
 4. Commit the updated lockfile
+
+No `chezmoi add` needed — lazy.nvim writes the file directly into the source tree via the symlink.
 
 **Intentional `version = false` exceptions** (floating HEAD — no releases):
 - `nvim-treesitter/nvim-treesitter` — no releases, HEAD-only by design
@@ -165,3 +175,5 @@ All other plugins use `version = "*"` (latest stable tag) or an explicit version
 ### `chezmoi` note
 
 `symlink_autoload.tmpl` creates a symlink for the vim autoload directory. It is not a plugin file — do not edit it when modifying plugins.
+
+`symlink_lazy-lock.json.tmpl` creates the `~/.config/nvim/lazy-lock.json` symlink (see Plugin version management above). It is not a plugin file — do not edit it when modifying plugins. The real lockfile is `.lazy-lock.json` in this same directory.
