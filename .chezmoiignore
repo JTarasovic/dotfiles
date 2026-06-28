@@ -2,6 +2,9 @@
 .config/wt.toml
 **/CLAUDE.md
 helpers/
+scripts/
+.pre-commit-config.yaml
+.shellcheckrc
 README.md
 plug.vim
 tool-versions

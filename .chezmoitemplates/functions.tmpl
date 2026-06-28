@@ -59,8 +59,9 @@ clean() {
 
 # https://stackoverflow.com/questions/1029969/why-is-my-git-repository-so-big
 git-fatfiles() {
-    git rev-list --all --objects \
-        | sed -n $(git rev-list --objects --all \
+    local sed_program
+    sed_program=$(
+        git rev-list --objects --all \
             | cut -f1 -d' ' \
             | git cat-file --batch-check \
             | grep blob \
@@ -68,8 +69,11 @@ git-fatfiles() {
             | tail -n40 \
             | while read -r hash _type size; do
                 printf "-e s/%s/%s/p " "$hash" "$size"
-            done) \
-        | sort -nr -k1
+            done
+    )
+    # intentional word-split: $sed_program expands to multiple space-separated -e args for sed
+    # shellcheck disable=SC2046,SC2086
+    git rev-list --all --objects | sed -n $sed_program | sort -nr -k1
 }
 {{- else -}}
 # git functions omitted
@@ -130,7 +134,7 @@ kdiff() {
 
 {{ if lookPath "chezmoi" -}}
 cmet() {
-    chezmoi execute-template $@
+    chezmoi execute-template "$@"
 }
 cmetf() {
     cmet "$@" | shfmt -d -s -bn -i 4 -ci -sr

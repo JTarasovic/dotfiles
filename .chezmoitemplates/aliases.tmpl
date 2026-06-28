@@ -64,7 +64,7 @@ alias dtls='apropos dtrace'
 {{ if lookPath "brew" -}}
 alias update='brew update && brew upgrade && chezmoi diff'
 install() {
-    brew install $@ && chezmoi diff
+    brew install "$@" && chezmoi diff
 }
 alias search='brew search'
 {{- else -}}

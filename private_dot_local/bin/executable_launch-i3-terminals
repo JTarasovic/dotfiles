@@ -10,12 +10,10 @@ vars[tag]=launch_i3_terminals
 echo "launching terminals" | systemd-cat -t "${vars[tag]}"
 echo "args: ${vars[*]}" | systemd-cat -t "${vars[tag]}"
 
-
 i3-msg "workspace ${vars[ws]}; append_layout ${vars[layout]}"
 
 declare -a terms
-for _ in $(seq 1 "${vars[count]}");
-do
+for _ in $(seq 1 "${vars[count]}"); do
     terms+=("exec ${vars[term]};")
 done
 

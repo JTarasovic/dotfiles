@@ -4,7 +4,7 @@ DELIM=${1:-"-"}
 REPLACE="$2"
 
 for context in $(kubectl config get-contexts -o name); do
-    if expr "$context" : 'kind-.*' >/dev/null; then
+    if expr "$context" : 'kind-.*' > /dev/null; then
         continue
     fi
 

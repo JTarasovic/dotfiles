@@ -17,8 +17,8 @@ pathmunge() {
     # path="$(resolvelink "$path")"
 
     # if path isn't already in $PATH
-    if ! echo "$PATH" | /usr/bin/grep -Eq "(^|:)$path($|:)" ; then
-         PATH=$path:$PATH
+    if ! echo "$PATH" | /usr/bin/grep -Eq "(^|:)$path($|:)"; then
+        PATH=$path:$PATH
     fi
 }
 

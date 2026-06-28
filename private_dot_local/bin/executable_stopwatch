@@ -3,8 +3,8 @@
 strt=$(date +%s)
 
 while true; do
-    now=$(date +%s);
-    diff=$((now - strt));
-    echo -ne "$(date -u --date @"$diff" +%H:%M:%S)\r";
-    sleep .3;
+    now=$(date +%s)
+    diff=$((now - strt))
+    echo -ne "$(date -u --date @"$diff" +%H:%M:%S)\r"
+    sleep .3
 done

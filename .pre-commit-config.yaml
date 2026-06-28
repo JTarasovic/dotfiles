@@ -1,0 +1,10 @@
+repos:
+  - repo: local
+    hooks:
+      - id: shell-guardrails
+        name: Shell linting and formatting check
+        language: system
+        entry: scripts/lint-shell.sh
+        pass_filenames: false
+        # Run only when a shell-relevant file is staged.
+        files: '(\.tmpl|\.sh)$|private_dot_local/bin/executable_|\.chezmoitemplates/|^helpers/|^scripts/'

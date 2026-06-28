@@ -1,21 +1,19 @@
 #!/bin/bash
 
-
 build_options() {
     local search="$1"
     echo "{}" \
-    | jq \
-        --arg state all \
-        --arg detail simple \
-        --arg tag "_untagged_" \
-        --arg search "$search" \
-        '. | { "state": $state, "detailType": $detail, "tag": $tag, "search": $search }'
+        | jq \
+            --arg state all \
+            --arg detail simple \
+            --arg tag "_untagged_" \
+            --arg search "$search" \
+            '. | { "state": $state, "detailType": $detail, "tag": $tag, "search": $search }'
 }
 
 declare -a IDS
 
-while IFS="|" read -r _ id;
-do
+while IFS="|" read -r _ id; do
     IDS+=("$id")
 done < <(pocket-enhanced ls --format='{{.Title}}|{{.ItemID}}' --options="$(build_options "$1")" | fzf -m)
 

@@ -1,0 +1,4 @@
+# .shellcheckrc — project-level shellcheck configuration.
+# Per-target severity/exclude overrides live in scripts/lint-shell.sh, not here,
+# to avoid accidentally weakening checks on real scripts.
+external-sources=true
