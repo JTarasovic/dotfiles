@@ -1,5 +1,5 @@
 .claude/
-.config/
+.config/wt.toml
 CLAUDE.md
 helpers/
 README.md
