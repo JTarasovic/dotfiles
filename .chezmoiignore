@@ -1,6 +1,6 @@
 .claude/
 .config/wt.toml
-CLAUDE.md
+**/CLAUDE.md
 helpers/
 README.md
 plug.vim
