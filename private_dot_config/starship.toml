@@ -314,3 +314,30 @@ cyan          = "#88C0D0"   # Nord8  — frost light blue
 bright-cyan   = "#8FBCBB"   # Nord7  — frost teal
 white         = "#E5E9F0"   # Nord5  — snow storm mid
 bright-white  = "#ECEFF4"   # Nord6  — snow storm bright
+
+# ── Claude Code statusline ──────────────────────────────────────────────────
+
+[profiles]
+claude-code = "$git_branch$git_status$claude_model$claude_context$claude_cost"
+
+[claude_model]
+symbol = " "
+style  = "bold bright-blue"
+format = "[$symbol$model]($style) "
+model_aliases = { "claude-sonnet-4-6" = "Sonnet 4.6", "claude-opus-4-8" = "Opus 4.8", "claude-haiku-4-5-20251001" = "Haiku 4.5" }
+
+[claude_context]
+format = "[$gauge $percentage]($style) "
+display = [
+  { threshold = 0,  style = "green" },
+  { threshold = 60, style = "yellow" },
+  { threshold = 80, style = "bold red" },
+]
+
+[claude_cost]
+format = '[$symbol\$$cost]($style) '
+display = [
+  { threshold = 0,   style = "green" },
+  { threshold = 1,   style = "yellow" },
+  { threshold = 5,   style = "bold red" },
+]
