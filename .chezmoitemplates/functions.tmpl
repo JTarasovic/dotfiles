@@ -110,7 +110,7 @@ pods_ready() {
 kjq() {
     local spec="$1"
     shift
-    kubectl get -o json $@ | jq "$spec"
+    kubectl get -o json "$@" | jq "$spec"
 }
 
 clean_kube_config() {
@@ -123,10 +123,12 @@ clean_kube_config() {
 }
 
 kdiff() {
-    local a=shift
-    local b=shift
-    local x=$@
-    diff -y -W 80 <(kubectl --context="$a" get -o yaml $x) <(kubectl --context="$b" get -o yaml $x)
+    local a="$1"
+    shift
+    local b="$1"
+    shift
+    local x=("$@")
+    diff -y -W 80 <(kubectl --context="$a" get -o yaml "${x[@]}") <(kubectl --context="$b" get -o yaml "${x[@]}")
 }
 {{- else -}}
 # kubectl functions omitted
@@ -166,7 +168,7 @@ wg-restart() {
 
 {{ if lookPath "docker" -}}
 clean_docker_images() {
-    docker rmi --force $(docker images -qa)
+    docker images -qa | xargs -r docker rmi --force
 
     if [ ${1:-""} == "--deep" ]; then
         docker system prune --all --force --volumes
