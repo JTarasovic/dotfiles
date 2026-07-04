@@ -292,7 +292,7 @@ exec --no-startup-id {{ ( cat $prog "-s") | quote }}
 
 {{ $prog := lookPath "spotify" -}}
 {{ if $prog -}}
-exec --no-startup-id {{ ( cat $prog ) | quote }}
+exec --no-startup-id {{ ( cat $prog "--audio-api=pulseaudio" ) | quote }}
 {{- else -}}
 # spotify startup skipped
 {{- end }}
