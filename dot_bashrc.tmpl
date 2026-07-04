@@ -39,10 +39,6 @@ eval -- "$(starship init bash --print-full-init)"
 eval -- "$(mise activate bash)"
 {{- end }}
 
-{{- if lookPath "direnv" -}}
-{{- output "direnv" "hook" "bash" -}}
-{{- end }}
-
 {{- if lookPath "wt" }}
 eval -- "$(wt config shell init bash)"
 {{- end }}

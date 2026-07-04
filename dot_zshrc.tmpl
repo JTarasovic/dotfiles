@@ -87,10 +87,6 @@ export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 eval -- "$(mise activate zsh)"
 {{- end }}
 
-{{- if lookPath "direnv" }}
-{{- output "direnv" "hook" "zsh" }}
-{{- end }}
-
 {{- if lookPath "wt" }}
 eval -- "$(wt config shell init zsh)"
 {{- end }}
