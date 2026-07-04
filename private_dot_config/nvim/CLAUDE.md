@@ -14,7 +14,7 @@
 | `lua/plugins/trouble.lua` | Trouble diagnostics panel |
 | `lua/plugins/noice.lua` | Noice UI (cmdline, messages, popupmenu) |
 | `lua/plugins/nvim-tree.lua` | File explorer sidebar |
-| `lua/plugins/comments.lua` | Comment.nvim + Todo-comments |
+| `lua/plugins/comments.lua` | Todo-comments (commenting itself uses Neovim's native `gc`/`gcc`; extra `gco`/`gcO`/`gcA` mappings are in `lua/settings/init.lua`) |
 | `lua/plugins/which-key.lua` | Which-key keymap discovery |
 | `lua/plugins/ui.lua` | Nord colorscheme, lualine statusline, colorizer, devicons |
 | `lua/plugins/util.lua` | Plenary (dep), nvim-luadev (Lua REPL) |
