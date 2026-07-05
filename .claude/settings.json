@@ -1,4 +1,7 @@
 {
+  "env": {
+    "BASH_ENV": ".claude/scripts/mise-bash-env.sh"
+  },
   "hooks": {
     "Stop": [
       {
