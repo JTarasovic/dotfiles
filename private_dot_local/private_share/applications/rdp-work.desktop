@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.5
+Terminal=false
+Type=Application
+Name=RDP: Work
+Exec=/home/jason/.local/bin/rdp-dual.sh --detached --rdp /home/jason/.config/freerdp/connections/default.rdp
+Icon=network-workgroup

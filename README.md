@@ -38,6 +38,7 @@ chezmoi init $GITHUB_USERNAME --apply
 - `chezmoi`, `git`, `zsh`, `neovim`, `starship`, `fzf`, `ripgrep`, `fd`, `bat`
 - `i3`, `i3status-rust`, `dunst`, `rofi`
 - `udiskie`, `playerctl`, `pactl`, `light-locker`
+- `libsecret` (provides `secret-tool`; Debian/Ubuntu package is `libsecret-tools`) — RDP credential caching
 - `yubioath-desktop`
 - JetBrains Mono Nerd Font
 
