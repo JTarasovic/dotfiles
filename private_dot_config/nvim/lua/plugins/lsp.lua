@@ -29,7 +29,20 @@ end
 
 -- desired LSPs and configs
 local servers = {
-    bashls = {},
+    bashls = {
+        -- Match scripts/lint-shell.sh / cmetf: shfmt -bn -ci -sr -s (indent width
+        -- comes from the editor's expandtab/shiftwidth, already 4 here).
+        settings = {
+            bashIde = {
+                shfmt = {
+                    binaryNextLine = true,
+                    caseIndent = true,
+                    spaceRedirects = true,
+                    simplifyCode = true,
+                },
+            },
+        },
+    },
     denols = {},
     -- experimenting with new docker "official" language server
     docker = {
