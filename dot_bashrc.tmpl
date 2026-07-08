@@ -3,6 +3,9 @@
 */ -}}
 #!/bin/bash
 
+# Exit early when running under Claude Code — prevents aliases/prompt from polluting shell snapshots
+[[ -n "$CLAUDECODE" ]] && return
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;

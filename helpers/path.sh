@@ -36,5 +36,6 @@ pathmunge "$HOME/go/bin"
 pathmunge "$HOME/.local/bin"
 pathmunge "$HOME/.nix-profile/bin"
 pathmunge "$HOME/.asdf/shims"
+pathmunge "$HOME/.local/share/mise/shims"
 
 echo "export PATH=\"$PATH\""
