@@ -1,0 +1,15 @@
+[Unit]
+Description=Claude Code background daemon (bg sessions, remote control)
+ConditionFileIsExecutable=%h/.local/bin/claude
+
+[Service]
+ExecStart=%h/.local/bin/claude daemon run
+ExecStop=%h/.local/bin/claude daemon stop --any
+
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target
+
+# vi: ft=systemd
