@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# claude-spawn — start a new, independent Claude Code background session in
+# the current directory under a fresh, unique display name.
+#
+# Uses Claude Code's own native background-agent support (`claude --bg`),
+# which is owned by the long-running `claude daemon` process (parented to
+# init), not by the shell that invokes this script — so it keeps running
+# after the invoking session ends. No nohup/disown/tmux required.
+#
+# Usage:
+#   claude-spawn [extra claude args...]
+#
+# The new session starts idle (no initial prompt) in $PWD, with
+# --remote-control always on (so it's reachable from claude.ai/code or the
+# Claude mobile app). Any extra arguments are forwarded to `claude --bg`
+# verbatim (e.g. --model, --agent).
+#
+# Prints the session name/id and, on the last line, an instruction for the
+# invoking assistant to relay the session name back to the user.
+
+set -euo pipefail
+
+for arg in "$@"; do
+  case "$arg" in
+    -h | --help)
+      sed -n '2,19p' "$0" | sed 's/^# \{0,1\}//'
+      exit 0
+      ;;
+  esac
+done
+
+if ! command -v claude >/dev/null 2>&1; then
+  echo "error: claude is not installed or not on PATH." >&2
+  exit 1
+fi
+
+ADJECTIVES=(quiet swift amber lucid nimble bold hazy vivid calm bright brisk
+  sunny misty golden silver quirky mellow rusty velvet plucky sturdy clever
+  gentle daring frosty crimson violet coastal woodland cosmic)
+NOUNS=(otter falcon meadow harbor lantern comet thicket ridge basin quartz
+  willow heron marlin canyon glacier orchid tundra prairie delta juniper
+  meridian cascade summit hollow lagoon boulder cinder fjord aurora)
+
+existing_names() {
+  # Best-effort: if `claude agents --json` fails for any reason, treat it as
+  # "no existing names" rather than aborting the whole script over a naming
+  # nicety.
+  claude agents --json --all 2>/dev/null | grep -o '"name": *"[^"]*"' \
+    | sed -E 's/.*"name": *"([^"]*)".*/\1/' || true
+}
+
+known_names="$(existing_names)"
+
+name=""
+for _ in $(seq 1 30); do
+  adj="${ADJECTIVES[RANDOM % ${#ADJECTIVES[@]}]}"
+  noun="${NOUNS[RANDOM % ${#NOUNS[@]}]}"
+  candidate="${adj}-${noun}-$((RANDOM % 100))"
+  if ! grep -qxF "$candidate" <<<"$known_names"; then
+    name="$candidate"
+    break
+  fi
+done
+
+if [[ -z "$name" ]]; then
+  echo "error: could not find a unique session name after 30 attempts." >&2
+  exit 1
+fi
+
+claude --bg --remote-control --name "$name" "$@"
+
+echo
+echo "Tell the user: started a new idle Claude Code background session named \"$name\" in $PWD. Use \`claude attach <id>\` (id shown above) to jump in, \`claude agents\` to list sessions, or \`claude stop <id>\` to end it."
