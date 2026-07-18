@@ -21,50 +21,50 @@
 set -euo pipefail
 
 for arg in "$@"; do
-  case "$arg" in
-    -h | --help)
-      sed -n '2,19p' "$0" | sed 's/^# \{0,1\}//'
-      exit 0
-      ;;
-  esac
+    case "$arg" in
+        -h | --help)
+            sed -n '2,19p' "$0" | sed 's/^# \{0,1\}//'
+            exit 0
+            ;;
+    esac
 done
 
-if ! command -v claude >/dev/null 2>&1; then
-  echo "error: claude is not installed or not on PATH." >&2
-  exit 1
+if ! command -v claude > /dev/null 2>&1; then
+    echo "error: claude is not installed or not on PATH." >&2
+    exit 1
 fi
 
 ADJECTIVES=(quiet swift amber lucid nimble bold hazy vivid calm bright brisk
-  sunny misty golden silver quirky mellow rusty velvet plucky sturdy clever
-  gentle daring frosty crimson violet coastal woodland cosmic)
+    sunny misty golden silver quirky mellow rusty velvet plucky sturdy clever
+    gentle daring frosty crimson violet coastal woodland cosmic)
 NOUNS=(otter falcon meadow harbor lantern comet thicket ridge basin quartz
-  willow heron marlin canyon glacier orchid tundra prairie delta juniper
-  meridian cascade summit hollow lagoon boulder cinder fjord aurora)
+    willow heron marlin canyon glacier orchid tundra prairie delta juniper
+    meridian cascade summit hollow lagoon boulder cinder fjord aurora)
 
 existing_names() {
-  # Best-effort: if `claude agents --json` fails for any reason, treat it as
-  # "no existing names" rather than aborting the whole script over a naming
-  # nicety.
-  claude agents --json --all 2>/dev/null | grep -o '"name": *"[^"]*"' \
-    | sed -E 's/.*"name": *"([^"]*)".*/\1/' || true
+    # Best-effort: if `claude agents --json` fails for any reason, treat it as
+    # "no existing names" rather than aborting the whole script over a naming
+    # nicety.
+    claude agents --json --all 2> /dev/null | grep -o '"name": *"[^"]*"' \
+        | sed -E 's/.*"name": *"([^"]*)".*/\1/' || true
 }
 
 known_names="$(existing_names)"
 
 name=""
 for _ in $(seq 1 30); do
-  adj="${ADJECTIVES[RANDOM % ${#ADJECTIVES[@]}]}"
-  noun="${NOUNS[RANDOM % ${#NOUNS[@]}]}"
-  candidate="${adj}-${noun}-$((RANDOM % 100))"
-  if ! grep -qxF "$candidate" <<<"$known_names"; then
-    name="$candidate"
-    break
-  fi
+    adj="${ADJECTIVES[RANDOM % ${#ADJECTIVES[@]}]}"
+    noun="${NOUNS[RANDOM % ${#NOUNS[@]}]}"
+    candidate="${adj}-${noun}-$((RANDOM % 100))"
+    if ! grep -qxF "$candidate" <<< "$known_names"; then
+        name="$candidate"
+        break
+    fi
 done
 
-if [[ -z "$name" ]]; then
-  echo "error: could not find a unique session name after 30 attempts." >&2
-  exit 1
+if [[ -z $name ]]; then
+    echo "error: could not find a unique session name after 30 attempts." >&2
+    exit 1
 fi
 
 claude --bg --remote-control --name "$name" "$@"
