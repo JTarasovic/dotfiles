@@ -69,8 +69,8 @@ source {{ $npmPlugin }}
 {{ template "aliases.tmpl" . }}
 # zsh specific aliases
 {{ if lookPath "bat" -}}
-alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
-alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
+alias -g -- -h='-h < /dev/null 2>&1 | bat --language=help --style=plain'
+alias -g -- --help='--help < /dev/null 2>&1 | bat --language=help --style=plain'
 {{- else -}}
 # additional bat aliases omitted
 {{- end }}
