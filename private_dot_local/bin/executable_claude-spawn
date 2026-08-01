@@ -70,4 +70,4 @@ fi
 claude --bg --remote-control --name "$name" "$@"
 
 echo
-echo "Tell the user: started a new idle Claude Code background session named \"$name\" in $PWD. Use \`claude attach <id>\` (id shown above) to jump in, \`claude agents\` to list sessions, or \`claude stop <id>\` to end it."
+echo "Tell the user: started a new idle Claude Code background session named \"$name\" in $PWD."
