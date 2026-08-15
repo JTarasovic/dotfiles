@@ -1,0 +1,11 @@
+#!/bin/sh
+# Claude Code statusline wrapper.
+#
+# starship consumes the statusline JSON off its own stdin, so custom modules
+# can't see it. Stash a copy first, then hand the payload to starship. Rate
+# limits are account-wide, so a single shared cache file is fine even with
+# several sessions running.
+payload=$(cat)
+cache="${XDG_RUNTIME_DIR:-/tmp}/claude-statusline.json"
+printf '%s' "$payload" > "$cache.tmp" && mv "$cache.tmp" "$cache"
+printf '%s' "$payload" | starship statusline claude-code
