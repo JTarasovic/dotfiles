@@ -6,6 +6,17 @@
 {{- $sensors = fromJson ( output "sensors" "-j" ) -}}
 {{- end -}}
 
+{{/* The kernel appends the thermal zone id to the hwmon name (iwlwifi_1 ->
+     iwlwifi_1_2), and iwlwifi itself counts registrations, so the chip name is
+     not stable across boots. libsensors only globs the bus/address parts of a
+     chip name, not the prefix, so resolve the real name here instead. */}}
+{{- $iwlwifi := "" -}}
+{{- range ( keys $sensors ) -}}
+{{- if and ( eq $iwlwifi "" ) ( hasPrefix "iwlwifi" . ) -}}
+{{- $iwlwifi = . -}}
+{{- end -}}
+{{- end -}}
+
 {{ $mouse_mac := output
     ( joinPath .chezmoi.sourceDir "helpers" "bluetooth-device-paired.sh")
     "LIFT" -}}
@@ -128,10 +139,10 @@ block = "net"
 format=" $icon {$speed_down.eng(w:3,p:M)} {$speed_up.eng(w:3,p:M)} "
 interval = 5
 
-{{ if ( get $sensors "iwlwifi_1-virtual-0" ) -}}
+{{ if $iwlwifi -}}
 [[block]]
 block = "temperature"
-chip = "iwlwifi_1-virtual-0"
+chip = "{{ $iwlwifi }}"
 good = 10
 idle = 20
 info = 65
@@ -139,7 +150,7 @@ warning = 70
 format = " 󰖩 {$max} "
 interval = 5
 {{- else -}}
-# skipped iwlwifi_1
+# skipped iwlwifi (no such chip)
 {{- end }}
 
 [[block]]
