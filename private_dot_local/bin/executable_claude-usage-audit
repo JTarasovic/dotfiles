@@ -1,0 +1,148 @@
+#!/usr/bin/env python3
+"""Attribute Claude Code token usage over a time window, by session/project/model.
+
+Reads ~/.claude/projects/**/*.jsonl transcripts, dedupes by requestId, and
+weights tokens into an estimated cost (the thing rate limits actually track).
+"""
+import json, glob, os, sys, argparse
+from collections import defaultdict
+from datetime import datetime, timedelta, timezone
+
+# $ per million tokens: (input, output, cache_write_5m, cache_write_1h, cache_read)
+PRICES = {
+    "opus":   (15.0, 75.0, 18.75, 30.0, 1.50),
+    "sonnet": (3.0,  15.0,  3.75,  6.0, 0.30),
+    "haiku":  (1.0,   5.0,  1.25,  2.0, 0.10),
+}
+
+def price_for(model):
+    m = (model or "").lower()
+    for k in PRICES:
+        if k in m:
+            return PRICES[k]
+    return PRICES["sonnet"]
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--hours", type=float, default=5.0)
+    ap.add_argument("--top", type=int, default=15)
+    ap.add_argument("--bucket", type=int, default=30, help="timeline bucket, minutes")
+    args = ap.parse_args()
+
+    now = datetime.now(timezone.utc)
+    cutoff = now - timedelta(hours=args.hours)
+
+    seen = set()
+    rows = []
+    for path in glob.glob(os.path.expanduser("~/.claude/projects/*/*.jsonl")):
+        if os.path.getmtime(path) < cutoff.timestamp() - 3600:
+            continue
+        project = os.path.basename(os.path.dirname(path))
+        try:
+            fh = open(path, errors="replace")
+        except OSError:
+            continue
+        with fh:
+            for line in fh:
+                if '"usage"' not in line:
+                    continue
+                try:
+                    d = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                msg = d.get("message") or {}
+                u = msg.get("usage")
+                if not isinstance(u, dict):
+                    continue
+                ts = d.get("timestamp")
+                if not ts:
+                    continue
+                try:
+                    t = datetime.fromisoformat(ts.replace("Z", "+00:00"))
+                except ValueError:
+                    continue
+                if t < cutoff:
+                    continue
+                key = d.get("requestId") or f"{d.get('sessionId')}:{d.get('uuid')}"
+                if key in seen:
+                    continue
+                seen.add(key)
+
+                cc = u.get("cache_creation") or {}
+                w5 = cc.get("ephemeral_5m_input_tokens", 0)
+                w1 = cc.get("ephemeral_1h_input_tokens", 0)
+                if not (w5 or w1):
+                    w5 = u.get("cache_creation_input_tokens", 0) or 0
+                inp = u.get("input_tokens", 0) or 0
+                out = u.get("output_tokens", 0) or 0
+                rd = u.get("cache_read_input_tokens", 0) or 0
+                model = msg.get("model") or "unknown"
+                pi, po, p5, p1, pr = price_for(model)
+                cost = (inp*pi + out*po + w5*p5 + w1*p1 + rd*pr) / 1e6
+                rows.append(dict(t=t, project=project, session=d.get("sessionId", "?"),
+                                 model=model, cost=cost, inp=inp, out=out,
+                                 write=w5+w1, read=rd,
+                                 cwd=d.get("cwd", ""),
+                                 sub=bool(d.get("isSidechain"))))
+
+    if not rows:
+        print("no usage found in window")
+        return
+    rows.sort(key=lambda r: r["t"])
+    total = sum(r["cost"] for r in rows)
+
+    def table(title, keyfn, limit):
+        agg = defaultdict(lambda: [0.0, 0, 0, 0, 0, 0])
+        for r in rows:
+            a = agg[keyfn(r)]
+            a[0] += r["cost"]; a[1] += 1
+            a[2] += r["inp"]; a[3] += r["out"]; a[4] += r["write"]; a[5] += r["read"]
+        print(f"\n=== {title} ===")
+        print(f"{'':<52}{'est$':>8}{'%':>6}{'reqs':>7}{'out':>10}{'cwrite':>10}{'cread':>12}")
+        for k, a in sorted(agg.items(), key=lambda kv: -kv[1][0])[:limit]:
+            print(f"{str(k)[:50]:<52}{a[0]:>8.2f}{100*a[0]/total:>6.1f}{a[1]:>7}"
+                  f"{a[3]:>10,}{a[4]:>10,}{a[5]:>12,}")
+
+    span = (rows[-1]["t"] - rows[0]["t"]).total_seconds() / 3600
+    print(f"window: last {args.hours}h  ({rows[0]['t'].astimezone():%H:%M} -> "
+          f"{rows[-1]['t'].astimezone():%H:%M} local, {span:.1f}h of activity)")
+    print(f"{len(rows)} API requests, est. ${total:.2f} weighted cost")
+
+    # where the money actually goes
+    comp = defaultdict(float)
+    for r in rows:
+        pi, po, p5, p1, pr = price_for(r["model"])
+        comp["cache read (re-sending context each turn)"] += r["read"]*pr/1e6
+        comp["cache write"] += r["write"]*p1/1e6
+        comp["output"] += r["out"]*po/1e6
+        comp["uncached input"] += r["inp"]*pi/1e6
+    print("\n=== COST COMPOSITION ===")
+    for k, v in sorted(comp.items(), key=lambda kv: -kv[1]):
+        print(f"{k:<45}{v:>8.2f}{100*v/total:>6.1f}%")
+
+    table("BY PROJECT", lambda r: r["project"], args.top)
+    table("BY SESSION", lambda r: f"{r['session'][:8]} {r['project'][:38]}", args.top)
+    table("BY MODEL", lambda r: r["model"], 10)
+    table("MAIN vs SUBAGENT", lambda r: "subagent" if r["sub"] else "main", 5)
+
+    # timeline
+    print(f"\n=== TIMELINE ({args.bucket}m buckets) ===")
+    b = defaultdict(float); bn = defaultdict(int)
+    step = timedelta(minutes=args.bucket)
+    for r in rows:
+        idx = int((r["t"] - cutoff) / step)
+        b[idx] += r["cost"]; bn[idx] += 1
+    peak = max(b.values()) or 1
+    for i in sorted(b):
+        start = (cutoff + i*step).astimezone()
+        bar = "#" * int(40 * b[i] / peak)
+        print(f"{start:%H:%M}  {b[i]:>7.2f} {bn[i]:>5}req  {bar}")
+
+    print("\n=== TOP 10 SINGLE REQUESTS ===")
+    for r in sorted(rows, key=lambda r: -r["cost"])[:10]:
+        print(f"{r['t'].astimezone():%H:%M:%S}  ${r['cost']:>6.2f}  "
+              f"out={r['out']:>7,} cw={r['write']:>7,} cr={r['read']:>9,}  "
+              f"{'[sub] ' if r['sub'] else ''}{r['session'][:8]} {r['project'][:40]}")
+
+if __name__ == "__main__":
+    main()
