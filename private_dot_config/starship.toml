@@ -362,7 +362,8 @@ format  = "[$symbol$output]($style) "
 # the values mirror [palettes.nord] above.
 #
 # `resets_at` is Unix epoch seconds, so the trailing countdown is derived --
-# omitted once the window has already rolled over.
+# omitted once the window has already rolled over. Only the 5-hour window shows
+# one; the weekly reset is always the same day, so it earns no space.
 [custom.claude_limits]
 command = """
 jq -r '
@@ -383,12 +384,12 @@ jq -r '
       else " " + (if   $hours >= 24 then "\\($hours / 24 | floor)d\\($hours % 24)h"
                   elif $hours > 0   then "\\($hours)h\\($mins % 60)m"
                   else                   "\\($mins)m" end | dim) end;
-  def window($label): select(. != null)
+  def window($label; $countdown): select(. != null)
     | .used_percentage as $pct
     | ($label | dim) + " \\($pct | color)\\($pct | gauge) \\($pct | round)%\\u001b[0m"
-      + (.resets_at // 0 | eta);
+      + (if $countdown then (.resets_at // 0 | eta) else "" end);
   .rate_limits // {}
-  | [ (.five_hour | window("5h")), (.seven_day | window("7d")) ]
+  | [ (.five_hour | window("5h"; true)), (.seven_day | window("7d"; false)) ]
   | join(" ")
 ' "${XDG_RUNTIME_DIR:-/tmp}/claude-statusline.json" 2>/dev/null
 """
