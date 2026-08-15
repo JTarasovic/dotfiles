@@ -125,6 +125,10 @@ symbol = " "
 read_only = " 󰌾"
 truncation_symbol = " /"
 truncate_to_repo = true
+# show the 2 most significant dirs in full and abbreviate each ancestor to a
+# single character (fish-style) rather than collapsing them into an ellipsis
+truncation_length = 2
+fish_style_pwd_dir_length = 1
 
 [docker_context]
 symbol = " "
