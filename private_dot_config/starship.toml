@@ -360,9 +360,13 @@ format  = "[$symbol$output]($style) "
 # the same green/yellow/red thresholds. Colors are inlined as raw truecolor
 # escapes because a custom module has one `style` and no `display` table --
 # the values mirror [palettes.nord] above.
+#
+# `resets_at` is Unix epoch seconds, so the trailing countdown is derived --
+# omitted once the window has already rolled over.
 [custom.claude_limits]
 command = """
 jq -r '
+  def dim: "\\u001b[38;2;76;86;106m\\(.)\\u001b[0m";
   def color: if   . >= 80 then "\\u001b[1;38;2;191;97;106m"
              elif . >= 60 then "\\u001b[38;2;235;203;139m"
              else            "\\u001b[38;2;163;190;140m" end;
@@ -372,9 +376,17 @@ jq -r '
     | (if $f - $full >= 0.25 then 1 else 0 end) as $part
     | ("\\u2588" * $full // "") + ("\\u2592" * $part // "")
       + ("\\u2591" * (5 - $full - $part) // "");
+  def eta:
+    ((. - now) / 60 | floor) as $mins
+    | ($mins / 60 | floor) as $hours
+    | if   $mins <= 0  then ""
+      else " " + (if   $hours >= 24 then "\\($hours / 24 | floor)d\\($hours % 24)h"
+                  elif $hours > 0   then "\\($hours)h\\($mins % 60)m"
+                  else                   "\\($mins)m" end | dim) end;
   def window($label): select(. != null)
-    | .used_percentage
-    | "\\u001b[38;2;76;86;106m\\($label)\\u001b[0m \\(color)\\(gauge) \\(round)%\\u001b[0m";
+    | .used_percentage as $pct
+    | ($label | dim) + " \\($pct | color)\\($pct | gauge) \\($pct | round)%\\u001b[0m"
+      + (.resets_at // 0 | eta);
   .rate_limits // {}
   | [ (.five_hour | window("5h")), (.seven_day | window("7d")) ]
   | join(" ")
