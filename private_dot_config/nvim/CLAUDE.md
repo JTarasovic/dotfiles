@@ -9,7 +9,7 @@
 | `lua/plugins/lsp.lua` | nvim-lspconfig — all LSP server configs |
 | `lua/plugins/completion.lua` | nvim-cmp — completion engine (LSP, snippets, buffer, path) |
 | `lua/plugins/lint.lua` | nvim-lint — linter-per-filetype config |
-| `lua/plugins/treesitter.lua` | Treesitter parsers, highlighting, indentation |
+| `lua/plugins/treesitter.lua` | Treesitter (`main` branch) — parser install, highlighting, indent, folds |
 | `lua/plugins/telescope.lua` | Telescope fuzzy finder + file browser extension |
 | `lua/plugins/trouble.lua` | Trouble diagnostics panel |
 | `lua/plugins/noice.lua` | Noice UI (cmdline, messages, popupmenu) |
@@ -54,7 +54,7 @@ Currently configured: `hadolint` (Dockerfile), `credo` (Elixir), `yamllint` (YAM
 Most plugins use event-based loading. Common events:
 - `VeryLazy` — deferred startup plugins
 - `InsertEnter` — completion
-- `BufReadPost` / `BufWritePost` — lint, treesitter
+- `BufReadPost` / `BufWritePost` — lint
 - `cmd` — plugins that only activate when a command is run
 
 ## Plugin version management
@@ -78,7 +78,7 @@ specific commit.
 No `chezmoi add` needed — lazy.nvim writes the file directly into the source tree via the symlink.
 
 **Intentional `version = false` exceptions** (floating HEAD — no releases):
-- `nvim-treesitter/nvim-treesitter` — no releases, HEAD-only by design
+- `nvim-treesitter/nvim-treesitter` — tracks the `main` branch (the rewrite); no releases, and `main` does not support lazy-loading
 - `nvim-lua/plenary.nvim` — no formal releases
 - `nvim-tree/nvim-web-devicons` — conventional HEAD usage
 - `neovim/nvim-lspconfig` — tracking HEAD given rapid Neovim 0.11+ API changes
