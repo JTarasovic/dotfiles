@@ -39,7 +39,7 @@ return {
                 return true
             end, opts.ensure_installed)
         end
-        require("nvim-treesitter").setup(opts)
+        require("nvim-treesitter.configs").setup(opts)
         if opts.textobjects then
             for _, mod in ipairs({ "move", "select", "swap", "lsp_interop" }) do
                 if opts.textobjects[mod] and opts.textobjects[mod].enable then
