@@ -321,12 +321,15 @@ bright-white  = "#ECEFF4"   # Nord6  — snow storm bright
 # ── Claude Code statusline ──────────────────────────────────────────────────
 
 [profiles]
-claude-code = "$git_branch$git_status$claude_model${custom.claude_effort}$claude_cost$claude_context${custom.claude_limits}"
+claude-code = "$git_branch$git_status$claude_model$claude_cost$claude_context${custom.claude_limits}"
 
 [claude_model]
 symbol = " "
 style  = "bold bright-blue"
-format = "[$symbol$model]($style) "
+# $effort is the session's live level from the payload, so it reflects per-model
+# overrides that the top-level `effortLevel` in settings.json misses. The
+# group drops out when the payload carries no level.
+format = "[$symbol$model]($style) ([󰧑 $effort](purple) )"
 model_aliases = { "claude-sonnet-4-6" = "Sonnet 4.6", "claude-opus-4-8" = "Opus 4.8", "claude-haiku-4-5-20251001" = "Haiku 4.5" }
 
 [claude_context]
@@ -337,18 +340,6 @@ display = [
   { threshold = 60, style = "yellow" },
   { threshold = 80, style = "bold red" },
 ]
-
-# No built-in module for effort: read the saved level out of settings.json.
-# Only referenced from the claude-code profile; the shell prompt's `format` drops
-# the catch-all `$custom` so custom modules don't leak into the regular prompt.
-[custom.claude_effort]
-command = 'jq -r ".effortLevel // empty" ~/.claude/settings.json'
-when    = true
-shell   = ["sh", "-c"]
-use_stdin = false   # starship otherwise pipes its stdin in and the output comes back empty
-symbol  = "󰧑 "
-style   = "purple"
-format  = "[$symbol$output]($style) "
 
 # Plan usage (5-hour and weekly windows). Claude Code puts these in the
 # statusline payload under `rate_limits`, but starship has no module for them
@@ -364,6 +355,9 @@ format  = "[$symbol$output]($style) "
 # `resets_at` is Unix epoch seconds, so the trailing countdown is derived --
 # omitted once the window has already rolled over. Only the 5-hour window shows
 # one; the weekly reset is always the same day, so it earns no space.
+#
+# Only referenced from the claude-code profile; the shell prompt's `format` drops
+# the catch-all `$custom` so custom modules don't leak into the regular prompt.
 [custom.claude_limits]
 command = """
 jq -r '
